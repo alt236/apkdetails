@@ -49,7 +49,7 @@ public class AndroidXmlDocument {
 
     public String getStringValue(String expression) {
         final String result = evaluateExpression(expression);
-        return expression + " -- " + (result == null ? "" : result);
+        return expression + " = '" + (result == null ? "" : result) + "'";
     }
 
     private String evaluateExpression(final String expression) {

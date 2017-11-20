@@ -3,62 +3,68 @@ package uk.co.alt236.apkdetails.model;
 import uk.co.alt236.apkdetails.xml.AndroidXPathFactory;
 import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
 
+import java.util.Locale;
+
 public class Manifest {
-    public static final String NODE_MANIFEST = "manifest";
-    public static final String NODE_APPLICATION = "application";
-    public static final String NODE_ACTIVITY = "activity";
-    public static final String NODE_ACTIVITY_ALIAS = "activity-alias";
-    public static final String NODE_SERVICE = "service";
-    public static final String NODE_RECEIVER = "receiver";
-    public static final String NODE_PROVIDER = "provider";
-    public static final String NODE_INTENT = "intent-filter";
-    public static final String NODE_ACTION = "action";
-    public static final String NODE_CATEGORY = "category";
-    public static final String NODE_USES_SDK = "uses-sdk";
-    public static final String NODE_PERMISSION = "permission";
-    public static final String NODE_PERMISSION_TREE = "permission-tree";
-    public static final String NODE_PERMISSION_GROUP = "permission-group";
-    public static final String NODE_USES_PERMISSION = "uses-permission";
-    public static final String NODE_INSTRUMENTATION = "instrumentation";
-    public static final String NODE_USES_LIBRARY = "uses-library";
-    public static final String NODE_SUPPORTS_SCREENS = "supports-screens";
-    public static final String NODE_COMPATIBLE_SCREENS = "compatible-screens";
-    public static final String NODE_USES_CONFIGURATION = "uses-configuration";
-    public static final String NODE_USES_FEATURE = "uses-feature";
-    public static final String NODE_METADATA = "meta-data";
-    public static final String NODE_DATA = "data";
-    public static final String NODE_GRANT_URI_PERMISSION = "grant-uri-permission";
-    public static final String NODE_PATH_PERMISSION = "path-permission";
-    public static final String NODE_SUPPORTS_GL_TEXTURE = "supports-gl-texture";
-    public static final String ATTRIBUTE_PACKAGE = "package";
-    public static final String ATTRIBUTE_VERSIONCODE = "versionCode";
-    public static final String ATTRIBUTE_VERSIONNAME = "versionName";
-    public static final String ATTRIBUTE_NAME = "name";
-    public static final String ATTRIBUTE_REQUIRED = "required";
-    public static final String ATTRIBUTE_GLESVERSION = "glEsVersion";
-    public static final String ATTRIBUTE_PROCESS = "process";
-    public static final String ATTRIBUTE_DEBUGGABLE = "debuggable";
-    public static final String ATTRIBUTE_LABEL = "label";
-    public static final String ATTRIBUTE_ICON = "icon";
-    public static final String ATTRIBUTE_MIN_SDK_VERSION = "minSdkVersion";
-    public static final String ATTRIBUTE_TARGET_SDK_VERSION = "targetSdkVersion";
-    public static final String ATTRIBUTE_TARGET_PACKAGE = "targetPackage";
-    public static final String ATTRIBUTE_TARGET_ACTIVITY = "targetActivity";
-    public static final String ATTRIBUTE_MANAGE_SPACE_ACTIVITY = "manageSpaceActivity";
-    public static final String ATTRIBUTE_EXPORTED = "exported";
-    public static final String ATTRIBUTE_RESIZEABLE = "resizeable";
-    public static final String ATTRIBUTE_ANYDENSITY = "anyDensity";
-    public static final String ATTRIBUTE_SMALLSCREENS = "smallScreens";
-    public static final String ATTRIBUTE_NORMALSCREENS = "normalScreens";
-    public static final String ATTRIBUTE_LARGESCREENS = "largeScreens";
-    public static final String ATTRIBUTE_REQ_5WAYNAV = "reqFiveWayNav";
-    public static final String ATTRIBUTE_REQ_NAVIGATION = "reqNavigation";
-    public static final String ATTRIBUTE_REQ_HARDKEYBOARD = "reqHardKeyboard";
-    public static final String ATTRIBUTE_REQ_KEYBOARDTYPE = "reqKeyboardType";
-    public static final String ATTRIBUTE_REQ_TOUCHSCREEN = "reqTouchScreen";
-    public static final String ATTRIBUTE_THEME = "theme";
-    public static final String ATTRIBUTE_BACKUP_AGENT = "backupAgent";
-    public static final String ATTRIBUTE_PARENT_ACTIVITY_NAME = "parentActivityName";
+    private static final String NS_DECLARATION_TEMPLATE = "xmlns:%s=\"%s\"";
+    private static final String NS_DECLARATION = String.format(
+            Locale.US, NS_DECLARATION_TEMPLATE, AndroidXPathFactory.DEFAULT_NS_PREFIX, AndroidXPathFactory.NS_RESOURCES);
+    
+    private static final String NODE_MANIFEST = "manifest";
+    private static final String NODE_APPLICATION = "application";
+    private static final String NODE_ACTIVITY = "activity";
+    private static final String NODE_ACTIVITY_ALIAS = "activity-alias";
+    private static final String NODE_SERVICE = "service";
+    private static final String NODE_RECEIVER = "receiver";
+    private static final String NODE_PROVIDER = "provider";
+    private static final String NODE_INTENT = "intent-filter";
+    private static final String NODE_ACTION = "action";
+    private static final String NODE_CATEGORY = "category";
+    private static final String NODE_USES_SDK = "uses-sdk";
+    private static final String NODE_PERMISSION = "permission";
+    private static final String NODE_PERMISSION_TREE = "permission-tree";
+    private static final String NODE_PERMISSION_GROUP = "permission-group";
+    private static final String NODE_USES_PERMISSION = "uses-permission";
+    private static final String NODE_INSTRUMENTATION = "instrumentation";
+    private static final String NODE_USES_LIBRARY = "uses-library";
+    private static final String NODE_SUPPORTS_SCREENS = "supports-screens";
+    private static final String NODE_COMPATIBLE_SCREENS = "compatible-screens";
+    private static final String NODE_USES_CONFIGURATION = "uses-configuration";
+    private static final String NODE_USES_FEATURE = "uses-feature";
+    private static final String NODE_METADATA = "meta-data";
+    private static final String NODE_DATA = "data";
+    private static final String NODE_GRANT_URI_PERMISSION = "grant-uri-permission";
+    private static final String NODE_PATH_PERMISSION = "path-permission";
+    private static final String NODE_SUPPORTS_GL_TEXTURE = "supports-gl-texture";
+    private static final String ATTRIBUTE_PACKAGE = "package";
+    private static final String ATTRIBUTE_VERSIONCODE = "versionCode";
+    private static final String ATTRIBUTE_VERSIONNAME = "versionName";
+    private static final String ATTRIBUTE_NAME = "name";
+    private static final String ATTRIBUTE_REQUIRED = "required";
+    private static final String ATTRIBUTE_GLESVERSION = "glEsVersion";
+    private static final String ATTRIBUTE_PROCESS = "process";
+    private static final String ATTRIBUTE_DEBUGGABLE = "debuggable";
+    private static final String ATTRIBUTE_LABEL = "label";
+    private static final String ATTRIBUTE_ICON = "icon";
+    private static final String ATTRIBUTE_MIN_SDK_VERSION = "minSdkVersion";
+    private static final String ATTRIBUTE_TARGET_SDK_VERSION = "targetSdkVersion";
+    private static final String ATTRIBUTE_TARGET_PACKAGE = "targetPackage";
+    private static final String ATTRIBUTE_TARGET_ACTIVITY = "targetActivity";
+    private static final String ATTRIBUTE_MANAGE_SPACE_ACTIVITY = "manageSpaceActivity";
+    private static final String ATTRIBUTE_EXPORTED = "exported";
+    private static final String ATTRIBUTE_RESIZEABLE = "resizeable";
+    private static final String ATTRIBUTE_ANYDENSITY = "anyDensity";
+    private static final String ATTRIBUTE_SMALLSCREENS = "smallScreens";
+    private static final String ATTRIBUTE_NORMALSCREENS = "normalScreens";
+    private static final String ATTRIBUTE_LARGESCREENS = "largeScreens";
+    private static final String ATTRIBUTE_REQ_5WAYNAV = "reqFiveWayNav";
+    private static final String ATTRIBUTE_REQ_NAVIGATION = "reqNavigation";
+    private static final String ATTRIBUTE_REQ_HARDKEYBOARD = "reqHardKeyboard";
+    private static final String ATTRIBUTE_REQ_KEYBOARDTYPE = "reqKeyboardType";
+    private static final String ATTRIBUTE_REQ_TOUCHSCREEN = "reqTouchScreen";
+    private static final String ATTRIBUTE_THEME = "theme";
+    private static final String ATTRIBUTE_BACKUP_AGENT = "backupAgent";
+    private static final String ATTRIBUTE_PARENT_ACTIVITY_NAME = "parentActivityName";
 
     private final AndroidXmlDocument xmlDocument;
 
@@ -78,7 +84,7 @@ public class Manifest {
     }
 
     public String getVersionCode() {
-        final String expression = "/" + NODE_MANIFEST +
+        final String expression = getNamespacedRoot() +
                 "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
                 ":" + ATTRIBUTE_VERSIONCODE;
 
@@ -87,7 +93,7 @@ public class Manifest {
 
 
     public String getVersionName() {
-        final String expression = "/" + NODE_MANIFEST +
+        final String expression = getNamespacedRoot() +
                 "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
                 ":" + ATTRIBUTE_VERSIONNAME;
 
@@ -96,7 +102,7 @@ public class Manifest {
 
 
     public String getMinSdkVersion() {
-        String expression = "/" + NODE_MANIFEST +
+        String expression = getNamespacedRoot() +
                 "/" + NODE_USES_SDK +
                 "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
                 ":" + ATTRIBUTE_MIN_SDK_VERSION;
@@ -105,7 +111,7 @@ public class Manifest {
     }
 
     public String getTargetSdkVersion() {
-        String expression = "/" + NODE_MANIFEST +
+        String expression = getNamespacedRoot() +
                 "/" + NODE_USES_SDK +
                 "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
                 ":" + ATTRIBUTE_TARGET_SDK_VERSION;
@@ -114,11 +120,15 @@ public class Manifest {
     }
 
     public String isDebuggable() {
-        final String expression = "/" + NODE_MANIFEST +
+        final String expression = getNamespacedRoot() +
                 "/" + NODE_APPLICATION +
                 "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
                 ":" + ATTRIBUTE_DEBUGGABLE;
 
         return xmlDocument.getStringValue(expression);
+    }
+
+    private String getNamespacedRoot() {
+        return "/" + NODE_MANIFEST + "[@" + NS_DECLARATION + "]";
     }
 }

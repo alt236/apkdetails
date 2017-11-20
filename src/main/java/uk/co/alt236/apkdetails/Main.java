@@ -35,7 +35,7 @@ public class Main {
                 kvPrinter.add("Debuggable", manifest.isDebuggable());
                 kvPrinter.print();
                 System.out.println();
-                System.out.println(manifest.getXml());
+                //System.out.println(manifest.getXml());
             } catch (Exception e) {
                 e.printStackTrace();
             }
