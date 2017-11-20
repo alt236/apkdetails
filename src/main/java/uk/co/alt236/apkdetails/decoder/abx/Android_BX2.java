@@ -21,6 +21,9 @@ import uk.co.alt236.apkdetails.decoder.utils.Utils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static uk.co.alt236.apkdetails.decoder.abx.Resource.*;
 
@@ -55,11 +58,12 @@ public class Android_BX2 {
     /**
      * Binary XML String pool
      */
-    private ArrayList<String> stringPool = new ArrayList<String>();
+    private List<String> stringPool = new ArrayList<>();
     /**
      * Resources.arsc Resource table string pool
      */
-    ArrayList<String> resStringPool = new ArrayList<String>();
+    private List<String> resStringPool = new ArrayList<>();
+    private Map<String, String> namespaceLookup = new HashMap<>();
 
     /**
      * Resource Map
@@ -438,6 +442,8 @@ public class Android_BX2 {
         read(in, int_buf);
         ns_uri_index = Utils.toInt(int_buf, false);
 
+
+        namespaceLookup.put(stringPool.get(ns_uri_index), stringPool.get(ns_prefix_index));
         Log.d(tag, "[Namespace Start]Line Number: " + ns_linenumber + " Prefix: " + stringPool.get(ns_prefix_index) + " URI: " + stringPool.get(ns_uri_index));
     }
 
@@ -575,6 +581,12 @@ public class Android_BX2 {
                 attr.setName(stringPool.get(attr_name_index));
                 attr.setValue(attr_value);
                 attr.setIndex(i);
+
+                if (attr_ns_index != -1) {
+                    final String key = stringPool.get(attr_ns_index);
+                    attr.setNamespace(namespaceLookup.get(key));
+                }
+
                 node.addAttribute(attr);
             }
 

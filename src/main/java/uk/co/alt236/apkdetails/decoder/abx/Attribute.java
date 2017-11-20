@@ -2,9 +2,10 @@ package uk.co.alt236.apkdetails.decoder.abx;
 
 public class Attribute {
 
-    String name;
-    String value;
-    int index;
+    private String name;
+    private String value;
+    private int index;
+    private String namespace;
 
     public String getName() {
         return name;
@@ -23,5 +24,13 @@ public class Attribute {
     }
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    public String getNamespace() {
+        return namespace;
     }
 }

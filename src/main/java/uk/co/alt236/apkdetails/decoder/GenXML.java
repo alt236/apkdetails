@@ -69,7 +69,15 @@ public class GenXML implements BXCallback {
             Attribute attr = attrs.get(i);
             // next line. All attributes in different line
             ln();
-            xml.append(" " + attr.getName() + "=\"" + attr.getValue() + "\"");
+
+            final String name;
+            if (attr.getNamespace() == null) {
+                name = attr.getName();
+            } else {
+                name = attr.getNamespace() + ":" + attr.getName();
+            }
+
+            xml.append(" " + name + "=\"" + attr.getValue() + "\"");
         }
 
         xml.append(">");
