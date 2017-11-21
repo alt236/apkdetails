@@ -33,6 +33,15 @@ public class AndroidXmlDocument {
         return xml;
     }
 
+    public long getLongValue(final String xPathExpression) {
+        final String result = evaluateExpression(xPathExpression);
+        try {
+            return Long.parseLong(result);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
     public int getIntValue(final String xPathExpression) {
         final String result = evaluateExpression(xPathExpression);
         try {
@@ -49,7 +58,7 @@ public class AndroidXmlDocument {
 
     public String getStringValue(String expression) {
         final String result = evaluateExpression(expression);
-        return expression + " = '" + (result == null ? "" : result) + "'";
+        return result == null ? "" : result.trim();
     }
 
     private String evaluateExpression(final String expression) {

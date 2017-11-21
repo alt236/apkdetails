@@ -1,14 +1,9 @@
 package uk.co.alt236.apkdetails.model;
 
-import uk.co.alt236.apkdetails.xml.AndroidXPathFactory;
 import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
-
-import java.util.Locale;
 
 public class Manifest {
     private static final String NS_DECLARATION_TEMPLATE = "xmlns:%s=\"%s\"";
-    private static final String NS_DECLARATION = String.format(
-            Locale.US, NS_DECLARATION_TEMPLATE, AndroidXPathFactory.DEFAULT_NS_PREFIX, AndroidXPathFactory.NS_RESOURCES);
     
     private static final String NODE_MANIFEST = "manifest";
     private static final String NODE_APPLICATION = "application";
@@ -83,52 +78,43 @@ public class Manifest {
         return xmlDocument.getStringValue(expression);
     }
 
-    public String getVersionCode() {
-        final String expression = getNamespacedRoot() +
-                "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
-                ":" + ATTRIBUTE_VERSIONCODE;
+    public long getVersionCode() {
+        final String expression = "/" + NODE_MANIFEST +
+                "/@" + ATTRIBUTE_VERSIONCODE;
 
-        return xmlDocument.getStringValue(expression);
+        return xmlDocument.getLongValue(expression);
     }
 
 
     public String getVersionName() {
-        final String expression = getNamespacedRoot() +
-                "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
-                ":" + ATTRIBUTE_VERSIONNAME;
+        final String expression = "/" + NODE_MANIFEST +
+                "/@" + ATTRIBUTE_VERSIONNAME;
 
         return xmlDocument.getStringValue(expression);
     }
 
 
-    public String getMinSdkVersion() {
-        String expression = getNamespacedRoot() +
+    public int getMinSdkVersion() {
+        String expression = "/" + NODE_MANIFEST +
                 "/" + NODE_USES_SDK +
-                "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
-                ":" + ATTRIBUTE_MIN_SDK_VERSION;
+                "/@" + ATTRIBUTE_MIN_SDK_VERSION;
 
-        return xmlDocument.getStringValue(expression);
+        return xmlDocument.getIntValue(expression);
     }
 
-    public String getTargetSdkVersion() {
-        String expression = getNamespacedRoot() +
+    public int getTargetSdkVersion() {
+        String expression = "/" + NODE_MANIFEST +
                 "/" + NODE_USES_SDK +
-                "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
-                ":" + ATTRIBUTE_TARGET_SDK_VERSION;
+                "/@" + ATTRIBUTE_TARGET_SDK_VERSION;
 
-        return xmlDocument.getStringValue(expression);
+        return xmlDocument.getIntValue(expression);
     }
 
-    public String isDebuggable() {
-        final String expression = getNamespacedRoot() +
+    public boolean isDebuggable() {
+        final String expression = "/" + NODE_MANIFEST +
                 "/" + NODE_APPLICATION +
-                "/@" + AndroidXPathFactory.DEFAULT_NS_PREFIX +
-                ":" + ATTRIBUTE_DEBUGGABLE;
+                "/@" + ATTRIBUTE_DEBUGGABLE;
 
-        return xmlDocument.getStringValue(expression);
-    }
-
-    private String getNamespacedRoot() {
-        return "/" + NODE_MANIFEST + "[@" + NS_DECLARATION + "]";
+        return xmlDocument.getBooleanValue(expression);
     }
 }

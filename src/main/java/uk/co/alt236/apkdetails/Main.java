@@ -27,9 +27,9 @@ public class Main {
                 final Manifest manifest = parser.parse();
                 final KVPrinter kvPrinter = new KVPrinter();
 
-                kvPrinter.add("Application ID", manifest.getApplicationId());
-                kvPrinter.add("Version Code", manifest.getVersionCode());
+                kvPrinter.add("Application Id", manifest.getApplicationId());
                 kvPrinter.add("Version Name", manifest.getVersionName());
+                kvPrinter.add("Version Code", manifest.getVersionCode());
                 kvPrinter.add("Min SDK", manifest.getMinSdkVersion());
                 kvPrinter.add("Target SDK", manifest.getTargetSdkVersion());
                 kvPrinter.add("Debuggable", manifest.isDebuggable());
@@ -50,6 +50,16 @@ public class Main {
         public KVPrinter() {
             keys = new ArrayList<>();
             values = new ArrayList<>();
+        }
+
+        public void add(String key, long value) {
+            keys.add(key);
+            values.add(String.valueOf(value));
+        }
+
+        public void add(String key, boolean value) {
+            keys.add(key);
+            values.add(String.valueOf(value));
         }
 
         public void add(String key, String value) {
