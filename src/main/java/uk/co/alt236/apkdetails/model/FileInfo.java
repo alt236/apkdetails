@@ -6,10 +6,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class ApkFile {
+public class FileInfo {
     private final String path;
 
-    public ApkFile(String path) {
+    public FileInfo(String path) {
         this.path = path;
     }
 

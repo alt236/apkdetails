@@ -1,7 +1,8 @@
 package uk.co.alt236.apkdetails;
 
 import uk.co.alt236.apkdetails.decoder.ManifestParser;
-import uk.co.alt236.apkdetails.model.ApkFile;
+import uk.co.alt236.apkdetails.model.ApkContents;
+import uk.co.alt236.apkdetails.model.FileInfo;
 import uk.co.alt236.apkdetails.model.Manifest;
 import uk.co.alt236.apkdetails.print.SectionedPrinter;
 
@@ -22,27 +23,38 @@ public class Main {
             appendFileInfo(printer, apkFile);
             printer.addNewLine();
             appendManifestInfo(printer, apkFile);
+            printer.addNewLine();
+            appendApkInfo(printer, apkFile);
             printer.print();
         }
     }
 
     private static void appendFileInfo(final SectionedPrinter kvPrinter, final String file) {
+        final FileInfo apkContents = new FileInfo(file);
+
         kvPrinter.add("File Info");
         kvPrinter.startKeyValueSection();
-        final ApkFile apkFile = new ApkFile(file);
-
-        kvPrinter.startKeyValueSection();
-        kvPrinter.addKv("APK", apkFile.getPath());
-        kvPrinter.addKv("MD5", apkFile.getMd5());
-        kvPrinter.addKv("SHA1", apkFile.getSha1());
+        kvPrinter.addKv("APK", apkContents.getPath());
+        kvPrinter.addKv("MD5", apkContents.getMd5());
+        kvPrinter.addKv("SHA1", apkContents.getSha1());
         kvPrinter.endKeyValueSection();
     }
 
-    private static void appendManifestInfo(final SectionedPrinter kvPrinter, final String apkFile) {
+    private static void appendApkInfo(final SectionedPrinter kvPrinter, final String file) {
+        final ApkContents fileInfo = new ApkContents(file);
+
+        kvPrinter.add("APK Info");
+        kvPrinter.startKeyValueSection();
+
+        kvPrinter.addKv("Assets", fileInfo.getNumberOfAssets());
+        kvPrinter.endKeyValueSection();
+    }
+
+    private static void appendManifestInfo(final SectionedPrinter kvPrinter, final String file) {
         kvPrinter.add("Manifest Info");
         kvPrinter.startKeyValueSection();
         try {
-            final ManifestParser parser = new ManifestParser(apkFile);
+            final ManifestParser parser = new ManifestParser(file);
             final Manifest manifest = parser.parse();
             kvPrinter.addKv("Application Id", manifest.getApplicationId());
             kvPrinter.addKv("Version Name", manifest.getVersionName());
