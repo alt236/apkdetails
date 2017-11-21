@@ -4,7 +4,7 @@ import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
 
 public class Manifest {
     private static final String NS_DECLARATION_TEMPLATE = "xmlns:%s=\"%s\"";
-    
+
     private static final String NODE_MANIFEST = "manifest";
     private static final String NODE_APPLICATION = "application";
     private static final String NODE_ACTIVITY = "activity";

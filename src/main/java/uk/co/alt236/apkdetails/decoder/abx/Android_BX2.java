@@ -137,7 +137,7 @@ public class Android_BX2 {
 
         // Is it an valid BXML ?
         /*
-		 * Chunk header meta size - 8 bytes
+         * Chunk header meta size - 8 bytes
 		 * [Chunk Type] - 2 bytes
 		 * [Chunk Header Size] - 2 bytes
 		 * [Chunk Size] - 4 bytes

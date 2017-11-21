@@ -37,13 +37,11 @@ import java.util.zip.ZipInputStream;
 class ApkExtractor {
 
     private final int BUFFER = 2048;
-    private ArrayList<String> xmlFiles = new ArrayList<String>();
+    private boolean debug = true;
+    private String tag = getClass().getSimpleName();
+    private ArrayList<String> xmlFiles = new ArrayList<>();
     private String dexFile = null;
     private String resFile = null;
-
-    boolean debug = true;
-
-    String tag = getClass().getSimpleName();
 
     /*
      * Supported Argumenets
@@ -143,7 +141,7 @@ class ApkExtractor {
         ZipInputStream zin = new ZipInputStream(new BufferedInputStream(fin));
 
 		/*
-		 * Zip InputStream shifts its index to every Zip entry when getNextEntry() is called.
+         * Zip InputStream shifts its index to every Zip entry when getNextEntry() is called.
 		 * If this method returns null, Zip InputStream reaches EOF.
 		 */
         ZipEntry ze = null;

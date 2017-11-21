@@ -36,19 +36,35 @@ public class AndroidXPathFactory {
     private static final XPathFactory sFactory = XPathFactory.newInstance();
 
     /**
+     * Creates a new XPath object, specifying which prefix in the query is used for the
+     * android namespace.
+     *
+     * @param androidPrefix The namespace prefix.
+     */
+    public static XPath newXPath(String androidPrefix) {
+        XPath xpath = sFactory.newXPath();
+        xpath.setNamespaceContext(new AndroidNamespaceContext(androidPrefix));
+        return xpath;
+    }
+
+    /**
+     * Creates a new XPath object using the default prefix for the android namespace.
+     *
+     * @see #DEFAULT_NS_PREFIX
+     */
+    public static XPath newXPath() {
+        XPath xpath = sFactory.newXPath();
+        xpath.setNamespaceContext(AndroidNamespaceContext.getDefault());
+        return xpath;
+    }
+
+    /**
      * Name space context for Android resource XML files.
      */
     private static class AndroidNamespaceContext implements NamespaceContext {
         private static final AndroidNamespaceContext sThis = new AndroidNamespaceContext(DEFAULT_NS_PREFIX);
         private final String mAndroidPrefix;
         private final List<String> mAndroidPrefixes;
-
-        /**
-         * Returns the default {@link AndroidNamespaceContext}.
-         */
-        private static AndroidNamespaceContext getDefault() {
-            return sThis;
-        }
 
         /**
          * Construct the context with the prefix associated with the android namespace.
@@ -58,6 +74,13 @@ public class AndroidXPathFactory {
         public AndroidNamespaceContext(String androidPrefix) {
             mAndroidPrefix = androidPrefix;
             mAndroidPrefixes = Collections.singletonList(mAndroidPrefix);
+        }
+
+        /**
+         * Returns the default {@link AndroidNamespaceContext}.
+         */
+        private static AndroidNamespaceContext getDefault() {
+            return sThis;
         }
 
         @Override
@@ -85,28 +108,5 @@ public class AndroidXPathFactory {
             }
             return null;
         }
-    }
-
-    /**
-     * Creates a new XPath object, specifying which prefix in the query is used for the
-     * android namespace.
-     *
-     * @param androidPrefix The namespace prefix.
-     */
-    public static XPath newXPath(String androidPrefix) {
-        XPath xpath = sFactory.newXPath();
-        xpath.setNamespaceContext(new AndroidNamespaceContext(androidPrefix));
-        return xpath;
-    }
-
-    /**
-     * Creates a new XPath object using the default prefix for the android namespace.
-     *
-     * @see #DEFAULT_NS_PREFIX
-     */
-    public static XPath newXPath() {
-        XPath xpath = sFactory.newXPath();
-        xpath.setNamespaceContext(AndroidNamespaceContext.getDefault());
-        return xpath;
     }
 }
