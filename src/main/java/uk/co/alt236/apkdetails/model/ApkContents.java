@@ -9,6 +9,9 @@ import java.util.zip.ZipFile;
 public class ApkContents {
     private static final String JNI_DIRECTORY = "lib/";
     private static final String ASSETS_DIRECTORY = "assets/";
+    private static final String DRAWABLES_DIRECTORY_PREFIX = "res/drawable";
+    private static final String LAYOUTS_DIRECTORY_PREFIX = "res/layout";
+    private static final String RAW_DIRECTORY_PREFIX = "res/raw";
 
     private final String path;
     private final List<Entry> entryList;
@@ -24,6 +27,18 @@ public class ApkContents {
                 .stream()
                 .filter(entry -> !entry.isDirectory() && entry.getName().startsWith(ASSETS_DIRECTORY))
                 .count();
+    }
+
+    public long getNumberOfDrawableRes() {
+        return getNumberOfResources(DRAWABLES_DIRECTORY_PREFIX);
+    }
+
+    public long getNumberOfRawRes() {
+        return getNumberOfResources(RAW_DIRECTORY_PREFIX);
+    }
+
+    public long getNumberOfLayoutRes() {
+        return getNumberOfResources(LAYOUTS_DIRECTORY_PREFIX);
     }
 
     public List<String> getJniArchitectures() {
@@ -49,6 +64,15 @@ public class ApkContents {
         return retVal;
     }
 
+    private long getNumberOfResources(String prefix) {
+        parseZipFile();
+        return entryList
+                .stream()
+                .filter(entry -> !entry.isDirectory() && entry.getName().startsWith(prefix))
+                .map(entry -> entry.getName().substring(entry.getName().lastIndexOf("/")))
+                .collect(Collectors.toSet())
+                .size();
+    }
 
     private synchronized void parseZipFile() {
         if (entryList.isEmpty()) {

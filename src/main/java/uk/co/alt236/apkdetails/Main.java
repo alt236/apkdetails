@@ -45,9 +45,12 @@ public class Main {
         final List<String> jniArchitectures = fileInfo.getJniArchitectures();
 
 
-        kvPrinter.add("APK Info");
+        kvPrinter.add("APK Contents");
         kvPrinter.startKeyValueSection();
         kvPrinter.addKv("Assets", fileInfo.getNumberOfAssets());
+        kvPrinter.addKv("Unique Raw", fileInfo.getNumberOfRawRes());
+        kvPrinter.addKv("Unique Layouts", fileInfo.getNumberOfLayoutRes());
+        kvPrinter.addKv("Unique Drawables", fileInfo.getNumberOfDrawableRes());
         kvPrinter.addKv("JNI Architectures", jniArchitectures.isEmpty()
                 ? "none"
                 : toString(jniArchitectures));
