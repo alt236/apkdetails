@@ -38,8 +38,8 @@ class ApkExtractor {
 
     private final int BUFFER = 2048;
     private boolean debug = true;
-    private String tag = getClass().getSimpleName();
-    private ArrayList<String> xmlFiles = new ArrayList<>();
+    private final String tag = getClass().getSimpleName();
+    private final ArrayList<String> xmlFiles = new ArrayList<>();
     private String dexFile = null;
     private String resFile = null;
 
@@ -162,7 +162,7 @@ class ApkExtractor {
             if (ze.isDirectory()) {
                 zeName = null; // Don't create  Zip Entry file
             } else {
-                if (zeName.indexOf("/") == -1) // Zip entry uses "/"
+                if (!zeName.contains("/")) // Zip entry uses "/"
                     zeFolder = null; // It is File. don't create Zip entry Folder
                 else {
                     zeFolder = zeName.substring(0, zeName.lastIndexOf("/"));
@@ -259,18 +259,18 @@ class ApkExtractor {
 		 * aapt (Android Assents Packaging Tool) converts XML files to Android Binary XML. It is not same as
 		 * WBXML format.
 		 */
-        for (int i = 0; i < xmlFiles.size(); i++) {
-            Log.p(tag, "XML File: " + xmlFiles.get(i));
+        for (String xmlFile : xmlFiles) {
+            Log.p(tag, "XML File: " + xmlFile);
 
             // 23rd March, 2012. Prasanta.
             // Skip exception while parsing any file and complete the complete parsing cycle.
             Android_BX2 abx2;
             try {
                 abx2 = new Android_BX2(new GenXML());
-                abx2.parse(xmlFiles.get(i));
+                abx2.parse(xmlFile);
 
             } catch (Exception ex) {
-                Log.e(tag, "Fail to parse - " + xmlFiles.get(i), ex);
+                Log.e(tag, "Fail to parse - " + xmlFile, ex);
             } finally {
                 abx2 = null;
             }

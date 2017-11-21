@@ -18,7 +18,7 @@ package uk.co.alt236.apkdetails.decoder.abx;
 
 public interface Resource {
     // Resource Types
-    public static int RES_NULL_TYPE = 0x0000,
+    int RES_NULL_TYPE = 0x0000,
             RES_STRING_POOL_TYPE = 0x0001,
             RES_TABLE_TYPE = 0x0002,
             RES_XML_TYPE = 0x0003,

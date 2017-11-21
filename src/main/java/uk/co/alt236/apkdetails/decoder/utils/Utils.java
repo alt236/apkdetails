@@ -25,7 +25,7 @@ import java.io.ByteArrayInputStream;
  */
 public class Utils {
 
-    private static final String[] hexStr = {"A", "B", "C", "D", "E", "F"};
+    private static final String[] HEX_LETTERS = {"A", "B", "C", "D", "E", "F"};
 
     /**
      * Enable minimum logging.
@@ -42,21 +42,21 @@ public class Utils {
         if (bytes == null || bytes.length == 0)
             return "";
         String hex = "";
-        for (int i = 0; i < bytes.length; i++) {
-            int num = 0xFF & bytes[i];
+        for (byte aByte : bytes) {
+            int num = 0xFF & aByte;
             int div = num / 16;
             int rem = num % 16;
 
             // 0xF9
             if (div > 9) {
                 div -= 10;
-                hex += " 0x" + hexStr[div];
+                hex += " 0x" + HEX_LETTERS[div];
             } else
                 hex += " 0x" + div;
 
             if (rem > 9) {
                 rem -= 10;
-                hex += "" + hexStr[rem];
+                hex += "" + HEX_LETTERS[rem];
             } else
                 hex += "" + rem;
         }
@@ -135,7 +135,7 @@ public class Utils {
      * @return
      */
     public static String toString(byte[] charBuf, boolean isBigEndian) throws Exception {
-        StringBuffer strBuf = new StringBuffer();
+        StringBuilder strBuf = new StringBuilder();
         byte[] buf_2 = new byte[2];
         ByteArrayInputStream in = new ByteArrayInputStream(charBuf);
 

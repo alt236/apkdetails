@@ -32,8 +32,8 @@ import java.io.PrintStream;
 public class Log {
 
 
-    public static int DEBUG_LEVEL = 1 << 0;
-    public static int PRODUCTION_LEVEL = 1 << 1;
+    public static final int DEBUG_LEVEL = 1 << 0;
+    public static final int PRODUCTION_LEVEL = 1 << 1;
 
     /**
      * Set to false if you don't need Log output
@@ -42,11 +42,11 @@ public class Log {
     private static boolean isLogEnabled = true;
     private static int logLevel = DEBUG_LEVEL;
 
-    private static String logFile = System.getProperty("user.dir") + File.separator + "apkExtractor_log.txt";
+    private static final String logFile = System.getProperty("user.dir") + File.separator + "apkExtractor_log.txt";
 
     private static PrintStream out = null;
 
-    private static StringBuffer buf = new StringBuffer();
+    private static final StringBuffer buf = new StringBuffer();
 
     static {
         System.out.println("Log File: " + logFile);

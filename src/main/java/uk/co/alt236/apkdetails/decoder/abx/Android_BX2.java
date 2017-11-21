@@ -43,32 +43,32 @@ import static uk.co.alt236.apkdetails.decoder.abx.Resource.*;
  */
 public class Android_BX2 {
 
-    private byte[] chunk_type_buf = new byte[2];
-    private byte[] header_size_buf = new byte[2];
-    private byte[] chunk_size_buf = new byte[4];
+    private final byte[] chunk_type_buf = new byte[2];
+    private final byte[] header_size_buf = new byte[2];
+    private final byte[] chunk_size_buf = new byte[4];
     private int header_size;
     private int chunk_size;
     private int package_count;
 
-    private byte[] buf_2 = new byte[2];
-    private byte[] buf_4 = new byte[4];
+    private final byte[] buf_2 = new byte[2];
+    private final byte[] buf_4 = new byte[4];
 
-    private String tag = "Android_BX2";
+    private final String tag = "Android_BX2";
 
     /**
      * Binary XML String pool
      */
-    private List<String> stringPool = new ArrayList<>();
+    private final List<String> stringPool = new ArrayList<>();
     /**
      * Resources.arsc Resource table string pool
      */
     private List<String> resStringPool = new ArrayList<>();
-    private Map<String, String> namespaceLookup = new HashMap<>();
+    private final Map<String, String> namespaceLookup = new HashMap<>();
 
     /**
      * Resource Map
      */
-    private ArrayList<Integer> resMap = new ArrayList<Integer>();
+    private final ArrayList<Integer> resMap = new ArrayList<>();
 
     private int ns_prefix_index = -1;
     private int ns_uri_index = -1;
@@ -373,10 +373,10 @@ public class Android_BX2 {
             byte[] buf = new byte[string_len - 2]; // Skip 2 Length bytes, already read.
             read(in, buf);
             int j = 0;
-            for (int k = 0; k < buf.length; k++) {
+            for (byte aBuf : buf) {
                 // Skipp 0x00
-                if (buf[k] != 0x00)
-                    str_buf[j++] = buf[k];
+                if (aBuf != 0x00)
+                    str_buf[j++] = aBuf;
             }
 
             stringPool.add(new String(str_buf));
@@ -778,7 +778,7 @@ public class Android_BX2 {
      * TypeN type spec chunk
      * TypeN type chunk
      *
-     * @param resPackageBuf
+     * @param in
      * @throws Exception
      */
     private void parseResPackage(BufferedInputStream in) throws Exception {
@@ -801,7 +801,7 @@ public class Android_BX2 {
         read(in, packg_name_buf);
 
         String packg_name = Utils.toString(packg_name_buf, false);
-        Log.d(tag, "Package Name: " + new String(packg_name));
+        Log.d(tag, "Package Name: " + packg_name);
 
         // typeStrings- init32
         // Index/Offset position of Type String Pool

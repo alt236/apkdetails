@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class Node {
 
-    public static int ROOT = 1;
+    public static final int ROOT = 1;
     /**
      * Node order index
      */
-    int index;
-    int linenumber;
-    String name;
-    String namespacePrefix;
-    String namespaceURI;
-    int namespaceLineNumber;
-    ArrayList<Attribute> attrs = new ArrayList<Attribute>();
+    private int index;
+    private int linenumber;
+    private String name;
+    private String namespacePrefix;
+    private String namespaceURI;
+    private int namespaceLineNumber;
+    private ArrayList<Attribute> attrs = new ArrayList<>();
 
     public int getIndex() {
         return index;

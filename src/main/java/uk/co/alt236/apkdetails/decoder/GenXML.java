@@ -17,12 +17,12 @@ import java.util.ArrayList;
  */
 public class GenXML implements BXCallback {
 
-    StringBuffer xml = new StringBuffer();
+    private final StringBuffer xml = new StringBuffer();
     // Current line number
-    int cl = 1;
-    Node currentNode = null;
-    String xmlFile;
-    String tag = getClass().getSimpleName();
+    private int cl = 1;
+    private Node currentNode = null;
+    private String xmlFile;
+    private final String tag = getClass().getSimpleName();
 
     public void startDoc(String xmlFile) {
         this.xmlFile = xmlFile;
@@ -65,8 +65,7 @@ public class GenXML implements BXCallback {
             return;
         }
 
-        for (int i = 0; i < attrs.size(); i++) {
-            Attribute attr = attrs.get(i);
+        for (Attribute attr : attrs) {
             // next line. All attributes in different line
             ln();
 
@@ -117,7 +116,7 @@ public class GenXML implements BXCallback {
 
     public void endDoc() throws Exception {
         // Generate the XML
-        if (xmlFile != null && xmlFile.isEmpty() == false) {
+        if (xmlFile != null && !xmlFile.isEmpty()) {
             FileOutputStream out = new FileOutputStream(xmlFile + ".xml");
             out.write(xml.toString().getBytes());
             out.flush();
