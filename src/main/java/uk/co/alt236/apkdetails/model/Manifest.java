@@ -60,6 +60,7 @@ public class Manifest {
     private static final String ATTRIBUTE_THEME = "theme";
     private static final String ATTRIBUTE_BACKUP_AGENT = "backupAgent";
     private static final String ATTRIBUTE_PARENT_ACTIVITY_NAME = "parentActivityName";
+    private static final String ATTRIBUTE_PLATFORM_BUILD_SDK_VERSION = "platformBuildVersionCode";
 
     private final AndroidXmlDocument xmlDocument;
 
@@ -98,6 +99,13 @@ public class Manifest {
         String expression = "/" + NODE_MANIFEST +
                 "/" + NODE_USES_SDK +
                 "/@" + ATTRIBUTE_MIN_SDK_VERSION;
+
+        return xmlDocument.getIntValue(expression);
+    }
+
+    public int getPlatformBuildSdkVersion() {
+        String expression = "/" + NODE_MANIFEST +
+                "/@" + ATTRIBUTE_PLATFORM_BUILD_SDK_VERSION;
 
         return xmlDocument.getIntValue(expression);
     }
