@@ -42,11 +42,15 @@ public class Main {
 
     private static void appendApkInfo(final SectionedPrinter kvPrinter, final String file) {
         final ApkContents fileInfo = new ApkContents(file);
+        final List<String> jniArchitectures = fileInfo.getJniArchitectures();
+
 
         kvPrinter.add("APK Info");
         kvPrinter.startKeyValueSection();
-
         kvPrinter.addKv("Assets", fileInfo.getNumberOfAssets());
+        kvPrinter.addKv("JNI Architectures", jniArchitectures.isEmpty()
+                ? "none"
+                : toString(jniArchitectures));
         kvPrinter.endKeyValueSection();
     }
 
@@ -70,5 +74,17 @@ public class Main {
         }
 
         kvPrinter.endKeyValueSection();
+    }
+
+    private static String toString(final List<String> list) {
+        final StringBuilder sb = new StringBuilder();
+        for (final String string : list) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+
+            sb.append(string);
+        }
+        return sb.toString();
     }
 }

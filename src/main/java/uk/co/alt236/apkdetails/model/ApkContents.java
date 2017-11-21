@@ -1,13 +1,15 @@
 package uk.co.alt236.apkdetails.model;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class ApkContents {
+    private static final String JNI_DIRECTORY = "lib/";
+    private static final String ASSETS_DIRECTORY = "assets/";
+
     private final String path;
     private final List<Entry> entryList;
 
@@ -20,9 +22,33 @@ public class ApkContents {
         parseZipFile();
         return entryList
                 .stream()
-                .filter(entry -> !entry.isDirectory() && entry.getName().startsWith("assets/"))
+                .filter(entry -> !entry.isDirectory() && entry.getName().startsWith(ASSETS_DIRECTORY))
                 .count();
     }
+
+    public List<String> getJniArchitectures() {
+        parseZipFile();
+
+        final List<Entry> libFiles = entryList
+                .stream()
+                .filter(entry -> entry.getName().startsWith(JNI_DIRECTORY))
+                .collect(Collectors.toList());
+
+        final Set<String> architectures = new HashSet<>();
+
+        for (final Entry entry : libFiles) {
+            final String cleanName = entry.getName().substring(JNI_DIRECTORY.length(), entry.getName().length());
+
+            if (!entry.isDirectory()) {
+                architectures.add(cleanName.substring(0, cleanName.indexOf("/")));
+            }
+        }
+
+        final List<String> retVal = new ArrayList<>(architectures);
+        Collections.sort(retVal);
+        return retVal;
+    }
+
 
     private synchronized void parseZipFile() {
         if (entryList.isEmpty()) {
@@ -58,6 +84,14 @@ public class ApkContents {
 
         public boolean isDirectory() {
             return directory;
+        }
+
+        @Override
+        public String toString() {
+            return "Entry{" +
+                    "name='" + name + '\'' +
+                    ", directory=" + directory +
+                    '}';
         }
     }
 }
