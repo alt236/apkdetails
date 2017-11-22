@@ -3,6 +3,7 @@ package uk.co.alt236.apkdetails;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ApkFileFilter {
 
@@ -15,7 +16,8 @@ public class ApkFileFilter {
         }
 
         if (file.isDirectory()) {
-            final File[] files = file.listFiles((dir, name) -> name.endsWith(".apk"));
+            final File[] files = file.listFiles(
+                    (dir, name) -> name.toLowerCase(Locale.US).endsWith(".apk"));
 
             if (files != null) {
                 for (final File apk : files) {
