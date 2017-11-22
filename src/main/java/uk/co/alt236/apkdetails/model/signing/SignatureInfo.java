@@ -1,5 +1,6 @@
 package uk.co.alt236.apkdetails.model.signing;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.cert.*;
@@ -11,11 +12,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class SignatureInfo {
-    private final String path;
+    private final File file;
     private final List<SigningCertificate> certList;
 
-    public SignatureInfo(String path) {
-        this.path = path;
+    public SignatureInfo(File file) {
+        this.file = file;
         this.certList = new ArrayList<>();
     }
 
@@ -31,7 +32,7 @@ public class SignatureInfo {
 
         final List<SigningCertificate> retVal = new ArrayList<>();
 
-        try (final ZipFile zipFile = new ZipFile(path)) {
+        try (final ZipFile zipFile = new ZipFile(file)) {
             final Enumeration<? extends ZipEntry> iterator = zipFile.entries();
             final List<ZipEntry> certEntries = new ArrayList<>();
 
@@ -61,6 +62,6 @@ public class SignatureInfo {
 
 
     public ValidationResult validateSignature() {
-        return new SignatureValidator().validateSignature(path);
+        return new SignatureValidator().validateSignature(file);
     }
 }

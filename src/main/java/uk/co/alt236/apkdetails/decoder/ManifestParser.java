@@ -12,19 +12,17 @@ import java.util.zip.ZipInputStream;
 public class ManifestParser {
     private final int BUFFER = 2048;
     private final String TAG = getClass().getSimpleName();
-    private final String apkFile;
+    private final File apkFile;
     private final XmlFormatter xmlFormatter;
 
 
-    public ManifestParser(String apkFile) {
-        this.apkFile = apkFile;
+    public ManifestParser(File file) {
+        this.apkFile = file;
         this.xmlFormatter = new XmlFormatter();
     }
 
     public AndroidManifest parse() throws Exception {
-        final File file = new File(apkFile);
-
-        final byte[] binaryXMLManifest = getBinaryManifest(file);
+        final byte[] binaryXMLManifest = getBinaryManifest(apkFile);
 
         final GenXML dataReceiver = new GenXML();
         final Android_BX2 abx2 = new Android_BX2(dataReceiver);

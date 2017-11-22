@@ -3,7 +3,7 @@ package uk.co.alt236.apkdetails.print;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionedPrinter {
+public class SectionedKvPrinter {
     private static final String BULLET_CHARACTER = Character.toString('\u2022');
     private final static String NEW_LINE = System.getProperty("line.separator");
     private final static String SECTION_LINE = "------------------------------";

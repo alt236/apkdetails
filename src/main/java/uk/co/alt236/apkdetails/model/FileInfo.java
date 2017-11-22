@@ -7,16 +7,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FileInfo {
-    private final String path;
+    private final File file;
 
-    public FileInfo(String path) {
-        this.path = path;
+    public FileInfo(File file) {
+        this.file = file;
     }
 
     public String getMd5() {
         String retVal;
         try {
-            FileInputStream fis = new FileInputStream(new File(path));
+            FileInputStream fis = new FileInputStream(file);
             retVal = DigestUtils.md5Hex(fis);
             fis.close();
         } catch (IOException e) {
@@ -29,7 +29,7 @@ public class FileInfo {
     public String getSha1() {
         String retVal;
         try {
-            FileInputStream fis = new FileInputStream(new File(path));
+            FileInputStream fis = new FileInputStream(file);
             retVal = DigestUtils.sha1Hex(fis);
             fis.close();
         } catch (IOException e) {
@@ -40,6 +40,6 @@ public class FileInfo {
     }
 
     public String getPath() {
-        return path;
+        return file.getAbsolutePath();
     }
 }

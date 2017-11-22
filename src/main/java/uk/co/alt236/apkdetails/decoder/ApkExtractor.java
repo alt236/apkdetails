@@ -86,7 +86,7 @@ class ApkExtractor {
             System.out.println("Parsing data, please wait...");
 
 
-            final ManifestParser manifestParser = new ManifestParser(file);
+            final ManifestParser manifestParser = new ManifestParser(new File(file));
             System.out.println(manifestParser.parse());
 
             // Unzip content

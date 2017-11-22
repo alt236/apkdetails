@@ -2,6 +2,7 @@ package uk.co.alt236.apkdetails.model;
 
 import uk.co.alt236.apkdetails.model.common.Entry;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,11 +16,11 @@ public class ApkContents {
     private static final String LAYOUTS_DIRECTORY_PREFIX = "res/layout";
     private static final String RAW_DIRECTORY_PREFIX = "res/raw";
 
-    private final String path;
+    private final File file;
     private final List<Entry> entryList;
 
-    public ApkContents(String path) {
-        this.path = path;
+    public ApkContents(File file) {
+        this.file = file;
         this.entryList = new ArrayList<>();
     }
 
@@ -79,7 +80,7 @@ public class ApkContents {
     private synchronized void parseZipFile() {
         if (entryList.isEmpty()) {
             try {
-                final ZipFile zipFile = new ZipFile(path);
+                final ZipFile zipFile = new ZipFile(file);
                 final Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
                 while (entries.hasMoreElements()) {

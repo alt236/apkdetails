@@ -35,10 +35,10 @@ class SignatureValidator {
         return Collections.unmodifiableList(invalidEntries);
     }
 
-    public ValidationResult validateSignature(final String path) {
+    public ValidationResult validateSignature(final File file) {
         JarFile jar;
         try {
-            jar = new JarFile(new File(path));
+            jar = new JarFile(file);
             final ZipEntry entry = jar.getEntry("META-INF/MANIFEST.MF");
             if (entry == null) {
                 return new ValidationResult(SignatureStatus.ABSENT);
