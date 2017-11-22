@@ -2,7 +2,7 @@ package uk.co.alt236.apkdetails.model;
 
 import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
 
-public class Manifest {
+public class AndroidManifest {
     private static final String NS_DECLARATION_TEMPLATE = "xmlns:%s=\"%s\"";
 
     private static final String NODE_MANIFEST = "manifest";
@@ -64,7 +64,7 @@ public class Manifest {
 
     private final AndroidXmlDocument xmlDocument;
 
-    public Manifest(final String xml) {
+    public AndroidManifest(final String xml) {
         this.xmlDocument = new AndroidXmlDocument(xml);
     }
 

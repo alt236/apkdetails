@@ -1,13 +1,17 @@
 package uk.co.alt236.apkdetails;
 
 import uk.co.alt236.apkdetails.decoder.ManifestParser;
+import uk.co.alt236.apkdetails.model.AndroidManifest;
 import uk.co.alt236.apkdetails.model.ApkContents;
 import uk.co.alt236.apkdetails.model.FileInfo;
-import uk.co.alt236.apkdetails.model.Manifest;
-import uk.co.alt236.apkdetails.model.SignatureInfo;
+import uk.co.alt236.apkdetails.model.signing.SignatureInfo;
+import uk.co.alt236.apkdetails.model.signing.SignatureStatus;
+import uk.co.alt236.apkdetails.model.signing.SigningCertificate;
+import uk.co.alt236.apkdetails.model.signing.ValidationResult;
 import uk.co.alt236.apkdetails.print.SectionedPrinter;
 
 import java.util.List;
+import java.util.Locale;
 
 public class Main {
 
@@ -34,15 +38,26 @@ public class Main {
 
     private static void appendSigningInfo(SectionedPrinter kvPrinter, String apkFile) {
         final SignatureInfo signatureInfo = new SignatureInfo(apkFile);
-        final List<SignatureInfo.Cert> certificates = signatureInfo.getCertificates();
+        final List<SigningCertificate> certificates = signatureInfo.getCertificates();
         kvPrinter.add("Signature Info");
         kvPrinter.startKeyValueSection();
+
+        final ValidationResult validationResult = signatureInfo.validateSignature();
+        final String validationStatus;
+        if (validationResult.getSignatureStatus() == SignatureStatus.INVALID) {
+            validationStatus = "Invalid. Failed entries: " + validationResult.getFailedEntries().size();
+        } else {
+            validationStatus = validationResult.getSignatureStatus().toString().toLowerCase(Locale.US);
+        }
+
+        kvPrinter.addKv("SignatureStatus", validationStatus);
+
         kvPrinter.addKv("Certificates", certificates.size());
         int count = 0;
-        for (final SignatureInfo.Cert certificate : certificates) {
+        for (final SigningCertificate certificate : certificates) {
             count++;
 
-            final String prefix = "Cert " + count + " ";
+            final String prefix = "SigningCertificate " + count + " ";
             kvPrinter.addKv(prefix + "Subject", certificate.getSubjectDN().toString());
             kvPrinter.addKv(prefix + "Issuer", certificate.getIssuerDN().toString());
             kvPrinter.addKv(prefix + "Validity", certificate.getNotBefore() + " to " + certificate.getNotAfter());
@@ -84,11 +99,11 @@ public class Main {
     }
 
     private static void appendManifestInfo(final SectionedPrinter kvPrinter, final String file) {
-        kvPrinter.add("Manifest Info");
+        kvPrinter.add("AndroidManifest Info");
         kvPrinter.startKeyValueSection();
         try {
             final ManifestParser parser = new ManifestParser(file);
-            final Manifest manifest = parser.parse();
+            final AndroidManifest manifest = parser.parse();
             kvPrinter.addKv("Application Id", manifest.getApplicationId());
             kvPrinter.addKv("Version Name", manifest.getVersionName());
             kvPrinter.addKv("Version Code", manifest.getVersionCode());
@@ -105,14 +120,14 @@ public class Main {
         kvPrinter.endKeyValueSection();
     }
 
-    private static String toString(final List<String> list) {
+    private static String toString(final List<?> list) {
         final StringBuilder sb = new StringBuilder();
-        for (final String string : list) {
+        for (final Object object : list) {
             if (sb.length() > 0) {
                 sb.append(", ");
             }
 
-            sb.append(string);
+            sb.append(object);
         }
         return sb.toString();
     }

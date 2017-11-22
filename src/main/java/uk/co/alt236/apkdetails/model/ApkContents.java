@@ -1,5 +1,7 @@
 package uk.co.alt236.apkdetails.model;
 
+import uk.co.alt236.apkdetails.model.common.Entry;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -92,30 +94,5 @@ public class ApkContents {
         }
     }
 
-    private static class Entry {
-        private final String name;
-        private final boolean directory;
 
-
-        public Entry(ZipEntry zipEntry) {
-            name = zipEntry.getName();
-            directory = zipEntry.isDirectory();
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isDirectory() {
-            return directory;
-        }
-
-        @Override
-        public String toString() {
-            return "Entry{" +
-                    "name='" + name + '\'' +
-                    ", directory=" + directory +
-                    '}';
-        }
-    }
 }

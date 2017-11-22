@@ -109,7 +109,7 @@ class ApkExtractor {
     /**
      * APK files are Zip file. Using Java Zip util to decompress APK resources.
      * 1. Decompress
-     * 2. Decode Android Binary XML (Manifest and Layout files)
+     * 2. Decode Android Binary XML (AndroidManifest and Layout files)
      * 3. Convert Dex/ODex files to Jar.
      *
      * @param apkFile
