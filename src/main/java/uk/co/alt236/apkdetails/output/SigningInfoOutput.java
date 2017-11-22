@@ -4,6 +4,7 @@ import uk.co.alt236.apkdetails.model.signing.SignatureInfo;
 import uk.co.alt236.apkdetails.model.signing.SignatureStatus;
 import uk.co.alt236.apkdetails.model.signing.SigningCertificate;
 import uk.co.alt236.apkdetails.model.signing.ValidationResult;
+import uk.co.alt236.apkdetails.print.Coloriser;
 import uk.co.alt236.apkdetails.print.SectionedKvPrinter;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class SigningInfoOutput implements Output {
 
         final String status = validationResult.getSignatureStatus().toString().toLowerCase(Locale.US);
         if (validationResult.getSignatureStatus() == SignatureStatus.INVALID) {
-            retVal = status + ". Failed entries: " + validationResult.getFailedEntries().size();
+            retVal = Coloriser.error(status + ". Failed entries: " + validationResult.getFailedEntries().size());
         } else {
             retVal = status;
         }
