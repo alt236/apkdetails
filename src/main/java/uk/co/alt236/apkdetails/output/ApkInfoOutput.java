@@ -28,10 +28,14 @@ public class ApkInfoOutput implements Output {
 
         printer.add("APK Contents");
         printer.startKeyValueSection();
+        printer.addKv("Dex Files", fileInfo.getNumberOfDexFiles());
+        printer.addKv("Dex Classes", fileInfo.getDexClassCount());
+        printer.addKv("Dex Methods", fileInfo.getDexMethodCount());
+        printer.addKv("Dex Strings", fileInfo.getDexStringCount());
+        printer.addKv("Res Raw", fileInfo.getNumberOfRawRes());
+        printer.addKv("Res Layouts", fileInfo.getNumberOfLayoutRes());
+        printer.addKv("Res Drawables", fileInfo.getNumberOfDrawableRes());
         printer.addKv("Assets", fileInfo.getNumberOfAssets());
-        printer.addKv("Unique Raw", fileInfo.getNumberOfRawRes());
-        printer.addKv("Unique Layouts", fileInfo.getNumberOfLayoutRes());
-        printer.addKv("Unique Drawables", fileInfo.getNumberOfDrawableRes());
         printer.addKv("JNI Architectures", jniArchitectures.isEmpty()
                 ? "none"
                 : toString(jniArchitectures));

@@ -1,5 +1,8 @@
 package uk.co.alt236.apkdetails.model;
 
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.Opcodes;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import uk.co.alt236.apkdetails.model.common.Entry;
 
 import java.io.File;
@@ -75,6 +78,62 @@ public class ApkContents {
                 .map(entry -> entry.getName().substring(entry.getName().lastIndexOf("/")))
                 .collect(Collectors.toSet())
                 .size();
+    }
+
+
+    public int getNumberOfDexFiles() {
+        return getDexFiles().size();
+    }
+
+    public long getDexClassCount() {
+        long count = -1;
+
+        Optional<DexBackedDexFile> dexFile = getDexBackedDexFile();
+        if (dexFile.isPresent()) {
+            count = dexFile.get().getClassCount();
+        }
+
+        return count;
+    }
+
+    public long getDexMethodCount() {
+        long count = -1;
+
+        Optional<DexBackedDexFile> dexFile = getDexBackedDexFile();
+        if (dexFile.isPresent()) {
+            count = dexFile.get().getMethodCount();
+        }
+
+        return count;
+    }
+
+    public long getDexStringCount() {
+        long count = -1;
+
+        Optional<DexBackedDexFile> dexFile = getDexBackedDexFile();
+        if (dexFile.isPresent()) {
+            count = dexFile.get().getStringCount();
+        }
+
+        return count;
+    }
+
+    private Optional<DexBackedDexFile> getDexBackedDexFile() {
+        try {
+            DexBackedDexFile dexFile = DexFileFactory.loadDexFile(file, Opcodes.getDefault());
+            return Optional.of(dexFile);
+        } catch (IOException e) {
+            //e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    private List<Entry> getDexFiles() {
+        parseZipFile();
+        return entryList
+                .stream()
+                .filter(entry -> !entry.isDirectory() && entry.getName().toLowerCase(Locale.US).endsWith(".dex"))
+                .collect(Collectors.toList());
     }
 
     private synchronized void parseZipFile() {

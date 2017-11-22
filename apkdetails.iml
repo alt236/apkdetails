@@ -15,5 +15,10 @@
     <orderEntry type="library" name="Maven: xerces:xercesImpl:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
+    <orderEntry type="library" name="Maven: org.smali:dexlib2:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.smali:util:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.beust:jcommander:1.64" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
   </component>
 </module>
