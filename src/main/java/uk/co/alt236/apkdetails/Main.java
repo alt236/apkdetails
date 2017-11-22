@@ -4,8 +4,11 @@ import uk.co.alt236.apkdetails.decoder.ManifestParser;
 import uk.co.alt236.apkdetails.model.ApkContents;
 import uk.co.alt236.apkdetails.model.FileInfo;
 import uk.co.alt236.apkdetails.model.Manifest;
+import uk.co.alt236.apkdetails.model.SignatureInfo;
 import uk.co.alt236.apkdetails.print.SectionedPrinter;
 
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.List;
 
 public class Main {
@@ -25,8 +28,32 @@ public class Main {
             appendManifestInfo(printer, apkFile);
             printer.addNewLine();
             appendApkInfo(printer, apkFile);
+            printer.addNewLine();
+            appendSigningInfo(printer, apkFile);
             printer.print();
         }
+    }
+
+    private static void appendSigningInfo(SectionedPrinter kvPrinter, String apkFile) {
+        final SignatureInfo signatureInfo = new SignatureInfo(apkFile);
+        final List<? extends Certificate> certificates = signatureInfo.getCertificates();
+        kvPrinter.add("Signature Info");
+        kvPrinter.startKeyValueSection();
+        kvPrinter.addKv("Certificates", certificates.size());
+        int count = 0;
+        for (final Certificate certificate : certificates) {
+            count++;
+
+            final X509Certificate x509 = (X509Certificate) certificate;
+            final String prefix = "Cert " + count + " ";
+            kvPrinter.addKv(prefix + "Subject", x509.getSubjectDN().toString());
+            kvPrinter.addKv(prefix + "Issuer", x509.getIssuerDN().toString());
+            kvPrinter.addKv(prefix + "Validity", x509.getNotBefore() + " to " + x509.getNotAfter());
+            kvPrinter.addKv(prefix + "Algorithm", x509.getSigAlgName());
+            kvPrinter.addKv(prefix + "Serial ", x509.getSerialNumber().toString());
+        }
+
+        kvPrinter.endKeyValueSection();
     }
 
     private static void appendFileInfo(final SectionedPrinter kvPrinter, final String file) {
