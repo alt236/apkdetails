@@ -7,8 +7,6 @@ import uk.co.alt236.apkdetails.model.Manifest;
 import uk.co.alt236.apkdetails.model.SignatureInfo;
 import uk.co.alt236.apkdetails.print.SectionedPrinter;
 
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 import java.util.List;
 
 public class Main {
@@ -36,21 +34,22 @@ public class Main {
 
     private static void appendSigningInfo(SectionedPrinter kvPrinter, String apkFile) {
         final SignatureInfo signatureInfo = new SignatureInfo(apkFile);
-        final List<? extends Certificate> certificates = signatureInfo.getCertificates();
+        final List<SignatureInfo.Cert> certificates = signatureInfo.getCertificates();
         kvPrinter.add("Signature Info");
         kvPrinter.startKeyValueSection();
         kvPrinter.addKv("Certificates", certificates.size());
         int count = 0;
-        for (final Certificate certificate : certificates) {
+        for (final SignatureInfo.Cert certificate : certificates) {
             count++;
 
-            final X509Certificate x509 = (X509Certificate) certificate;
             final String prefix = "Cert " + count + " ";
-            kvPrinter.addKv(prefix + "Subject", x509.getSubjectDN().toString());
-            kvPrinter.addKv(prefix + "Issuer", x509.getIssuerDN().toString());
-            kvPrinter.addKv(prefix + "Validity", x509.getNotBefore() + " to " + x509.getNotAfter());
-            kvPrinter.addKv(prefix + "Algorithm", x509.getSigAlgName());
-            kvPrinter.addKv(prefix + "Serial ", x509.getSerialNumber().toString());
+            kvPrinter.addKv(prefix + "Subject", certificate.getSubjectDN().toString());
+            kvPrinter.addKv(prefix + "Issuer", certificate.getIssuerDN().toString());
+            kvPrinter.addKv(prefix + "Validity", certificate.getNotBefore() + " to " + certificate.getNotAfter());
+            kvPrinter.addKv(prefix + "Algorithm", certificate.getSigAlgName());
+            kvPrinter.addKv(prefix + "Serial", certificate.getSerialNumber().toString());
+            kvPrinter.addKv(prefix + "MD5 Thumb", certificate.getMd5Thumbprint());
+            kvPrinter.addKv(prefix + "SHA1 Thumb", certificate.getSha1Thumbprint());
         }
 
         kvPrinter.endKeyValueSection();

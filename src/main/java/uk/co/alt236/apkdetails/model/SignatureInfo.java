@@ -1,12 +1,14 @@
 package uk.co.alt236.apkdetails.model;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.cert.CertPath;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
+import java.math.BigInteger;
+import java.security.Principal;
+import java.security.cert.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -19,8 +21,8 @@ public class SignatureInfo {
         this.path = path;
     }
 
-    private List<? extends Certificate> loadCertificates() {
-        final List<? extends Certificate> retVal = new ArrayList<>();
+    private List<Cert> loadCertificates() {
+        final List<Cert> retVal = new ArrayList<>();
 
         try (final ZipFile zipFile = new ZipFile(path)) {
             final Enumeration<ZipEntry> iterator = (Enumeration<ZipEntry>) zipFile.entries();
@@ -38,7 +40,9 @@ public class SignatureInfo {
                 final InputStream is = zipFile.getInputStream(zipEntry);
                 final CertificateFactory factory = CertificateFactory.getInstance("X.509");
                 final CertPath cp = factory.generateCertPath(is, "PKCS7");
-                retVal.addAll(new ArrayList(cp.getCertificates()));
+                for (final Certificate certificate : cp.getCertificates()) {
+                    retVal.add(new Cert((X509Certificate) certificate));
+                }
                 is.close();
             }
         } catch (IOException | CertificateException e) {
@@ -48,7 +52,55 @@ public class SignatureInfo {
         return retVal;
     }
 
-    public List<? extends Certificate> getCertificates() {
+    public List<Cert> getCertificates() {
         return loadCertificates();
+    }
+
+    public static class Cert {
+        private final X509Certificate cert;
+
+        private Cert(X509Certificate cert) {
+            this.cert = cert;
+        }
+
+        public Principal getSubjectDN() {
+            return cert.getSubjectDN();
+        }
+
+        public Principal getIssuerDN() {
+            return cert.getIssuerDN();
+        }
+
+        public String getSigAlgName() {
+            return cert.getSigAlgName();
+        }
+
+        public BigInteger getSerialNumber() {
+            return cert.getSerialNumber();
+        }
+
+        public Date getNotBefore() {
+            return cert.getNotBefore();
+        }
+
+        public Date getNotAfter() {
+            return cert.getNotAfter();
+        }
+
+        public String getMd5Thumbprint() {
+            try {
+                return DigestUtils.md5Hex(cert.getEncoded());
+            } catch (CertificateEncodingException e) {
+                throw new IllegalStateException(e.getMessage(), e);
+            }
+        }
+
+        public String getSha1Thumbprint() {
+            try {
+                return DigestUtils.sha1Hex(cert.getEncoded());
+            } catch (CertificateEncodingException e) {
+                throw new IllegalStateException(e.getMessage(), e);
+            }
+        }
     }
 }
