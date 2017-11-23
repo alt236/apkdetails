@@ -6,6 +6,7 @@ import uk.co.alt236.apkdetails.print.Coloriser;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.io.File;
+import java.util.List;
 
 public class ManifestInfoOutput implements Output {
 
@@ -24,12 +25,23 @@ public class ManifestInfoOutput implements Output {
             printer.addKv("Build SDK", coloriseError(manifest.getPlatformBuildSdkVersion()));
             printer.addKv("Debuggable", manifest.isDebuggable());
 
+            printOptionalList(printer, manifest.getActivities(), "Activities");
+            printOptionalList(printer, manifest.getServices(), "Services");
+            printOptionalList(printer, manifest.getPermissions(), "Permissions");
+
             //System.out.println(manifest.getXml());
         } catch (Exception e) {
             printer.addKv("Parsing Error", Coloriser.error(e.toString()));
         }
 
         printer.endKeyValueSection();
+    }
+
+    private void printOptionalList(SectionedKvPrinter printer, List<String> items, String name) {
+        printer.addKv(name + " #", items.size());
+        if (!items.isEmpty()) {
+            printer.addKv(name, items);
+        }
     }
 
     private String coloriseError(final int input) {

@@ -1,6 +1,11 @@
 package uk.co.alt236.apkdetails.model;
 
+import org.w3c.dom.NodeList;
 import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AndroidManifest {
     private static final String NS_DECLARATION_TEMPLATE = "xmlns:%s=\"%s\"";
@@ -63,6 +68,8 @@ public class AndroidManifest {
     private static final String ATTRIBUTE_PLATFORM_BUILD_SDK_VERSION = "platformBuildVersionCode";
 
     private final AndroidXmlDocument xmlDocument;
+    private List<String> services;
+    private List<String> permissions;
 
     public AndroidManifest(final String xml) {
         this.xmlDocument = new AndroidXmlDocument(xml);
@@ -124,5 +131,42 @@ public class AndroidManifest {
                 "/@" + ATTRIBUTE_DEBUGGABLE;
 
         return xmlDocument.getBooleanValue(expression);
+    }
+
+    public List<String> getActivities() {
+        final List<String> items = new ArrayList<>();
+        final String expression = "/" + NODE_MANIFEST +
+                "/" + NODE_APPLICATION +
+                "/" + NODE_ACTIVITY;
+
+        return getAndroidNamesOfNodes(items, expression);
+    }
+
+
+    public List<String> getServices() {
+        final List<String> items = new ArrayList<>();
+        final String expression = "/" + NODE_MANIFEST +
+                "/" + NODE_APPLICATION +
+                "/" + NODE_SERVICE;
+
+        return getAndroidNamesOfNodes(items, expression);
+    }
+
+    public List<String> getPermissions() {
+        final List<String> items = new ArrayList<>();
+        final String expression = "/" + NODE_MANIFEST +
+                "/" + NODE_USES_PERMISSION;
+
+        return getAndroidNamesOfNodes(items, expression);
+    }
+
+    private List<String> getAndroidNamesOfNodes(List<String> items, String expression) {
+        final NodeList nodeList = xmlDocument.getNodes(expression);
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            items.add(nodeList.item(i).getAttributes().getNamedItem("android:name").getNodeValue());
+        }
+
+        Collections.sort(items);
+        return items;
     }
 }
