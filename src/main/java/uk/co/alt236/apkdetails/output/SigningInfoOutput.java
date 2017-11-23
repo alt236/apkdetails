@@ -5,7 +5,7 @@ import uk.co.alt236.apkdetails.model.signing.SignatureStatus;
 import uk.co.alt236.apkdetails.model.signing.SigningCertificate;
 import uk.co.alt236.apkdetails.model.signing.ValidationResult;
 import uk.co.alt236.apkdetails.print.Coloriser;
-import uk.co.alt236.apkdetails.print.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.io.File;
 import java.util.List;

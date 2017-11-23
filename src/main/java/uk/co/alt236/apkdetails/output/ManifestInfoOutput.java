@@ -3,7 +3,7 @@ package uk.co.alt236.apkdetails.output;
 import uk.co.alt236.apkdetails.decoder.ManifestParser;
 import uk.co.alt236.apkdetails.model.AndroidManifest;
 import uk.co.alt236.apkdetails.print.Coloriser;
-import uk.co.alt236.apkdetails.print.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.io.File;
 

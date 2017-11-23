@@ -4,7 +4,7 @@ import uk.co.alt236.apkdetails.output.ApkInfoOutput;
 import uk.co.alt236.apkdetails.output.FileInfoOutput;
 import uk.co.alt236.apkdetails.output.ManifestInfoOutput;
 import uk.co.alt236.apkdetails.output.SigningInfoOutput;
-import uk.co.alt236.apkdetails.print.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.io.File;
 import java.util.List;
