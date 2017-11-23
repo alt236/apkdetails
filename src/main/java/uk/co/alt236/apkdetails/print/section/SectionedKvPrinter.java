@@ -50,7 +50,7 @@ public class SectionedKvPrinter {
         addKv(label, new SimpleValue(value));
     }
 
-    public void addKv(final String label, final Collection<String> value) {
+    public void addKv(final String label, final Collection<?> value) {
         addKv(label, new MultiLineValue(value));
     }
 

@@ -10,6 +10,7 @@ import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class SigningInfoOutput implements Output {
 
@@ -18,12 +19,16 @@ public class SigningInfoOutput implements Output {
         final SignatureInfo signatureInfo = new SignatureInfo(file);
 
         final List<SigningCertificate> certificates = signatureInfo.getCertificates();
-        final String validationStatus = getValidationStatus(signatureInfo.validateSignature());
+        final ValidationResult validationResult = signatureInfo.validateSignature();
+        final String validationStatus = getValidationStatus(validationResult);
 
         printer.add("Signature Info");
         printer.startKeyValueSection();
 
         printer.addKv("Signature status", validationStatus);
+        if (!validationResult.getFailedEntries().isEmpty()) {
+            printer.addKv("Failed entries", getFailedEntries(validationResult));
+        }
         printer.addKv("Certificates", certificates.size());
         int count = 0;
         for (final SigningCertificate certificate : certificates) {
@@ -40,6 +45,15 @@ public class SigningInfoOutput implements Output {
         }
 
         printer.endKeyValueSection();
+    }
+
+    private List<String> getFailedEntries(ValidationResult validationResult) {
+        return validationResult
+                .getFailedEntries()
+                .stream()
+                .map(entry -> Coloriser.error(entry.getName()))
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     private String getValidationStatus(ValidationResult validationResult) {
