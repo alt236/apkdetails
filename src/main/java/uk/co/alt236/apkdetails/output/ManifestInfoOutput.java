@@ -9,6 +9,11 @@ import java.io.File;
 import java.util.List;
 
 public class ManifestInfoOutput implements Output {
+    private boolean verbose;
+
+    public ManifestInfoOutput(final boolean verbose) {
+        this.verbose = verbose;
+    }
 
     @Override
     public void output(SectionedKvPrinter printer, File file) {
@@ -25,9 +30,9 @@ public class ManifestInfoOutput implements Output {
             printer.addKv("Build SDK", coloriseError(manifest.getPlatformBuildSdkVersion()));
             printer.addKv("Debuggable", manifest.isDebuggable());
 
-            printOptionalList(printer, manifest.getActivities(), "Activities");
-            printOptionalList(printer, manifest.getServices(), "Services");
-            printOptionalList(printer, manifest.getPermissions(), "Permissions");
+            printOptionalList(printer, verbose, manifest.getActivities(), "Activities");
+            printOptionalList(printer, verbose, manifest.getServices(), "Services");
+            printOptionalList(printer, verbose, manifest.getPermissions(), "Permissions");
 
             //System.out.println(manifest.getXml());
         } catch (Exception e) {
@@ -37,9 +42,9 @@ public class ManifestInfoOutput implements Output {
         printer.endKeyValueSection();
     }
 
-    private void printOptionalList(SectionedKvPrinter printer, List<String> items, String name) {
+    private void printOptionalList(SectionedKvPrinter printer, boolean verbose, List<String> items, String name) {
         printer.addKv(name + " #", items.size());
-        if (!items.isEmpty()) {
+        if (!items.isEmpty() && verbose) {
             printer.addKv(name, items);
         }
     }

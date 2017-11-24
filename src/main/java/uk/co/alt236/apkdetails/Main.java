@@ -1,39 +1,67 @@
 package uk.co.alt236.apkdetails;
 
-import uk.co.alt236.apkdetails.output.ApkInfoOutput;
-import uk.co.alt236.apkdetails.output.FileInfoOutput;
-import uk.co.alt236.apkdetails.output.ManifestInfoOutput;
-import uk.co.alt236.apkdetails.output.SigningInfoOutput;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import org.apache.commons.cli.*;
+import uk.co.alt236.apkdetails.cli.CommandHelpPrinter;
+import uk.co.alt236.apkdetails.cli.CommandLineOptions;
+import uk.co.alt236.apkdetails.cli.OptionsBuilder;
+import uk.co.alt236.apkdetails.resources.Strings;
 
 import java.io.File;
 import java.util.List;
 
 public class Main {
 
+    private Main() {
+        //NOOP
+    }
+
     public static void main(String[] args) {
-        final String source = "/home/alex/tmp/test_apk/";
-        final List<String> files = new ApkFileFilter().getFiles(source);
+        final Strings strings = new Strings();
+        final CommandLineOptions cliOptions = parseArgs(strings, args);
 
-        System.out.println("APK Files: " + files.size());
+        if (cliOptions != null) {
+            final ApkFileFilter apkFileFilter = new ApkFileFilter();
+            final List<String> files = apkFileFilter.getFiles(cliOptions.getInput());
 
-        for (final String apkFile : files) {
-            final File file = new File(apkFile);
-            final SectionedKvPrinter printer = new SectionedKvPrinter();
-
-            printer.addSectionLine();
-
-            new FileInfoOutput().output(printer, file);
-            printer.addNewLine();
-
-            new ManifestInfoOutput().output(printer, file);
-            printer.addNewLine();
-
-            new ApkInfoOutput().output(printer, file);
-            printer.addNewLine();
-
-            new SigningInfoOutput().output(printer, file);
-            printer.print();
+            if (files.isEmpty()) {
+                System.err.println("No valid files found");
+                System.exit(1);
+            } else {
+                new ApkDetails().printDetails(cliOptions, files);
+            }
         }
     }
+
+    private static CommandLineOptions parseArgs(Strings strings, String[] args) {
+        final CommandLineParser parser = new DefaultParser();
+        final Options options = new OptionsBuilder(strings).compileOptions();
+        final CommandLineOptions retVal;
+
+        if (args.length == 0) {
+            new CommandHelpPrinter(strings, options, getJarName()).printHelp();
+            retVal = null;
+        } else {
+            CommandLine line = null;
+
+            try {
+                line = parser.parse(options, args);
+            } catch (final ParseException exp) {
+                final String message = exp.getMessage();
+                System.err.println(message);
+                System.exit(1);
+            }
+
+            retVal = new CommandLineOptions(line);
+        }
+
+        return retVal;
+    }
+
+    private static String getJarName() {
+        final File
+                f =
+                new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toString());
+        return f.getName();
+    }
+
 }
