@@ -10,35 +10,40 @@ import java.util.List;
 
 class ApkDetails {
 
-    public void printDetails(final CommandLineOptions commandLineOptions,
+    public void printDetails(final CommandLineOptions cli,
                              final List<String> files) {
         System.out.println("APK Files: " + files.size());
 
-        final boolean verbose = commandLineOptions.isVerbose();
+        final boolean verbose = cli.isVerbose();
 
         for (final String apkFile : files) {
             final File file = new File(apkFile);
             final ZipContents zipContents = new ZipContents(file);
 
+            final Output fileInfoOutput = new FileInfoOutput(file);
+            final Output manifestInfoOutput = new ManifestInfoOutput(file, verbose);
+            final Output apkInfoOutput = new ApkInfoOutput(zipContents);
+            final Output dexInfoOutput = new DexInfoOutput(zipContents);
+            final Output signingInfoOutput = new SigningInfoOutput(file);
+
             final SectionedKvPrinter printer = new SectionedKvPrinter();
             printer.addSectionLine();
 
-            new FileInfoOutput(file).output(printer);
-            printer.addNewLine();
+            output(printer, fileInfoOutput, true);
+            output(printer, manifestInfoOutput, true);
+            output(printer, apkInfoOutput, true);
+            output(printer, dexInfoOutput, true);
+            output(printer, signingInfoOutput, true);
 
-            new ManifestInfoOutput(file, verbose).output(printer);
-            printer.addNewLine();
-
-            new ApkInfoOutput(zipContents).output(printer);
-            printer.addNewLine();
-
-            new DexInfoOutput(zipContents).output(printer);
-            printer.addNewLine();
-
-            new SigningInfoOutput(file).output(printer);
             printer.print();
-
             zipContents.close();
+        }
+    }
+
+    private void output(SectionedKvPrinter printer, Output output, final boolean enabled) {
+        if (enabled) {
+            output.output(printer);
+            printer.addNewLine();
         }
     }
 }
