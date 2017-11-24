@@ -35,6 +35,7 @@ public class ManifestInfoOutput implements Output {
             printOptionalList(printer, verbose, manifest.getActivities(), "Activities");
             printOptionalList(printer, verbose, manifest.getServices(), "Services");
             printOptionalList(printer, verbose, manifest.getPermissions(), "Permissions");
+            printOptionalList(printer, verbose, manifest.getReceivers(), "Receivers");
 
             //System.out.println(manifest.getXml());
         } catch (Exception e) {
