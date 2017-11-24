@@ -19,6 +19,12 @@ public class ContentSizeOutput implements Output {
     public void output(SectionedKvPrinter printer) {
         final ContentSize contentSize = new ContentSize(zipContents);
 
+        listLargestFiles(printer, contentSize);
+        listLargestRes(printer, contentSize);
+    }
+
+
+    private void listLargestFiles(SectionedKvPrinter printer, ContentSize contentSize) {
         printer.add("Largest files in APK");
         printer.startKeyValueSection();
 
@@ -28,8 +34,10 @@ public class ContentSizeOutput implements Output {
 
         printer.endKeyValueSection();
         printer.addNewLine();
+    }
 
-        printer.add("Largest res in APK");
+    private void listLargestRes(SectionedKvPrinter printer, ContentSize contentSize) {
+        printer.add("Largest Resources in APK");
         printer.startKeyValueSection();
 
         for (final Entry entry : contentSize.getLargestResources(noOfFiles)) {
@@ -37,5 +45,6 @@ public class ContentSizeOutput implements Output {
         }
 
         printer.endKeyValueSection();
+        printer.addNewLine();
     }
 }
