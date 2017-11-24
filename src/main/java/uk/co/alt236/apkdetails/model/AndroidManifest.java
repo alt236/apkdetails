@@ -153,7 +153,7 @@ public class AndroidManifest {
         return getAndroidNamesOfNodes(items, expression);
     }
 
-    public List<String> getPermissions() {
+    public List<String> getUsedPermissions() {
         final List<String> items = new ArrayList<>();
         final String expression = "/" + NODE_MANIFEST +
                 "/" + NODE_USES_PERMISSION;
