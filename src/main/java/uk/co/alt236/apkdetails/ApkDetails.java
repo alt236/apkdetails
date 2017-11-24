@@ -25,6 +25,7 @@ class ApkDetails {
             final Output apkInfoOutput = new ApkInfoOutput(zipContents);
             final Output dexInfoOutput = new DexInfoOutput(zipContents);
             final Output signingInfoOutput = new SigningInfoOutput(file);
+            final Output contentSizeOutput = new ContentSizeOutput(zipContents, 10);
 
             final SectionedKvPrinter printer = new SectionedKvPrinter();
             printer.addSectionLine();
@@ -34,6 +35,7 @@ class ApkDetails {
             output(printer, apkInfoOutput, true);
             output(printer, dexInfoOutput, true);
             output(printer, signingInfoOutput, true);
+            output(printer, contentSizeOutput, verbose);
 
             printer.print();
             zipContents.close();
