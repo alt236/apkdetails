@@ -1,5 +1,6 @@
 package uk.co.alt236.apkdetails.model;
 
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
 
@@ -163,7 +164,17 @@ public class AndroidManifest {
     private List<String> getAndroidNamesOfNodes(List<String> items, String expression) {
         final NodeList nodeList = xmlDocument.getNodes(expression);
         for (int i = 0; i < nodeList.getLength(); i++) {
-            items.add(nodeList.item(i).getAttributes().getNamedItem("android:name").getNodeValue());
+            final Node node = nodeList.item(i);
+
+            final Node nameNode;
+
+            if (node.getAttributes().getNamedItem("android:name") != null) {
+                nameNode = node.getAttributes().getNamedItem("android:name");
+            } else {
+                nameNode = node.getAttributes().getNamedItem("name");
+            }
+
+            items.add(nameNode.getNodeValue());
         }
 
         Collections.sort(items);
