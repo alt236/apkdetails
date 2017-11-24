@@ -1,12 +1,18 @@
 package uk.co.alt236.apkdetails.output;
 
 import uk.co.alt236.apkdetails.model.ApkContents;
+import uk.co.alt236.apkdetails.model.common.ZipContents;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
-import java.io.File;
 import java.util.List;
 
 public class ApkInfoOutput implements Output {
+
+    private final ZipContents zipContents;
+
+    public ApkInfoOutput(final ZipContents zipContents) {
+        this.zipContents = zipContents;
+    }
 
     private static String toString(final List<?> list) {
         final StringBuilder sb = new StringBuilder();
@@ -21,17 +27,13 @@ public class ApkInfoOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer, File file) {
-        final ApkContents fileInfo = new ApkContents(file);
+    public void output(SectionedKvPrinter printer) {
+        final ApkContents fileInfo = new ApkContents(zipContents);
         final List<String> jniArchitectures = fileInfo.getJniArchitectures();
 
 
         printer.add("APK Contents");
         printer.startKeyValueSection();
-        printer.addKv("Dex Files", fileInfo.getNumberOfDexFiles());
-        printer.addKv("Dex Classes", fileInfo.getDexClassCount());
-        printer.addKv("Dex Methods", fileInfo.getDexMethodCount());
-        printer.addKv("Dex Strings", fileInfo.getDexStringCount());
         printer.addKv("Res Raw", fileInfo.getNumberOfRawRes());
         printer.addKv("Res Layouts", fileInfo.getNumberOfLayoutRes());
         printer.addKv("Res Drawables", fileInfo.getNumberOfDrawableRes());

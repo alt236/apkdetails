@@ -13,9 +13,14 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class SigningInfoOutput implements Output {
+    private final File file;
+
+    public SigningInfoOutput(File file) {
+        this.file = file;
+    }
 
     @Override
-    public void output(SectionedKvPrinter printer, File file) {
+    public void output(SectionedKvPrinter printer) {
         final SignatureInfo signatureInfo = new SignatureInfo(file);
 
         final List<SigningCertificate> certificates = signatureInfo.getCertificates();

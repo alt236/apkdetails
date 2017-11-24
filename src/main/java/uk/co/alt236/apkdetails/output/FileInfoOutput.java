@@ -6,9 +6,14 @@ import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 import java.io.File;
 
 public class FileInfoOutput implements Output {
+    private final File file;
+
+    public FileInfoOutput(File file) {
+        this.file = file;
+    }
 
     @Override
-    public void output(SectionedKvPrinter printer, File file) {
+    public void output(SectionedKvPrinter printer) {
         final FileInfo apkContents = new FileInfo(file);
 
         printer.add("File Info");

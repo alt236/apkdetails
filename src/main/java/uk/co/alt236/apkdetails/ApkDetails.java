@@ -1,10 +1,8 @@
 package uk.co.alt236.apkdetails;
 
 import uk.co.alt236.apkdetails.cli.CommandLineOptions;
-import uk.co.alt236.apkdetails.output.ApkInfoOutput;
-import uk.co.alt236.apkdetails.output.FileInfoOutput;
-import uk.co.alt236.apkdetails.output.ManifestInfoOutput;
-import uk.co.alt236.apkdetails.output.SigningInfoOutput;
+import uk.co.alt236.apkdetails.model.common.ZipContents;
+import uk.co.alt236.apkdetails.output.*;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.io.File;
@@ -20,21 +18,27 @@ class ApkDetails {
 
         for (final String apkFile : files) {
             final File file = new File(apkFile);
-            final SectionedKvPrinter printer = new SectionedKvPrinter();
+            final ZipContents zipContents = new ZipContents(file);
 
+            final SectionedKvPrinter printer = new SectionedKvPrinter();
             printer.addSectionLine();
 
-            new FileInfoOutput().output(printer, file);
+            new FileInfoOutput(file).output(printer);
             printer.addNewLine();
 
-            new ManifestInfoOutput(verbose).output(printer, file);
+            new ManifestInfoOutput(file, verbose).output(printer);
             printer.addNewLine();
 
-            new ApkInfoOutput().output(printer, file);
+            new ApkInfoOutput(zipContents).output(printer);
             printer.addNewLine();
 
-            new SigningInfoOutput().output(printer, file);
+            new DexInfoOutput(zipContents).output(printer);
+            printer.addNewLine();
+
+            new SigningInfoOutput(file).output(printer);
             printer.print();
+
+            zipContents.close();
         }
     }
 }

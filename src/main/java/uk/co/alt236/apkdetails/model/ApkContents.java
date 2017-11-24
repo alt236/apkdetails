@@ -1,16 +1,10 @@
 package uk.co.alt236.apkdetails.model;
 
-import org.jf.dexlib2.DexFileFactory;
-import org.jf.dexlib2.Opcodes;
-import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import uk.co.alt236.apkdetails.model.common.Entry;
+import uk.co.alt236.apkdetails.model.common.ZipContents;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 public class ApkContents {
     private static final String JNI_DIRECTORY = "lib/";
@@ -19,17 +13,14 @@ public class ApkContents {
     private static final String LAYOUTS_DIRECTORY_PREFIX = "res/layout";
     private static final String RAW_DIRECTORY_PREFIX = "res/raw";
 
-    private final File file;
-    private final List<Entry> entryList;
+    private final ZipContents zipContents;
 
-    public ApkContents(File file) {
-        this.file = file;
-        this.entryList = new ArrayList<>();
+    public ApkContents(ZipContents zipContents) {
+        this.zipContents = zipContents;
     }
 
     public long getNumberOfAssets() {
-        parseZipFile();
-        return entryList
+        return zipContents.getEntries()
                 .stream()
                 .filter(entry -> !entry.isDirectory() && entry.getName().startsWith(ASSETS_DIRECTORY))
                 .count();
@@ -48,12 +39,8 @@ public class ApkContents {
     }
 
     public List<String> getJniArchitectures() {
-        parseZipFile();
-
-        final List<Entry> libFiles = entryList
-                .stream()
-                .filter(entry -> entry.getName().startsWith(JNI_DIRECTORY))
-                .collect(Collectors.toList());
+        final List<Entry> libFiles = zipContents
+                .getEntries(entry -> entry.getName().startsWith(JNI_DIRECTORY));
 
         final Set<String> architectures = new HashSet<>();
 
@@ -71,88 +58,10 @@ public class ApkContents {
     }
 
     private long getNumberOfResources(String prefix) {
-        parseZipFile();
-        return entryList
+        return zipContents.getEntries(entry -> !entry.isDirectory() && entry.getName().startsWith(prefix))
                 .stream()
-                .filter(entry -> !entry.isDirectory() && entry.getName().startsWith(prefix))
                 .map(entry -> entry.getName().substring(entry.getName().lastIndexOf("/")))
                 .collect(Collectors.toSet())
                 .size();
     }
-
-
-    public int getNumberOfDexFiles() {
-        return getDexFiles().size();
-    }
-
-    public long getDexClassCount() {
-        long count = -1;
-
-        Optional<DexBackedDexFile> dexFile = getDexBackedDexFile();
-        if (dexFile.isPresent()) {
-            count = dexFile.get().getClassCount();
-        }
-
-        return count;
-    }
-
-    public long getDexMethodCount() {
-        long count = -1;
-
-        Optional<DexBackedDexFile> dexFile = getDexBackedDexFile();
-        if (dexFile.isPresent()) {
-            count = dexFile.get().getMethodCount();
-        }
-
-        return count;
-    }
-
-    public long getDexStringCount() {
-        long count = -1;
-
-        Optional<DexBackedDexFile> dexFile = getDexBackedDexFile();
-        if (dexFile.isPresent()) {
-            count = dexFile.get().getStringCount();
-        }
-
-        return count;
-    }
-
-    private Optional<DexBackedDexFile> getDexBackedDexFile() {
-        try {
-            DexBackedDexFile dexFile = DexFileFactory.loadDexFile(file, Opcodes.getDefault());
-            return Optional.of(dexFile);
-        } catch (IOException e) {
-            //e.printStackTrace();
-            return Optional.empty();
-        }
-    }
-
-    private List<Entry> getDexFiles() {
-        parseZipFile();
-        return entryList
-                .stream()
-                .filter(entry -> !entry.isDirectory() && entry.getName().toLowerCase(Locale.US).endsWith(".dex"))
-                .collect(Collectors.toList());
-    }
-
-    private synchronized void parseZipFile() {
-        if (entryList.isEmpty()) {
-            try {
-                final ZipFile zipFile = new ZipFile(file);
-                final Enumeration<? extends ZipEntry> entries = zipFile.entries();
-
-                while (entries.hasMoreElements()) {
-                    final ZipEntry zipEntry = entries.nextElement();
-                    entryList.add(new Entry(zipEntry));
-                }
-
-                zipFile.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
 }

@@ -5,6 +5,10 @@ import java.io.IOException;
 
 public final class StreamUtils {
     public static void close(Closeable closeable) {
+        if (closeable == null) {
+            return;
+        }
+
         try {
             closeable.close();
         } catch (IOException e) {

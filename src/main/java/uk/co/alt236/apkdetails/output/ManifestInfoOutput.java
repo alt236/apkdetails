@@ -9,14 +9,16 @@ import java.io.File;
 import java.util.List;
 
 public class ManifestInfoOutput implements Output {
-    private boolean verbose;
+    private final boolean verbose;
+    private final File file;
 
-    public ManifestInfoOutput(final boolean verbose) {
+    public ManifestInfoOutput(final File file, final boolean verbose) {
+        this.file = file;
         this.verbose = verbose;
     }
 
     @Override
-    public void output(SectionedKvPrinter printer, File file) {
+    public void output(SectionedKvPrinter printer) {
         printer.add("AndroidManifest Info");
         printer.startKeyValueSection();
         try {
@@ -25,9 +27,9 @@ public class ManifestInfoOutput implements Output {
             printer.addKv("Application Id", manifest.getApplicationId());
             printer.addKv("Version Name", manifest.getVersionName());
             printer.addKv("Version Code", manifest.getVersionCode());
-            printer.addKv("Minimum SDK", coloriseError(manifest.getMinSdkVersion()));
-            printer.addKv("Compile SDK", coloriseError(manifest.getTargetSdkVersion()));
-            printer.addKv("Build SDK", coloriseError(manifest.getPlatformBuildSdkVersion()));
+            printer.addKv("Minimum SDK", colorizeError(manifest.getMinSdkVersion()));
+            printer.addKv("Compile SDK", colorizeError(manifest.getTargetSdkVersion()));
+            printer.addKv("Build SDK", colorizeError(manifest.getPlatformBuildSdkVersion()));
             printer.addKv("Debuggable", manifest.isDebuggable());
 
             printOptionalList(printer, verbose, manifest.getActivities(), "Activities");
@@ -49,7 +51,7 @@ public class ManifestInfoOutput implements Output {
         }
     }
 
-    private String coloriseError(final int input) {
+    private String colorizeError(final int input) {
         if (input < 0) {
             return Coloriser.error(input);
         } else {
