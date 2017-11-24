@@ -4,13 +4,17 @@ import uk.co.alt236.apkdetails.model.ContentSize;
 import uk.co.alt236.apkdetails.model.common.Entry;
 import uk.co.alt236.apkdetails.model.common.ZipContents;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
 public class ContentSizeOutput implements Output {
     private final ZipContents zipContents;
+    private final FileSizeFormatter fileSizeFormatter;
     private final int noOfFiles;
 
     public ContentSizeOutput(final ZipContents zipContents,
+                             final FileSizeFormatter fileSizeFormatter,
                              final int noOfFiles) {
+        this.fileSizeFormatter = fileSizeFormatter;
         this.zipContents = zipContents;
         this.noOfFiles = noOfFiles;
     }
@@ -29,7 +33,7 @@ public class ContentSizeOutput implements Output {
         printer.startKeyValueSection();
 
         for (final Entry entry : contentSize.getLargestFiles(noOfFiles)) {
-            printer.addKv(entry.getName(), entry.getFileSize());
+            printer.addKv(entry.getName(), fileSizeFormatter.format(entry.getFileSize()));
         }
 
         printer.endKeyValueSection();
@@ -41,7 +45,7 @@ public class ContentSizeOutput implements Output {
         printer.startKeyValueSection();
 
         for (final Entry entry : contentSize.getLargestResources(noOfFiles)) {
-            printer.addKv(entry.getName(), entry.getFileSize());
+            printer.addKv(entry.getName(), fileSizeFormatter.format(entry.getFileSize()));
         }
 
         printer.endKeyValueSection();

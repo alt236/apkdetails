@@ -4,6 +4,7 @@ import uk.co.alt236.apkdetails.cli.CommandLineOptions;
 import uk.co.alt236.apkdetails.model.common.ZipContents;
 import uk.co.alt236.apkdetails.output.*;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
 import java.io.File;
 import java.util.List;
@@ -15,6 +16,9 @@ class ApkDetails {
         System.out.println("APK Files: " + files.size());
 
         final boolean verbose = cli.isVerbose();
+        final boolean humanReadableFileSizes = cli.isHumanReadableFileSizes();
+
+        final FileSizeFormatter fileSizeFormatter = new FileSizeFormatter(humanReadableFileSizes);
 
         for (final String apkFile : files) {
             final File file = new File(apkFile);
@@ -25,7 +29,7 @@ class ApkDetails {
             final Output apkInfoOutput = new ApkInfoOutput(zipContents);
             final Output dexInfoOutput = new DexInfoOutput(zipContents);
             final Output signingInfoOutput = new SigningInfoOutput(file);
-            final Output contentSizeOutput = new ContentSizeOutput(zipContents, 10);
+            final Output contentSizeOutput = new ContentSizeOutput(zipContents, fileSizeFormatter, 10);
 
             final SectionedKvPrinter printer = new SectionedKvPrinter();
             printer.addSectionLine();

@@ -14,6 +14,10 @@ public class CommandLineOptions {
         return commandLine.hasOption(OptionsBuilder.ARG_VERBOSE_LONG);
     }
 
+    public boolean isHumanReadableFileSizes() {
+        return commandLine.hasOption(OptionsBuilder.ARG_HUMAN_READABLE_SIZES_LONG);
+    }
+
     public String getInput() {
         return commandLine.getOptionValue(OptionsBuilder.ARG_INPUT_LONG);
     }

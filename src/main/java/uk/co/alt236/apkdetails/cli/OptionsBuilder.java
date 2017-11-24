@@ -12,6 +12,9 @@ public class OptionsBuilder {
     /*package*/ static final String ARG_VERBOSE = "v";
     /*package*/ static final String ARG_VERBOSE_LONG = "verbose";
 
+    /*package*/ static final String ARG_HUMAN_READABLE_SIZES = "h";
+    /*package*/ static final String ARG_HUMAN_READABLE_SIZES_LONG = "human";
+
     private final Strings strings;
 
     public OptionsBuilder(Strings strings) {
@@ -23,6 +26,7 @@ public class OptionsBuilder {
 
         options.addOption(createOptionInputJar());
         options.addOption(createOptionVerbose());
+        options.addOption(createOptionHumanReadableSizes());
 
         return options;
     }
@@ -41,6 +45,16 @@ public class OptionsBuilder {
         final String desc = strings.getString("cli_cmd_input_verbose");
         return Option.builder(ARG_VERBOSE)
                 .longOpt(ARG_VERBOSE_LONG)
+                .hasArg(false)
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createOptionHumanReadableSizes() {
+        final String desc = strings.getString("cli_cmd_human_readable_sizes");
+        return Option.builder(ARG_HUMAN_READABLE_SIZES)
+                .longOpt(ARG_HUMAN_READABLE_SIZES_LONG)
                 .hasArg(false)
                 .required(false)
                 .desc(desc)
