@@ -6,6 +6,7 @@ import uk.co.alt236.apkdetails.model.signing.SigningCertificate;
 import uk.co.alt236.apkdetails.model.signing.ValidationResult;
 import uk.co.alt236.apkdetails.print.Coloriser;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.util.date.IsoISO8601DateParser;
 
 import java.io.File;
 import java.util.List;
@@ -42,7 +43,8 @@ public class SigningInfoOutput implements Output {
             final String prefix = "Certificate " + count + " ";
             printer.addKv(prefix + "Subject", certificate.getSubjectDN().toString());
             printer.addKv(prefix + "Issuer", certificate.getIssuerDN().toString());
-            printer.addKv(prefix + "Validity", certificate.getNotBefore() + " to " + certificate.getNotAfter());
+            printer.addKv(prefix + "Valid from", IsoISO8601DateParser.toIsoDateString(certificate.getNotBefore()));
+            printer.addKv(prefix + "Valid to", IsoISO8601DateParser.toIsoDateString(certificate.getNotAfter()));
             printer.addKv(prefix + "Algorithm", certificate.getSigAlgName());
             printer.addKv(prefix + "Serial", certificate.getSerialNumber().toString());
             printer.addKv(prefix + "MD5 Thumb", certificate.getMd5Thumbprint());
