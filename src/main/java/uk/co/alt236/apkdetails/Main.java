@@ -3,10 +3,10 @@ package uk.co.alt236.apkdetails;
 import org.apache.commons.cli.*;
 import uk.co.alt236.apkdetails.cli.CommandHelpPrinter;
 import uk.co.alt236.apkdetails.cli.CommandLineOptions;
+import uk.co.alt236.apkdetails.cli.JarDetails;
 import uk.co.alt236.apkdetails.cli.OptionsBuilder;
 import uk.co.alt236.apkdetails.resources.Strings;
 
-import java.io.File;
 import java.util.List;
 
 public class Main {
@@ -38,7 +38,8 @@ public class Main {
         final CommandLineOptions retVal;
 
         if (args.length == 0) {
-            new CommandHelpPrinter(strings, options, getJarName()).printHelp();
+            final JarDetails jarDetails = new JarDetails(Main.class);
+            new CommandHelpPrinter(strings, jarDetails, options).printHelp();
             retVal = null;
         } else {
             CommandLine line = null;
@@ -56,12 +57,4 @@ public class Main {
 
         return retVal;
     }
-
-    private static String getJarName() {
-        final File
-                f =
-                new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toString());
-        return f.getName();
-    }
-
 }
