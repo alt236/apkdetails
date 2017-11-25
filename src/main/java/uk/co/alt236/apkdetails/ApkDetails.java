@@ -24,7 +24,7 @@ class ApkDetails {
             final File file = new File(apkFile);
             final ZipContents zipContents = new ZipContents(file);
 
-            final Output fileInfoOutput = new FileInfoOutput(file);
+            final Output fileInfoOutput = new FileInfoOutput(file, fileSizeFormatter);
             final Output manifestInfoOutput = new ManifestInfoOutput(file, verbose);
             final Output apkInfoOutput = new ApkInfoOutput(zipContents);
             final Output dexInfoOutput = new DexInfoOutput(zipContents);

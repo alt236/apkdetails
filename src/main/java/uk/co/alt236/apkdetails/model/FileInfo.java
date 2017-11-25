@@ -13,6 +13,10 @@ public class FileInfo {
         this.file = file;
     }
 
+    public long getFileSize() {
+        return file.length();
+    }
+
     public String getMd5() {
         String retVal;
         try {
