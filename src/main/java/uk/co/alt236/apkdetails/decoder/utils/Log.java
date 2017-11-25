@@ -31,7 +31,7 @@ import java.io.PrintStream;
  */
 public class Log {
 
-
+    private static final boolean LOG_TO_FILE_ENABLED = false;
     public static final int DEBUG_LEVEL = 1 << 0;
     public static final int PRODUCTION_LEVEL = 1 << 1;
 
@@ -49,7 +49,9 @@ public class Log {
     private static final StringBuffer buf = new StringBuffer();
 
     static {
-        System.out.println("Log File: " + logFile);
+        if (LOG_TO_FILE_ENABLED) {
+            System.out.println("Log File: " + logFile);
+        }
     }
 
     /**
@@ -173,9 +175,12 @@ public class Log {
         // Print Exception
         if (ex != null) {
             try {
-                if (out == null)
-                    out = new PrintStream(logFile);
-                ex.printStackTrace(out);
+                if (LOG_TO_FILE_ENABLED) {
+                    if (out == null) {
+                        out = new PrintStream(logFile);
+                    }
+                    ex.printStackTrace(out);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -185,10 +190,13 @@ public class Log {
     private static void print(String s) {
         // TODO: Add appropriate stream based on your platform
         try {
-            if (out == null)
-                out = new PrintStream(logFile);
-            out.print(s);
-            out.flush();
+            if (LOG_TO_FILE_ENABLED) {
+                if (out == null) {
+                    out = new PrintStream(logFile);
+                }
+                out.print(s);
+                out.flush();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -196,7 +204,8 @@ public class Log {
     }
 
     public static void exitLogger() {
-        if (out != null)
+        if (out != null) {
             out.close();
+        }
     }
 }
