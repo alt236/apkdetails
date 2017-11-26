@@ -43,7 +43,7 @@ class ApkDetails {
             collect(collector, archOutput, true);
             collect(collector, dexInfoOutput, true);
             collect(collector, signingInfoOutput, true);
-            collect(collector, contentSizeOutput, verbose);
+            collect(collector, contentSizeOutput, true);
             zipContents.close();
 
             System.out.println(collector.toString());
