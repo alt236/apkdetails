@@ -3,6 +3,7 @@ package uk.co.alt236.apkdetails;
 import uk.co.alt236.apkdetails.cli.CommandLineOptions;
 import uk.co.alt236.apkdetails.model.common.ZipContents;
 import uk.co.alt236.apkdetails.output.*;
+import uk.co.alt236.apkdetails.print.Colorizer;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
@@ -19,17 +20,18 @@ class ApkDetails {
         final boolean humanReadableFileSizes = cli.isHumanReadableFileSizes();
 
         final FileSizeFormatter fileSizeFormatter = new FileSizeFormatter(humanReadableFileSizes);
+        final Colorizer colorizer = new Colorizer(true);
 
         for (final String apkFile : files) {
             final File file = new File(apkFile);
             final ZipContents zipContents = new ZipContents(file);
 
             final Output fileInfoOutput = new FileInfoOutput(file, fileSizeFormatter);
-            final Output manifestInfoOutput = new ManifestInfoOutput(file, verbose);
+            final Output manifestInfoOutput = new ManifestInfoOutput(file, colorizer, verbose);
             final Output dexInfoOutput = new DexInfoOutput(zipContents);
             final Output resOutput = new ResourcesOutput(zipContents);
             final Output archOutput = new ArchitecturesOutput(zipContents);
-            final Output signingInfoOutput = new SigningInfoOutput(file);
+            final Output signingInfoOutput = new SigningInfoOutput(file, colorizer);
             final Output contentSizeOutput = new ContentSizeOutput(zipContents, fileSizeFormatter, 10);
 
             final SectionedKvPrinter printer = new SectionedKvPrinter();

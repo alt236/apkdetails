@@ -4,7 +4,7 @@ import uk.co.alt236.apkdetails.model.signing.SignatureInfo;
 import uk.co.alt236.apkdetails.model.signing.SignatureStatus;
 import uk.co.alt236.apkdetails.model.signing.SigningCertificate;
 import uk.co.alt236.apkdetails.model.signing.ValidationResult;
-import uk.co.alt236.apkdetails.print.Coloriser;
+import uk.co.alt236.apkdetails.print.Colorizer;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 import uk.co.alt236.apkdetails.util.date.IsoISO8601DateParser;
 
@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 
 public class SigningInfoOutput implements Output {
     private final File file;
+    private final Colorizer colorizer;
 
-    public SigningInfoOutput(File file) {
+    public SigningInfoOutput(File file, Colorizer colorizer) {
         this.file = file;
+        this.colorizer = colorizer;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class SigningInfoOutput implements Output {
         return validationResult
                 .getFailedEntries()
                 .stream()
-                .map(entry -> Coloriser.error(entry.getName()))
+                .map(entry -> colorizer.error(entry.getName()))
                 .sorted()
                 .collect(Collectors.toList());
     }
@@ -68,7 +70,7 @@ public class SigningInfoOutput implements Output {
 
         final String status = validationResult.getSignatureStatus().toString().toLowerCase(Locale.US);
         if (validationResult.getSignatureStatus() == SignatureStatus.INVALID) {
-            retVal = Coloriser.error(status + ". Failed entries: " + validationResult.getFailedEntries().size());
+            retVal = colorizer.error(status + ". Failed entries: " + validationResult.getFailedEntries().size());
         } else {
             retVal = status;
         }

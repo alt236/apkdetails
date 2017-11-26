@@ -2,7 +2,7 @@ package uk.co.alt236.apkdetails.output;
 
 import uk.co.alt236.apkdetails.decoder.ManifestParser;
 import uk.co.alt236.apkdetails.model.AndroidManifest;
-import uk.co.alt236.apkdetails.print.Coloriser;
+import uk.co.alt236.apkdetails.print.Colorizer;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.io.File;
@@ -11,10 +11,14 @@ import java.util.List;
 public class ManifestInfoOutput implements Output {
     private final boolean verbose;
     private final File file;
+    private final Colorizer colorizer;
 
-    public ManifestInfoOutput(final File file, final boolean verbose) {
+    public ManifestInfoOutput(final File file,
+                              final Colorizer colorizer,
+                              final boolean verbose) {
         this.file = file;
         this.verbose = verbose;
+        this.colorizer = colorizer;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class ManifestInfoOutput implements Output {
 
             //System.out.println(manifest.getXml());
         } catch (Exception e) {
-            printer.addKv("Parsing Error", Coloriser.error(e.toString()));
+            printer.addKv("Parsing Error", colorizer.error(e.toString()));
         }
 
         printer.endKeyValueSection();
@@ -54,7 +58,7 @@ public class ManifestInfoOutput implements Output {
 
     private String colorizeError(final int input) {
         if (input < 0) {
-            return Coloriser.error(input);
+            return colorizer.error(input);
         } else {
             return String.valueOf(input);
         }

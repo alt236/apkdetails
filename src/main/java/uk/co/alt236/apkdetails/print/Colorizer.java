@@ -1,7 +1,7 @@
 package uk.co.alt236.apkdetails.print;
 
 
-public final class Coloriser {
+public class Colorizer {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -12,24 +12,33 @@ public final class Coloriser {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
-    public static String error(final String input) {
+    private final boolean enabled;
+    private final boolean isWindows;
+
+    public Colorizer(final boolean enabled) {
+        this.enabled = enabled;
+        this.isWindows = isWindows();
+    }
+
+
+    public String error(final String input) {
         return colorise(ANSI_RED, input);
     }
 
-    public static String error(final int input) {
+    public String error(final int input) {
         return error(String.valueOf(input));
     }
 
-    public static String error(final long input) {
+    public String error(final long input) {
         return error(String.valueOf(input));
     }
 
-    public static String error(final boolean input) {
+    public String error(final boolean input) {
         return error(String.valueOf(input));
     }
 
-    private static String colorise(final String color, final String text) {
-        if (isWindows()) {
+    private String colorise(final String color, final String text) {
+        if (!enabled || isWindows) {
             return text;
         } else {
             return color + text + ANSI_RESET;
