@@ -26,8 +26,9 @@ class ApkDetails {
 
             final Output fileInfoOutput = new FileInfoOutput(file, fileSizeFormatter);
             final Output manifestInfoOutput = new ManifestInfoOutput(file, verbose);
-            final Output apkInfoOutput = new ApkInfoOutput(zipContents);
             final Output dexInfoOutput = new DexInfoOutput(zipContents);
+            final Output resOutput = new ResourcesOutput(zipContents);
+            final Output archOutput = new ArchitecturesOutput(zipContents);
             final Output signingInfoOutput = new SigningInfoOutput(file);
             final Output contentSizeOutput = new ContentSizeOutput(zipContents, fileSizeFormatter, 10);
 
@@ -36,7 +37,8 @@ class ApkDetails {
 
             output(printer, fileInfoOutput, true);
             output(printer, manifestInfoOutput, true);
-            output(printer, apkInfoOutput, true);
+            output(printer, resOutput, true);
+            output(printer, archOutput, true);
             output(printer, dexInfoOutput, true);
             output(printer, signingInfoOutput, true);
             output(printer, contentSizeOutput, verbose);

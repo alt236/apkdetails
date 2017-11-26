@@ -1,13 +1,10 @@
 package uk.co.alt236.apkdetails.model;
 
-import uk.co.alt236.apkdetails.model.common.Entry;
 import uk.co.alt236.apkdetails.model.common.ZipContents;
 
-import java.util.*;
 import java.util.stream.Collectors;
 
-public class ApkContents {
-    private static final String JNI_DIRECTORY = "lib/";
+public class Resources {
     private static final String ASSETS_DIRECTORY = "assets/";
     private static final String DRAWABLES_DIRECTORY_PREFIX = "res/drawable";
     private static final String LAYOUTS_DIRECTORY_PREFIX = "res/layout";
@@ -15,7 +12,7 @@ public class ApkContents {
 
     private final ZipContents zipContents;
 
-    public ApkContents(ZipContents zipContents) {
+    public Resources(ZipContents zipContents) {
         this.zipContents = zipContents;
     }
 
@@ -36,25 +33,6 @@ public class ApkContents {
 
     public long getNumberOfLayoutRes() {
         return getNumberOfResources(LAYOUTS_DIRECTORY_PREFIX);
-    }
-
-    public List<String> getJniArchitectures() {
-        final List<Entry> libFiles = zipContents
-                .getEntries(entry -> entry.getName().startsWith(JNI_DIRECTORY));
-
-        final Set<String> architectures = new HashSet<>();
-
-        for (final Entry entry : libFiles) {
-            final String cleanName = entry.getName().substring(JNI_DIRECTORY.length(), entry.getName().length());
-
-            if (!entry.isDirectory()) {
-                architectures.add(cleanName.substring(0, cleanName.indexOf("/")));
-            }
-        }
-
-        final List<String> retVal = new ArrayList<>(architectures);
-        Collections.sort(retVal);
-        return retVal;
     }
 
     private long getNumberOfResources(String prefix) {

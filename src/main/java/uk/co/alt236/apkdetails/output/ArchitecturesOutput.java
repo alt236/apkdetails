@@ -1,16 +1,15 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.model.ApkContents;
+import uk.co.alt236.apkdetails.model.Architectures;
 import uk.co.alt236.apkdetails.model.common.ZipContents;
 import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
 
 import java.util.List;
 
-public class ApkInfoOutput implements Output {
-
+public class ArchitecturesOutput implements Output {
     private final ZipContents zipContents;
 
-    public ApkInfoOutput(final ZipContents zipContents) {
+    public ArchitecturesOutput(final ZipContents zipContents) {
         this.zipContents = zipContents;
     }
 
@@ -28,16 +27,12 @@ public class ApkInfoOutput implements Output {
 
     @Override
     public void output(SectionedKvPrinter printer) {
-        final ApkContents fileInfo = new ApkContents(zipContents);
-        final List<String> jniArchitectures = fileInfo.getJniArchitectures();
+        final Architectures archs = new Architectures(zipContents);
+        final List<String> jniArchitectures = archs.getJniArchitectures();
 
 
-        printer.add("APK Contents");
+        printer.add("Native architectures");
         printer.startKeyValueSection();
-        printer.addKv("Res Raw", fileInfo.getNumberOfRawRes());
-        printer.addKv("Res Layouts", fileInfo.getNumberOfLayoutRes());
-        printer.addKv("Res Drawables", fileInfo.getNumberOfDrawableRes());
-        printer.addKv("Assets", fileInfo.getNumberOfAssets());
         printer.addKv("JNI Architectures", jniArchitectures.isEmpty()
                 ? "none"
                 : toString(jniArchitectures));
