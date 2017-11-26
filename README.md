@@ -12,18 +12,25 @@ Analyzes an APK and prints information helpful to a developer
 ## Usage
 
 ```
-usage: apkdetails-1.0.jar [-h] -i
+usage: apkdetails.jar [-h] -i <arg> [-v]
+version: 1.0
+Analyzes an APK and prints helpful info.
 
-<arg> [-v]
-  version: 1.0
-  Analyzes an APK and prints helpful info.</arg>
+ -h,--human         If set, file sizes will be human readable
+ -i,--input <arg>   Input. This can be either a single APK, or a
+                    directory. If it's the latter, all files with ".apk"
+                    extension will be analysed
+ -v,--verbose       If set, more detailed information will be printed.
+                    This includes a full list of Manifest
+                    activities/permissions/receivers and services.
 
--h,--human If set, file sizes will be human readable -i,--input
+Sample usage:
 
-<arg>   Input. This can be either a single APK, or a
-                      directory. If it's the latter, all files with ".apk"
-                      extension will be analysed
-   -v,--verbose       If set, more detailed information will be printed</arg>
+ * apkdetails-1.0-SNAPSHOT.jar --input ~/tmp/sample.apk
+ * apkdetails-1.0-SNAPSHOT.jar -v -i ~/tmp/path/to/apks/
+
+Source code: https://github.com/alt236/apkdetails
+Please report issues at https://github.com/alt236/apkdetails/issues
 ```
 ## Example Usage
 
@@ -41,11 +48,9 @@ apkdetails.jar -v -i ~/tmp/path/to/apks/
 
 Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 
-Source code: <https://github.com/alt236/apkdetails> Please report issues at <https://github.com/alt236/apkdetails/issues>
-
 ## Links
 
-- Github: [https://github.com/alt236/apkdetails]()
+* Github: [https://github.com/alt236/apkdetails]()
 
 ## Credits
 
