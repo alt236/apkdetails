@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package uk.co.alt236.apkdetails.decoder.abx;
+package com.pras.abx;
 
-import uk.co.alt236.apkdetails.decoder.utils.Log;
-import uk.co.alt236.apkdetails.decoder.utils.Utils;
+import com.pras.utils.Log;
+import com.pras.utils.Utils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static uk.co.alt236.apkdetails.decoder.abx.Resource.*;
+import static com.pras.abx.Resource.*;
 
 
 /**

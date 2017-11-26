@@ -1,9 +1,9 @@
-package uk.co.alt236.apkdetails.decoder;
+package com.pras;
 
-import uk.co.alt236.apkdetails.decoder.abx.Attribute;
-import uk.co.alt236.apkdetails.decoder.abx.BXCallback;
-import uk.co.alt236.apkdetails.decoder.abx.Node;
-import uk.co.alt236.apkdetails.decoder.utils.Log;
+import com.pras.abx.Attribute;
+import com.pras.abx.BXCallback;
+import com.pras.abx.Node;
+import com.pras.utils.Log;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;

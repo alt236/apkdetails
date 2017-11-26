@@ -1,7 +1,7 @@
-package uk.co.alt236.apkdetails.decoder;
+package com.pras;
 
-import uk.co.alt236.apkdetails.decoder.abx.Android_BX2;
-import uk.co.alt236.apkdetails.decoder.utils.Log;
+import com.pras.abx.Android_BX2;
+import com.pras.utils.Log;
 import uk.co.alt236.apkdetails.model.AndroidManifest;
 import uk.co.alt236.apkdetails.xml.XmlFormatter;
 

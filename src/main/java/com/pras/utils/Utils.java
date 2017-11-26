@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.co.alt236.apkdetails.decoder.utils;
+package com.pras.utils;
 
 import java.io.ByteArrayInputStream;
 

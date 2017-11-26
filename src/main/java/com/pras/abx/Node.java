@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.decoder.abx;
+package com.pras.abx;
 
 import java.util.ArrayList;
 

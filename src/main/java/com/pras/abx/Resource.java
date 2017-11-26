@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.co.alt236.apkdetails.decoder.abx;
+package com.pras.abx;
 
 public interface Resource {
     // Resource Types
