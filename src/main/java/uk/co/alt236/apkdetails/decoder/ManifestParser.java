@@ -2,7 +2,7 @@ package uk.co.alt236.apkdetails.decoder;
 
 import uk.co.alt236.apkdetails.decoder.abx.Android_BX2;
 import uk.co.alt236.apkdetails.decoder.utils.Log;
-import uk.co.alt236.apkdetails.model.AndroidManifest;
+import uk.co.alt236.apkdetails.repo.AndroidManifestRepository;
 import uk.co.alt236.apkdetails.xml.XmlFormatter;
 
 import java.io.*;
@@ -21,14 +21,14 @@ public class ManifestParser {
         this.xmlFormatter = new XmlFormatter();
     }
 
-    public AndroidManifest parse() throws Exception {
+    public AndroidManifestRepository parse() throws Exception {
         final byte[] binaryXMLManifest = getBinaryManifest(apkFile);
 
         final GenXML dataReceiver = new GenXML();
         final Android_BX2 abx2 = new Android_BX2(dataReceiver);
 
         abx2.parse(binaryXMLManifest);
-        return new AndroidManifest(xmlFormatter.format(dataReceiver.getXml()));
+        return new AndroidManifestRepository(xmlFormatter.format(dataReceiver.getXml()));
     }
 
 

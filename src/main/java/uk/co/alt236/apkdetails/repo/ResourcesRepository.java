@@ -1,10 +1,10 @@
-package uk.co.alt236.apkdetails.model;
+package uk.co.alt236.apkdetails.repo;
 
-import uk.co.alt236.apkdetails.model.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 
 import java.util.stream.Collectors;
 
-public class Resources {
+public class ResourcesRepository {
     private static final String ASSETS_DIRECTORY = "assets/";
     private static final String DRAWABLES_DIRECTORY_PREFIX = "res/drawable";
     private static final String LAYOUTS_DIRECTORY_PREFIX = "res/layout";
@@ -12,7 +12,7 @@ public class Resources {
 
     private final ZipContents zipContents;
 
-    public Resources(ZipContents zipContents) {
+    public ResourcesRepository(ZipContents zipContents) {
         this.zipContents = zipContents;
     }
 

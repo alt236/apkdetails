@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.model;
+package uk.co.alt236.apkdetails.repo;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -6,10 +6,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class FileInfo {
+public class FileInfoRepository {
     private final File file;
 
-    public FileInfo(File file) {
+    public FileInfoRepository(File file) {
         this.file = file;
     }
 

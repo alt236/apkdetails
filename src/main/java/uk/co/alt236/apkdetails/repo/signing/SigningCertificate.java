@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.model.signing;
+package uk.co.alt236.apkdetails.repo.signing;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

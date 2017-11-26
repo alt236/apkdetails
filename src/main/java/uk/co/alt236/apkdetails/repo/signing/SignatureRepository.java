@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.model.signing;
+package uk.co.alt236.apkdetails.repo.signing;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class SignatureInfo {
+public class SignatureRepository {
     private final File file;
     private final List<SigningCertificate> certList;
 
-    public SignatureInfo(File file) {
+    public SignatureRepository(File file) {
         this.file = file;
         this.certList = new ArrayList<>();
     }

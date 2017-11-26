@@ -1,8 +1,8 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.model.Architectures;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.ArchitectureRepository;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 
 import java.util.List;
 
@@ -26,14 +26,14 @@ public class ArchitecturesOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer) {
-        final Architectures archs = new Architectures(zipContents);
+    public void output(OutputCollector printer) {
+        final ArchitectureRepository archs = new ArchitectureRepository(zipContents);
         final List<String> jniArchitectures = archs.getJniArchitectures();
 
 
         printer.add("Native architectures");
         printer.startKeyValueSection();
-        printer.addKv("JNI Architectures", jniArchitectures.isEmpty()
+        printer.addKv("JNI ArchitectureRepository", jniArchitectures.isEmpty()
                 ? "none"
                 : toString(jniArchitectures));
         printer.endKeyValueSection();

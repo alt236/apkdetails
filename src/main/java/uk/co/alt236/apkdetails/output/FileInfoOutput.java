@@ -1,7 +1,7 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.model.FileInfo;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.FileInfoRepository;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
 import java.io.File;
@@ -17,8 +17,8 @@ public class FileInfoOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer) {
-        final FileInfo apkContents = new FileInfo(file);
+    public void output(OutputCollector printer) {
+        final FileInfoRepository apkContents = new FileInfoRepository(file);
 
         printer.add("File Info");
         printer.startKeyValueSection();

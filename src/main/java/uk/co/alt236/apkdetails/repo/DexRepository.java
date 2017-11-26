@@ -1,9 +1,9 @@
-package uk.co.alt236.apkdetails.model;
+package uk.co.alt236.apkdetails.repo;
 
 import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
-import uk.co.alt236.apkdetails.model.common.Entry;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.common.Entry;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 import uk.co.alt236.apkdetails.util.StreamUtils;
 
 import java.io.IOException;
@@ -13,11 +13,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class DexContents {
+public class DexRepository {
     private final ZipContents zipContents;
     private final List<DexBackedDexFile> dexFiles;
 
-    public DexContents(final ZipContents zipContents) {
+    public DexRepository(final ZipContents zipContents) {
         this.zipContents = zipContents;
         this.dexFiles = new ArrayList<>();
     }

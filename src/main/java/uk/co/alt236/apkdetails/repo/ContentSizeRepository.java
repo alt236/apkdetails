@@ -1,16 +1,16 @@
-package uk.co.alt236.apkdetails.model;
+package uk.co.alt236.apkdetails.repo;
 
-import uk.co.alt236.apkdetails.model.common.Entry;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.common.Entry;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ContentSize {
+public class ContentSizeRepository {
 
     private final ZipContents zipContents;
 
-    public ContentSize(ZipContents zipContents) {
+    public ContentSizeRepository(ZipContents zipContents) {
         this.zipContents = zipContents;
     }
 

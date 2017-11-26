@@ -1,9 +1,9 @@
 package uk.co.alt236.apkdetails.output;
 
 import uk.co.alt236.apkdetails.decoder.ManifestParser;
-import uk.co.alt236.apkdetails.model.AndroidManifest;
-import uk.co.alt236.apkdetails.print.Colorizer;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.AndroidManifestRepository;
+import uk.co.alt236.apkdetails.util.Colorizer;
 
 import java.io.File;
 import java.util.List;
@@ -22,12 +22,12 @@ public class ManifestInfoOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer) {
-        printer.add("AndroidManifest Info");
+    public void output(OutputCollector printer) {
+        printer.add("AndroidManifestRepository Info");
         printer.startKeyValueSection();
         try {
             final ManifestParser parser = new ManifestParser(file);
-            final AndroidManifest manifest = parser.parse();
+            final AndroidManifestRepository manifest = parser.parse();
             printer.addKv("Application Id", manifest.getApplicationId());
             printer.addKv("Version Name", manifest.getVersionName());
             printer.addKv("Version Code", manifest.getVersionCode());
@@ -49,7 +49,7 @@ public class ManifestInfoOutput implements Output {
         printer.endKeyValueSection();
     }
 
-    private void printOptionalList(SectionedKvPrinter printer, boolean verbose, List<String> items, String name) {
+    private void printOptionalList(OutputCollector printer, boolean verbose, List<String> items, String name) {
         printer.addKv(name + " #", items.size());
         if (!items.isEmpty() && verbose) {
             printer.addKv(name, items);

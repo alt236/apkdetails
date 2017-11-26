@@ -1,8 +1,8 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.model.Resources;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.ResourcesRepository;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 
 public class ResourcesOutput implements Output {
 
@@ -13,10 +13,10 @@ public class ResourcesOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer) {
-        final Resources fileInfo = new Resources(zipContents);
+    public void output(OutputCollector printer) {
+        final ResourcesRepository fileInfo = new ResourcesRepository(zipContents);
 
-        printer.add("Resources");
+        printer.add("ResourcesRepository");
         printer.startKeyValueSection();
         printer.addKv("Res Raw", fileInfo.getNumberOfRawRes());
         printer.addKv("Res Layouts", fileInfo.getNumberOfLayoutRes());

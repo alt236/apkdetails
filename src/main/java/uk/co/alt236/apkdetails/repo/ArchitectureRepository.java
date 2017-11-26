@@ -1,15 +1,15 @@
-package uk.co.alt236.apkdetails.model;
+package uk.co.alt236.apkdetails.repo;
 
-import uk.co.alt236.apkdetails.model.common.Entry;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.common.Entry;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 
 import java.util.*;
 
-public class Architectures {
+public class ArchitectureRepository {
     private static final String JNI_DIRECTORY = "lib/";
     private final ZipContents zipContents;
 
-    public Architectures(ZipContents zipContents) {
+    public ArchitectureRepository(ZipContents zipContents) {
         this.zipContents = zipContents;
     }
 

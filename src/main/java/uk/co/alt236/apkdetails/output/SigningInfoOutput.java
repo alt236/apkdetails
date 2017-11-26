@@ -1,11 +1,11 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.model.signing.SignatureInfo;
-import uk.co.alt236.apkdetails.model.signing.SignatureStatus;
-import uk.co.alt236.apkdetails.model.signing.SigningCertificate;
-import uk.co.alt236.apkdetails.model.signing.ValidationResult;
-import uk.co.alt236.apkdetails.print.Colorizer;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.signing.SignatureRepository;
+import uk.co.alt236.apkdetails.repo.signing.SignatureStatus;
+import uk.co.alt236.apkdetails.repo.signing.SigningCertificate;
+import uk.co.alt236.apkdetails.repo.signing.ValidationResult;
+import uk.co.alt236.apkdetails.util.Colorizer;
 import uk.co.alt236.apkdetails.util.date.IsoISO8601DateParser;
 
 import java.io.File;
@@ -23,11 +23,11 @@ public class SigningInfoOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer) {
-        final SignatureInfo signatureInfo = new SignatureInfo(file);
+    public void output(OutputCollector printer) {
+        final SignatureRepository signatureRepository = new SignatureRepository(file);
 
-        final List<SigningCertificate> certificates = signatureInfo.getCertificates();
-        final ValidationResult validationResult = signatureInfo.validateSignature();
+        final List<SigningCertificate> certificates = signatureRepository.getCertificates();
+        final ValidationResult validationResult = signatureRepository.validateSignature();
         final String validationStatus = getValidationStatus(validationResult);
 
         printer.add("Signature Info");

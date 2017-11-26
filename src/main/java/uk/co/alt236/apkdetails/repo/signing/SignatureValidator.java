@@ -1,6 +1,6 @@
-package uk.co.alt236.apkdetails.model.signing;
+package uk.co.alt236.apkdetails.repo.signing;
 
-import uk.co.alt236.apkdetails.model.common.Entry;
+import uk.co.alt236.apkdetails.repo.common.Entry;
 
 import java.io.File;
 import java.io.IOException;

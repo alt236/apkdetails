@@ -1,9 +1,9 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.model.ContentSize;
-import uk.co.alt236.apkdetails.model.common.Entry;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.ContentSizeRepository;
+import uk.co.alt236.apkdetails.repo.common.Entry;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
 public class ContentSizeOutput implements Output {
@@ -20,19 +20,19 @@ public class ContentSizeOutput implements Output {
     }
 
     @Override
-    public void output(SectionedKvPrinter printer) {
-        final ContentSize contentSize = new ContentSize(zipContents);
+    public void output(OutputCollector printer) {
+        final ContentSizeRepository contentSizeRepository = new ContentSizeRepository(zipContents);
 
-        listLargestFiles(printer, contentSize);
-        listLargestRes(printer, contentSize);
+        listLargestFiles(printer, contentSizeRepository);
+        listLargestRes(printer, contentSizeRepository);
     }
 
 
-    private void listLargestFiles(SectionedKvPrinter printer, ContentSize contentSize) {
+    private void listLargestFiles(OutputCollector printer, ContentSizeRepository contentSizeRepository) {
         printer.add("Largest files in APK");
         printer.startKeyValueSection();
 
-        for (final Entry entry : contentSize.getLargestFiles(noOfFiles)) {
+        for (final Entry entry : contentSizeRepository.getLargestFiles(noOfFiles)) {
             printer.addKv(entry.getName(), fileSizeFormatter.format(entry.getFileSize()));
         }
 
@@ -40,11 +40,11 @@ public class ContentSizeOutput implements Output {
         printer.addNewLine();
     }
 
-    private void listLargestRes(SectionedKvPrinter printer, ContentSize contentSize) {
-        printer.add("Largest Resources in APK");
+    private void listLargestRes(OutputCollector printer, ContentSizeRepository contentSizeRepository) {
+        printer.add("Largest ResourcesRepository in APK");
         printer.startKeyValueSection();
 
-        for (final Entry entry : contentSize.getLargestResources(noOfFiles)) {
+        for (final Entry entry : contentSizeRepository.getLargestResources(noOfFiles)) {
             printer.addKv(entry.getName(), fileSizeFormatter.format(entry.getFileSize()));
         }
 

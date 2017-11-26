@@ -9,7 +9,7 @@ import uk.co.alt236.apkdetails.print.section.values.Value;
 
 import java.util.Collection;
 
-public class SectionedKvPrinter {
+public class OutputCollector {
     private final static String NEW_LINE = System.getProperty("line.separator");
     private final static String SECTION_LINE = "------------------------------";
     private final StringBuilder sb = new StringBuilder();
@@ -122,9 +122,5 @@ public class SectionedKvPrinter {
     @Override
     public String toString() {
         return sb.toString();
-    }
-
-    public void print() {
-        System.out.println(toString());
     }
 }

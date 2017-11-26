@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.model.common;
+package uk.co.alt236.apkdetails.repo.common;
 
 import java.util.zip.ZipEntry;
 

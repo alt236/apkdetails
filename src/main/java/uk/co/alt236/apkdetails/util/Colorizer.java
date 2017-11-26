@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.print;
+package uk.co.alt236.apkdetails.util;
 
 
 public class Colorizer {

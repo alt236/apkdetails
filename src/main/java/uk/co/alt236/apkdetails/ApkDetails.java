@@ -1,10 +1,10 @@
 package uk.co.alt236.apkdetails;
 
 import uk.co.alt236.apkdetails.cli.CommandLineOptions;
-import uk.co.alt236.apkdetails.model.common.ZipContents;
 import uk.co.alt236.apkdetails.output.*;
-import uk.co.alt236.apkdetails.print.Colorizer;
-import uk.co.alt236.apkdetails.print.section.SectionedKvPrinter;
+import uk.co.alt236.apkdetails.print.section.OutputCollector;
+import uk.co.alt236.apkdetails.repo.common.ZipContents;
+import uk.co.alt236.apkdetails.util.Colorizer;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
 import java.io.File;
@@ -34,26 +34,26 @@ class ApkDetails {
             final Output signingInfoOutput = new SigningInfoOutput(file, colorizer);
             final Output contentSizeOutput = new ContentSizeOutput(zipContents, fileSizeFormatter, 10);
 
-            final SectionedKvPrinter printer = new SectionedKvPrinter();
-            printer.addSectionLine();
+            final OutputCollector collector = new OutputCollector();
+            collector.addSectionLine();
 
-            output(printer, fileInfoOutput, true);
-            output(printer, manifestInfoOutput, true);
-            output(printer, resOutput, true);
-            output(printer, archOutput, true);
-            output(printer, dexInfoOutput, true);
-            output(printer, signingInfoOutput, true);
-            output(printer, contentSizeOutput, verbose);
-
-            printer.print();
+            collect(collector, fileInfoOutput, true);
+            collect(collector, manifestInfoOutput, true);
+            collect(collector, resOutput, true);
+            collect(collector, archOutput, true);
+            collect(collector, dexInfoOutput, true);
+            collect(collector, signingInfoOutput, true);
+            collect(collector, contentSizeOutput, verbose);
             zipContents.close();
+
+            System.out.println(collector.toString());
         }
     }
 
-    private void output(SectionedKvPrinter printer, Output output, final boolean enabled) {
+    private void collect(OutputCollector outputCollector, Output output, final boolean enabled) {
         if (enabled) {
-            output.output(printer);
-            printer.addNewLine();
+            output.output(outputCollector);
+            outputCollector.addNewLine();
         }
     }
 }

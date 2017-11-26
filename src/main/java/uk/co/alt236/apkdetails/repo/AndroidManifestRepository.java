@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.model;
+package uk.co.alt236.apkdetails.repo;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AndroidManifest {
+public class AndroidManifestRepository {
     private static final String NS_DECLARATION_TEMPLATE = "xmlns:%s=\"%s\"";
 
     private static final String NODE_MANIFEST = "manifest";
@@ -72,7 +72,7 @@ public class AndroidManifest {
     private List<String> services;
     private List<String> permissions;
 
-    public AndroidManifest(final String xml) {
+    public AndroidManifestRepository(final String xml) {
         this.xmlDocument = new AndroidXmlDocument(xml);
     }
 
