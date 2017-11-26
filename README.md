@@ -56,6 +56,8 @@ Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 
 Author: [Alexandros Schillings](https://github.com/alt236).
 
+The XML parser a slightly modified version of the one in [apk-extractor](https://code.google.com/archive/p/apk-extractor) by Prasanta Paul.
+
 The code in this project is licensed under the [Apache Software License 2.0](LICENSE-2.0.html).
 
 Copyright (c) 2017 Alexandros Schillings.
