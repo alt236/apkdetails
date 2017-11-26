@@ -1,16 +1,16 @@
 package uk.co.alt236.apkdetails.repo;
 
-import org.apache.commons.codec.digest.DigestUtils;
+import uk.co.alt236.apkdetails.util.Hasher;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class FileInfoRepository {
     private final File file;
+    private final Hasher hasher;
 
     public FileInfoRepository(File file) {
         this.file = file;
+        this.hasher = new Hasher();
     }
 
     public long getFileSize() {
@@ -18,29 +18,11 @@ public class FileInfoRepository {
     }
 
     public String getMd5() {
-        String retVal;
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            retVal = DigestUtils.md5Hex(fis);
-            fis.close();
-        } catch (IOException e) {
-            retVal = "";
-        }
-
-        return retVal;
+        return hasher.md5Hex(file);
     }
 
     public String getSha1() {
-        String retVal;
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            retVal = DigestUtils.sha1Hex(fis);
-            fis.close();
-        } catch (IOException e) {
-            retVal = "";
-        }
-
-        return retVal;
+        return hasher.sha1Hex(file);
     }
 
     public String getPath() {

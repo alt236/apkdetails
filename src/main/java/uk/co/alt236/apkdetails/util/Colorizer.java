@@ -20,7 +20,6 @@ public class Colorizer {
         this.isWindows = isWindows();
     }
 
-
     public String error(final String input) {
         return colorise(ANSI_RED, input);
     }

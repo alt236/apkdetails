@@ -1,6 +1,6 @@
 package uk.co.alt236.apkdetails.repo.signing;
 
-import org.apache.commons.codec.digest.DigestUtils;
+import uk.co.alt236.apkdetails.util.Hasher;
 
 import java.math.BigInteger;
 import java.security.Principal;
@@ -10,9 +10,11 @@ import java.util.Date;
 
 public class SigningCertificate {
     private final X509Certificate cert;
+    private final Hasher hasher;
 
     SigningCertificate(X509Certificate cert) {
         this.cert = cert;
+        this.hasher = new Hasher();
     }
 
     public Principal getSubjectDN() {
@@ -41,7 +43,7 @@ public class SigningCertificate {
 
     public String getMd5Thumbprint() {
         try {
-            return DigestUtils.md5Hex(cert.getEncoded());
+            return hasher.md5Hex(cert.getEncoded());
         } catch (CertificateEncodingException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
@@ -49,7 +51,7 @@ public class SigningCertificate {
 
     public String getSha1Thumbprint() {
         try {
-            return DigestUtils.sha1Hex(cert.getEncoded());
+            return hasher.sha1Hex(cert.getEncoded());
         } catch (CertificateEncodingException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }

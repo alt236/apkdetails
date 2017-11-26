@@ -33,7 +33,7 @@ public class UtcDateFormatter extends java.text.SimpleDateFormat {
     @Override
     public void setTimeZone(final TimeZone timezone) {
         if (!TIME_ZONE_STRING.equals(timezone.getID())) {
-            throw new UnsupportedOperationException("This SimpleDateFormat can only be in " + TIME_ZONE_STRING);
+            throw new IllegalArgumentException("This SimpleDateFormat can only be in " + TIME_ZONE_STRING);
         }
     }
 }
