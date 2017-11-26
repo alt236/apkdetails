@@ -1,7 +1,13 @@
 package uk.co.alt236.apkdetails.model;
 
+import parser.arsc.ARSCFile;
+import parser.axml.res.IntReader;
+import uk.co.alt236.apkdetails.model.common.Entry;
 import uk.co.alt236.apkdetails.model.common.ZipContents;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Resources {
@@ -11,7 +17,6 @@ public class Resources {
     private static final String RAW_DIRECTORY_PREFIX = "res/raw";
 
     private final ZipContents zipContents;
-
     public Resources(ZipContents zipContents) {
         this.zipContents = zipContents;
     }
@@ -34,6 +39,22 @@ public class Resources {
     public long getNumberOfLayoutRes() {
         return getNumberOfResources(LAYOUTS_DIRECTORY_PREFIX);
     }
+
+
+    public long test() {
+
+        final Entry entry = zipContents.getEntries(entry1 -> entry1.getName().equals("resources.arsc")).get(0);
+        final InputStream is = zipContents.getInputStream(entry);
+        try {
+            final ARSCFile arscFile = new ARSCFile(new IntReader(is, false));
+            System.out.println(Arrays.toString(arscFile.pkges));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
 
     private long getNumberOfResources(String prefix) {
         return zipContents.getEntries(entry -> !entry.isDirectory() && entry.getName().startsWith(prefix))

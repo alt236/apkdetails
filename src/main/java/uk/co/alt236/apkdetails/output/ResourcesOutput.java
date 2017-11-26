@@ -23,5 +23,7 @@ public class ResourcesOutput implements Output {
         printer.addKv("Res Drawables", fileInfo.getNumberOfDrawableRes());
         printer.addKv("Assets", fileInfo.getNumberOfAssets());
         printer.endKeyValueSection();
+
+        fileInfo.test();
     }
 }

@@ -35,13 +35,13 @@ class ApkDetails {
             final SectionedKvPrinter printer = new SectionedKvPrinter();
             printer.addSectionLine();
 
-            output(printer, fileInfoOutput, true);
-            output(printer, manifestInfoOutput, true);
+//            output(printer, fileInfoOutput, true);
+//            output(printer, manifestInfoOutput, true);
             output(printer, resOutput, true);
-            output(printer, archOutput, true);
-            output(printer, dexInfoOutput, true);
-            output(printer, signingInfoOutput, true);
-            output(printer, contentSizeOutput, verbose);
+//            output(printer, archOutput, true);
+//            output(printer, dexInfoOutput, true);
+//            output(printer, signingInfoOutput, true);
+//            output(printer, contentSizeOutput, verbose);
 
             printer.print();
             zipContents.close();

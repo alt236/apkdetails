@@ -76,4 +76,8 @@ public class ZipContents {
     public void close() {
         StreamUtils.close(zipFile);
     }
+
+    public File getFile() {
+        return file;
+    }
 }
