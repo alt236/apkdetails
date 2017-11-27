@@ -22,7 +22,6 @@ public class ArchitecturesOutput implements Output {
         final ArchitectureRepository archs = new ArchitectureRepository(zipContents);
         final List<Architecture> jniArchitectures = archs.getJniArchitectures();
 
-
         printer.add("Native architectures");
         printer.startKeyValueSection();
         printer.addKv("JNI Architectures", jniArchitectures.isEmpty()
