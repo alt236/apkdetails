@@ -41,7 +41,7 @@ public class ContentSizeOutput implements Output {
     }
 
     private void listLargestRes(OutputCollector printer, ContentSizeRepository contentSizeRepository) {
-        printer.add("Largest ResourcesRepository in APK");
+        printer.add("Largest Resources in APK");
         printer.startKeyValueSection();
 
         for (final Entry entry : contentSizeRepository.getLargestResources(noOfFiles)) {

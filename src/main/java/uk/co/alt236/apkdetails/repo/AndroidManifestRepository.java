@@ -170,6 +170,16 @@ public class AndroidManifestRepository {
         return getAndroidNamesOfNodes(items, expression);
     }
 
+    public List<String> getProviders() {
+        final List<String> items = new ArrayList<>();
+        final String expression = "/" + NODE_MANIFEST +
+                "/" + NODE_APPLICATION +
+                "/" + NODE_PROVIDER;
+
+        return getAndroidNamesOfNodes(items, expression);
+    }
+
+
     private List<String> getAndroidNamesOfNodes(List<String> items, String expression) {
         final NodeList nodeList = xmlDocument.getNodes(expression);
         for (int i = 0; i < nodeList.getLength(); i++) {
