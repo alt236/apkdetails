@@ -29,7 +29,7 @@ public class ArchitectureRepository {
     }
 
 
-    private final Map<String, List<Entry>> getArchitecturesAndFiles() {
+    private Map<String, List<Entry>> getArchitecturesAndFiles() {
         final List<Entry> libFiles = zipContents
                 .getEntries(entry -> entry.getName().startsWith(JNI_DIRECTORY));
 
@@ -38,12 +38,20 @@ public class ArchitectureRepository {
         for (final Entry entry : libFiles) {
             final String cleanName = entry.getName().substring(JNI_DIRECTORY.length(), entry.getName().length());
 
-            if (!entry.isDirectory()) {
-                final String archName = cleanName.substring(0, cleanName.indexOf("/"));
-
-                if (!retVal.containsKey(archName)) {
-                    retVal.put(archName, new ArrayList<>());
+            if (entry.isDirectory()) {
+                // This is the case where there is an empty dir under lib/
+                if (countChar(cleanName, '/') == 1) {
+                    final String archName = cleanName.substring(0, cleanName.indexOf("/"));
+                    addArchitectureToMap(archName, retVal);
                 }
+            } else {
+                // This is a random file under lib/
+                if (!cleanName.contains("/")) {
+                    continue;
+                }
+
+                final String archName = cleanName.substring(0, cleanName.indexOf("/"));
+                addArchitectureToMap(archName, retVal);
                 retVal.get(archName).add(entry);
             }
         }
@@ -53,5 +61,23 @@ public class ArchitectureRepository {
         }
 
         return retVal;
+    }
+
+
+    private void addArchitectureToMap(final String arch, final Map<String, List<Entry>> map) {
+        if (!map.containsKey(arch)) {
+            map.put(arch, new ArrayList<>());
+        }
+    }
+
+    private int countChar(final String input,
+                          final char chr) {
+        int counter = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == chr) {
+                counter++;
+            }
+        }
+        return counter;
     }
 }
