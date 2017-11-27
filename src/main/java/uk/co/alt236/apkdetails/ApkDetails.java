@@ -30,7 +30,7 @@ class ApkDetails {
             final Output manifestInfoOutput = new ManifestInfoOutput(file, colorizer, verbose);
             final Output dexInfoOutput = new DexInfoOutput(zipContents);
             final Output resOutput = new ResourcesOutput(zipContents);
-            final Output archOutput = new ArchitecturesOutput(zipContents);
+            final Output archOutput = new ArchitecturesOutput(zipContents, verbose);
             final Output signingInfoOutput = new SigningInfoOutput(file, colorizer);
             final Output contentSizeOutput = new ContentSizeOutput(zipContents, fileSizeFormatter, 10);
 
