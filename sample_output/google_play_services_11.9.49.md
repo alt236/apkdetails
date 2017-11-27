@@ -5,7 +5,7 @@ File Info
  •MD5 : edfc8fd634be2ec2cc5d07dcea1059c6
  •SHA1: 9a9352fe345c132446bc3747a81939bf2bfca3ca
 
-AndroidManifest Info
+Manifest Info
  •Application Id    : com.google.android.gms
  •Version Name      : 11.9.49 (948-176442569)
  •Version Code      : 11949948
@@ -1022,6 +1022,48 @@ AndroidManifest Info
                     : com.google.android.location.network.LocationModeChangingReceiver
                     : com.google.android.location.network.LocationProviderChangeReceiver
                     : com.google.android.location.reporting.service.GcmRegistrationReceiver
+ •Providers #       : 41
+ •Providers         : android.support.v4.content.FileProvider
+                    : com.google.android.gms.ads.adinfo.AdvertisingInfoContentProvider
+                    : com.google.android.gms.appstate.provider.AppStateContentProvider
+                    : com.google.android.gms.auth.account.be.accountstate.AccountStateContentProvider
+                    : com.google.android.gms.auth.account.be.accountstate.CredentialStateContentProvider
+                    : com.google.android.gms.auth.account.be.legacy.AccountContentProvider
+                    : com.google.android.gms.auth.api.credentials.be.persistence.TemporaryValueProvider
+                    : com.google.android.gms.auth.api.credentials.sync.CredentialContentProvider
+                    : com.google.android.gms.autofill.content.AutofillContentProvider
+                    : com.google.android.gms.car.CarFileProvider
+                    : com.google.android.gms.chimera.container.GmsModuleProvider
+                    : com.google.android.gms.chromesync.sync.SyncContentProvider
+                    : com.google.android.gms.common.download.provider.DownloadsProvider
+                    : com.google.android.gms.common.stats.net.contentprovider.NetworkUsageContentProvider
+                    : com.google.android.gms.drive.metadata.sync.syncadapter.StubContentProvider
+                    : com.google.android.gms.fitness.sync.FitnessContentProvider
+                    : com.google.android.gms.fonts.provider.FontsProvider
+                    : com.google.android.gms.games.chimera.GamesContentProviderProxy
+                    : com.google.android.gms.games.provider.NotificationStubContentProvider
+                    : com.google.android.gms.icing.indexapi.IndexApiContentProvider
+                    : com.google.android.gms.icing.proxy.AppsContentProvider
+                    : com.google.android.gms.icing.proxy.InternalIcingCorporaProvider
+                    : com.google.android.gms.icing.proxy.SmsContentProvider
+                    : com.google.android.gms.icing.proxy.SuggestQueryContentProvider
+                    : com.google.android.gms.instantapps.routing.InstantAppsContentProvider
+                    : com.google.android.gms.matchstick.data.AppDataProvider
+                    : com.google.android.gms.matchstick.data.DatabaseProvider
+                    : com.google.android.gms.people.profile.AvatarFileProvider
+                    : com.google.android.gms.people.service.PeopleContentProvider
+                    : com.google.android.gms.phenotype.provider.ConfigurationProvider
+                    : com.google.android.gms.plus.provider.PlusProvider
+                    : com.google.android.gms.reminders.provider.RemindersProvider
+                    : com.google.android.gms.security.provider.SecurityProvider
+                    : com.google.android.gms.subscribedfeeds.GmsSubscribedFeedsProvider
+                    : com.google.android.gms.thunderbird.config.EmergencyConfigContentProvider
+                    : com.google.android.gms.trustagent.framework.model.be.ModelContentProvider
+                    : com.google.android.gms.wallet.provider.WalletFileProvider
+                    : com.google.android.libraries.social.autobackup.AutoBackupProvider
+                    : com.google.android.location.internal.LocationContentProvider
+                    : com.google.android.location.internal.server.HistorianFileProvider
+                    : com.google.android.location.reporting.service.ReportingContentProvider
 
 Resources
  •Res Raw      : 19
