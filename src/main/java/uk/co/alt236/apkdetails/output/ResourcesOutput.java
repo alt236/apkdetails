@@ -16,7 +16,7 @@ public class ResourcesOutput implements Output {
     public void output(OutputCollector printer) {
         final ResourcesRepository fileInfo = new ResourcesRepository(zipContents);
 
-        printer.add("ResourcesRepository");
+        printer.add("Resources");
         printer.startKeyValueSection();
         printer.addKv("Res Raw", fileInfo.getNumberOfRawRes());
         printer.addKv("Res Layouts", fileInfo.getNumberOfLayoutRes());

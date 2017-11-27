@@ -33,7 +33,7 @@ public class ArchitecturesOutput implements Output {
 
         printer.add("Native architectures");
         printer.startKeyValueSection();
-        printer.addKv("JNI ArchitectureRepository", jniArchitectures.isEmpty()
+        printer.addKv("JNI Architectures", jniArchitectures.isEmpty()
                 ? "none"
                 : toString(jniArchitectures));
         printer.endKeyValueSection();

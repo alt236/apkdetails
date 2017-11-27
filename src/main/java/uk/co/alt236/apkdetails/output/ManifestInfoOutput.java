@@ -23,7 +23,7 @@ public class ManifestInfoOutput implements Output {
 
     @Override
     public void output(OutputCollector printer) {
-        printer.add("AndroidManifestRepository Info");
+        printer.add("Manifest Info");
         printer.startKeyValueSection();
         try {
             final ManifestParser parser = new ManifestParser(file);
@@ -40,6 +40,7 @@ public class ManifestInfoOutput implements Output {
             printOptionalList(printer, verbose, manifest.getServices(), "Services");
             printOptionalList(printer, verbose, manifest.getUsedPermissions(), "Used Permissions");
             printOptionalList(printer, verbose, manifest.getReceivers(), "Receivers");
+            printOptionalList(printer, verbose, manifest.getProviders(), "Providers");
 
             //System.out.println(manifest.getXml());
         } catch (Exception e) {
