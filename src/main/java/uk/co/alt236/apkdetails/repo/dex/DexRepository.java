@@ -30,7 +30,7 @@ public class DexRepository {
         return Collections.unmodifiableList(dexFiles);
     }
 
-    public long getTotalMethods() {
+    public long getTotalMethodCount() {
         loadDexFiles();
         return dexFiles.stream().mapToLong(DexBackedDexFile::getMethodCount).sum();
     }
@@ -38,6 +38,11 @@ public class DexRepository {
     public long getTotalClassCount() {
         loadDexFiles();
         return dexFiles.stream().mapToLong(DexBackedDexFile::getClassCount).sum();
+    }
+
+    public long getTotalFieldCount() {
+        loadDexFiles();
+        return dexFiles.stream().mapToLong(DexBackedDexFile::getFieldCount).sum();
     }
 
     public long getAnonymousClassCount() {
@@ -54,7 +59,7 @@ public class DexRepository {
         return count;
     }
 
-    public long getTotalStrings() {
+    public long getTotalStringCount() {
         loadDexFiles();
         return dexFiles.stream().mapToLong(DexBackedDexFile::getStringCount).sum();
     }
