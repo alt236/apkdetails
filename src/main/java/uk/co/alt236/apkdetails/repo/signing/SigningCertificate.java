@@ -56,4 +56,12 @@ public class SigningCertificate {
             throw new IllegalStateException(e.getMessage(), e);
         }
     }
+
+    public String getSha256Thumbprint() {
+        try {
+            return hasher.sha256Hex(cert.getEncoded());
+        } catch (CertificateEncodingException e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+    }
 }

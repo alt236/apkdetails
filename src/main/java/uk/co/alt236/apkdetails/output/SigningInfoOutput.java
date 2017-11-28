@@ -51,6 +51,7 @@ public class SigningInfoOutput implements Output {
             printer.addKv(prefix + "Serial", certificate.getSerialNumber().toString());
             printer.addKv(prefix + "MD5 Thumb", certificate.getMd5Thumbprint());
             printer.addKv(prefix + "SHA1 Thumb", certificate.getSha1Thumbprint());
+            printer.addKv(prefix + "SHA256 Thumb", certificate.getSha256Thumbprint());
         }
 
         printer.endKeyValueSection();

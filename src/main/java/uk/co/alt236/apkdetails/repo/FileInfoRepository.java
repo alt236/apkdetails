@@ -25,6 +25,10 @@ public class FileInfoRepository {
         return hasher.sha1Hex(file);
     }
 
+    public String getSha256() {
+        return hasher.sha256Hex(file);
+    }
+
     public String getPath() {
         return file.getAbsolutePath();
     }

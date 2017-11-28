@@ -26,6 +26,7 @@ public class FileInfoOutput implements Output {
         printer.addKv("Size", fileSizeFormatter.format(apkContents.getFileSize()));
         printer.addKv("MD5", apkContents.getMd5());
         printer.addKv("SHA1", apkContents.getSha1());
+        printer.addKv("SHA256", apkContents.getSha256());
         printer.endKeyValueSection();
     }
 }
