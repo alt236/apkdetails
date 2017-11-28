@@ -21,8 +21,9 @@ public class DexInfoOutput implements Output {
         printer.addKv("Dex Files", dexContents.getDexFiles().size());
         printer.addKv("Dex Classes", dexClasses);
         printer.addKv("Dex Anon Classes", anonClasses + "/" + dexClasses);
-        printer.addKv("Dex Methods", dexContents.getTotalMethods());
-        printer.addKv("Dex Strings", dexContents.getTotalStrings());
+        printer.addKv("Dex Methods", dexContents.getTotalMethodCount());
+        printer.addKv("Dex Fields", dexContents.getTotalFieldCount());
+        printer.addKv("Dex Strings", dexContents.getTotalStringCount());
         printer.endKeyValueSection();
     }
 }
