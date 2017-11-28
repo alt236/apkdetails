@@ -42,4 +42,21 @@ public class Hasher {
         return retVal;
     }
 
+    public String sha256Hex(final byte[] input) {
+        return DigestUtils.sha256Hex(input);
+    }
+
+    public String sha256Hex(final File input) {
+        String retVal;
+        try {
+            FileInputStream fis = new FileInputStream(input);
+            retVal = DigestUtils.sha256Hex(fis);
+            fis.close();
+        } catch (IOException e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+
+        return retVal;
+    }
+
 }
