@@ -1,6 +1,7 @@
-package uk.co.alt236.apkdetails.repo;
+package uk.co.alt236.apkdetails.repo.dex;
 
 import org.jf.dexlib2.Opcodes;
+import org.jf.dexlib2.dexbacked.DexBackedClassDef;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import uk.co.alt236.apkdetails.repo.common.Entry;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
@@ -16,8 +17,10 @@ import java.util.Locale;
 public class DexRepository {
     private final ZipContents zipContents;
     private final List<DexBackedDexFile> dexFiles;
+    private final DexClassInfo dexClassInfo;
 
     public DexRepository(final ZipContents zipContents) {
+        this.dexClassInfo = new DexClassInfo();
         this.zipContents = zipContents;
         this.dexFiles = new ArrayList<>();
     }
@@ -32,9 +35,23 @@ public class DexRepository {
         return dexFiles.stream().mapToLong(DexBackedDexFile::getMethodCount).sum();
     }
 
-    public long getTotalClasses() {
+    public long getTotalClassCount() {
         loadDexFiles();
         return dexFiles.stream().mapToLong(DexBackedDexFile::getClassCount).sum();
+    }
+
+    public long getAnonymousClassCount() {
+        loadDexFiles();
+        long count = 0;
+        for (final DexBackedDexFile dexFile : dexFiles) {
+            for (final DexBackedClassDef clazz : dexFile.getClasses()) {
+                if (dexClassInfo.isInnerClass(clazz)) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     public long getTotalStrings() {
@@ -59,7 +76,6 @@ public class DexRepository {
             StreamUtils.close(is);
         }
     }
-
 
     private List<Entry> getDexFileEntries() {
         return zipContents
