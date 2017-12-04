@@ -69,6 +69,11 @@ public class DexRepository {
         return dexFiles.stream().mapToLong(DexBackedDexFile::getStringCount).sum();
     }
 
+    public long getTotalProtoCount() {
+        loadDexFiles();
+        return dexFiles.stream().mapToLong(DexBackedDexFile::getProtoCount).sum();
+    }
+
     private void loadDexFiles() {
         if (!dexFiles.isEmpty()) {
             return;
