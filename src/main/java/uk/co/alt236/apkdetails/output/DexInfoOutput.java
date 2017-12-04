@@ -16,14 +16,17 @@ public class DexInfoOutput implements Output {
         final DexRepository dexContents = new DexRepository(zipContents);
         final long dexClasses = dexContents.getTotalClassCount();
         final long anonClasses = dexContents.getAnonymousClassCount();
+        final long lambdaClasses = dexContents.getLambdaClassCount();
+
         printer.add("Dex Contents");
         printer.startKeyValueSection();
-        printer.addKv("Dex Files", dexContents.getDexFiles().size());
-        printer.addKv("Dex Classes", dexClasses);
-        printer.addKv("Dex Anon Classes", anonClasses + "/" + dexClasses);
-        printer.addKv("Dex Methods", dexContents.getTotalMethodCount());
-        printer.addKv("Dex Fields", dexContents.getTotalFieldCount());
-        printer.addKv("Dex Strings", dexContents.getTotalStringCount());
+        printer.addKv("Files", dexContents.getDexFiles().size());
+        printer.addKv("Classes", dexClasses);
+        printer.addKv("Anon Classes", anonClasses + "/" + dexClasses);
+        printer.addKv("Lambdas Classes", lambdaClasses + "/" + anonClasses);
+        printer.addKv("Methods", dexContents.getTotalMethodCount());
+        printer.addKv("Fields", dexContents.getTotalFieldCount());
+        printer.addKv("Strings", dexContents.getTotalStringCount());
         printer.endKeyValueSection();
     }
 }

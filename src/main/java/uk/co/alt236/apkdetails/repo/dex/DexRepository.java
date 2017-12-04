@@ -1,7 +1,6 @@
 package uk.co.alt236.apkdetails.repo.dex;
 
 import org.jf.dexlib2.Opcodes;
-import org.jf.dexlib2.dexbacked.DexBackedClassDef;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import uk.co.alt236.apkdetails.repo.common.Entry;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
@@ -49,11 +48,17 @@ public class DexRepository {
         loadDexFiles();
         long count = 0;
         for (final DexBackedDexFile dexFile : dexFiles) {
-            for (final DexBackedClassDef clazz : dexFile.getClasses()) {
-                if (dexClassInfo.isInnerClass(clazz)) {
-                    count++;
-                }
-            }
+            count += dexFile.getClasses().stream().filter(dexClassInfo::isInnerClass).count();
+        }
+
+        return count;
+    }
+
+    public long getLambdaClassCount() {
+        loadDexFiles();
+        long count = 0;
+        for (final DexBackedDexFile dexFile : dexFiles) {
+            count += dexFile.getClasses().stream().filter(dexClassInfo::isLambda).count();
         }
 
         return count;
