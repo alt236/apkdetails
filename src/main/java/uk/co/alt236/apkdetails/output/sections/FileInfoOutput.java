@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.output;
+package uk.co.alt236.apkdetails.output.sections;
 
 import uk.co.alt236.apkdetails.print.section.OutputCollector;
 import uk.co.alt236.apkdetails.repo.FileInfoRepository;

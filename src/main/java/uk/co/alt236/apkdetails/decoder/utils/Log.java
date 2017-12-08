@@ -20,9 +20,9 @@ import java.io.File;
 import java.io.PrintStream;
 
 /**
- * Based on your target platform- edit this file and add appropriate Log console
+ * Based on your target platform- edit this file and add appropriate Logger console
  * e.g.
- * for Android, android.util.Log
+ * for Android, android.util.Logger
  * for J2ME, Desktop File based logging.
  * </br>
  * By default Logging will be enabled
@@ -36,7 +36,7 @@ public class Log {
     public static final int PRODUCTION_LEVEL = 1 << 1;
 
     /**
-     * Set to false if you don't need Log output
+     * Set to false if you don't need Logger output
      * Default values.
      */
     private static boolean isLogEnabled = true;
@@ -50,7 +50,7 @@ public class Log {
 
     static {
         if (LOG_TO_FILE_ENABLED) {
-            System.out.println("Log File: " + logFile);
+            System.out.println("Logger File: " + logFile);
         }
     }
 
@@ -86,7 +86,7 @@ public class Log {
     }
 
     /**
-     * Production Log
+     * Production Logger
      *
      * @param tag
      * @param msg
@@ -107,7 +107,7 @@ public class Log {
     }
 
     /**
-     * Production Log
+     * Production Logger
      *
      * @param tag
      * @param msg
@@ -118,10 +118,10 @@ public class Log {
     }
 
     /**
-     * Pring Production Log message
+     * Pring Production Logger message
      *
-     * @param tag Log TAG
-     * @param msg Log Message
+     * @param tag Logger TAG
+     * @param msg Logger Message
      */
     private static void write(String tag, String msg) {
 
@@ -141,7 +141,7 @@ public class Log {
     }
 
     /**
-     * Print Exception irrespective of Log Level.
+     * Print Exception irrespective of Logger Level.
      *
      * @param tag
      * @param msg
@@ -151,7 +151,7 @@ public class Log {
     }
 
     /**
-     * Print Exception irrespective of Log Level.
+     * Print Exception irrespective of Logger Level.
      *
      * @param msg
      * @param ex
