@@ -21,4 +21,8 @@ public class CommandLineOptions {
     public String getInput() {
         return commandLine.getOptionValue(OptionsBuilder.ARG_INPUT_LONG);
     }
+
+    public String getOutputDirectory() {
+        return commandLine.getOptionValue(OptionsBuilder.ARG_OUTPUT_LONG);
+    }
 }

@@ -9,6 +9,9 @@ public class OptionsBuilder {
     /*package*/ static final String ARG_INPUT = "i";
     /*package*/ static final String ARG_INPUT_LONG = "input";
 
+    /*package*/ static final String ARG_OUTPUT = "o";
+    /*package*/ static final String ARG_OUTPUT_LONG = "output";
+
     /*package*/ static final String ARG_VERBOSE = "v";
     /*package*/ static final String ARG_VERBOSE_LONG = "verbose";
 
@@ -24,17 +27,28 @@ public class OptionsBuilder {
     public Options compileOptions() {
         final Options options = new Options();
 
-        options.addOption(createOptionInputJar());
+        options.addOption(createOptionInput());
+        options.addOption(createOptionOutput());
         options.addOption(createOptionVerbose());
         options.addOption(createOptionHumanReadableSizes());
 
         return options;
     }
 
-    private Option createOptionInputJar() {
+    private Option createOptionInput() {
         final String desc = strings.getString("cli_cmd_input");
         return Option.builder(ARG_INPUT)
                 .longOpt(ARG_INPUT_LONG)
+                .hasArg()
+                .required(true)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createOptionOutput() {
+        final String desc = strings.getString("cli_cmd_output");
+        return Option.builder(ARG_OUTPUT)
+                .longOpt(ARG_OUTPUT_LONG)
                 .hasArg()
                 .required(true)
                 .desc(desc)

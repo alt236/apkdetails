@@ -569,10 +569,10 @@ public class Android_BX2 {
                 read(in, int_buf);
                 int data = Utils.toInt(int_buf, false); // Refer to Resource Table
                 attr_value = "" + data;
-                //Log.d(tag, "[Attribute] Value: "+ data);
+                //Logger.d(tag, "[Attribute] Value: "+ data);
             } else {
                 attr_value = stringPool.get(attr_raw_value);
-                //Log.d(tag, "[Attribute] Value: "+ attr_value);
+                //Logger.d(tag, "[Attribute] Value: "+ attr_value);
                 // Skip Typed value bytes
                 in.skip(8);
             }
@@ -590,7 +590,7 @@ public class Android_BX2 {
                 node.addAttribute(attr);
             }
 
-//			Log.d(tag, "[Attribute] NameSpace: "+ (attr_ns_index == -1 ? "-1": stringPool.get(attr_ns_index)) +
+//			Logger.d(tag, "[Attribute] NameSpace: "+ (attr_ns_index == -1 ? "-1": stringPool.get(attr_ns_index)) +
 //								" Name: "+ (attr_name_index == -1 ? "-1" : stringPool.get(attr_name_index)));
         }
 
