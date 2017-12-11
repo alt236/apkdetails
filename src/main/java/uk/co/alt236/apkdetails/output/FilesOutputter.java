@@ -1,11 +1,13 @@
 package uk.co.alt236.apkdetails.output;
 
+import uk.co.alt236.apkdetails.output.graphml.GraphMlTreeAdapter;
 import uk.co.alt236.apkdetails.output.loging.Logger;
 import uk.co.alt236.apkdetails.output.tree.ClassTreeAdapter;
 import uk.co.alt236.apkdetails.output.tree.DexNode;
 import uk.co.alt236.apkdetails.output.tree.DexTree;
 import uk.co.alt236.apkdetails.print.ClassListPrinter;
 import uk.co.alt236.apkdetails.print.file.FileWriter;
+import uk.co.alt236.apkdetails.print.graphml.GraphMLPrinter;
 import uk.co.alt236.apkdetails.print.tree.TreePrinter;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
 import uk.co.alt236.apkdetails.repo.dex.DexRepository;
@@ -41,8 +43,11 @@ public class FilesOutputter {
                          boolean verbose) {
 
         saveManifest(outputPathFactory, manifestRepository);
-        saveClassTree(outputPathFactory, dexRepository);
         saveClassList(outputPathFactory, dexRepository);
+
+        final Tree<DexClass> dexTree = createTree(dexRepository);
+        saveClassTree(outputPathFactory, dexTree);
+        saveGraphMl(outputPathFactory, dexTree);
     }
 
 
@@ -66,20 +71,29 @@ public class FilesOutputter {
     }
 
     private void saveClassTree(OutputPathFactory outputPathFactory,
-                               DexRepository dexRepository) {
+                               Tree<DexClass> tree) {
 
         final File outputFile = outputPathFactory.getClassTreeFile();
         if (outputFile != null) {
             Logger.get().out("Class Tree file: " + outputFile);
             final FileWriter fileWriter = new FileWriter(outputFile);
 
-            final Tree<DexClass> tree = new DexTree();
-            final Collection<DexClass> classes = dexRepository.getAllClasses();
-            final List<Node<DexClass>> dexNodes = classes.stream().map(DexNode::new).collect(Collectors.toList());
-            tree.addChildren(dexNodes);
-
             final TreePrinter<Node<DexClass>> treePrinter = new TreePrinter<>(new ClassTreeAdapter());
             treePrinter.print(fileWriter, tree.getRoot());
+        }
+    }
+
+    private void saveGraphMl(OutputPathFactory outputPathFactory,
+                             Tree<DexClass> tree) {
+
+        final File outputFile = outputPathFactory.getClassGraphMlFile();
+        if (outputFile != null) {
+            Logger.get().out("Class graph: " + outputFile);
+            final FileWriter fileWriter = new FileWriter(outputFile);
+
+            final GraphMLPrinter<Node<DexClass>> graphMLPrinter
+                    = new GraphMLPrinter<>(new GraphMlTreeAdapter());
+            graphMLPrinter.print(fileWriter, tree.getRoot());
         }
     }
 
@@ -101,4 +115,12 @@ public class FilesOutputter {
         }
     }
 
+    private Tree<DexClass> createTree(final DexRepository dexRepository) {
+        final Tree<DexClass> tree = new DexTree();
+        final Collection<DexClass> classes = dexRepository.getAllClasses();
+        final List<Node<DexClass>> dexNodes = classes.stream().map(DexNode::new).collect(Collectors.toList());
+        tree.addChildren(dexNodes);
+
+        return tree;
+    }
 }
