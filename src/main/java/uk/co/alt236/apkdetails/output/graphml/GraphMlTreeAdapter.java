@@ -17,7 +17,7 @@ public class GraphMlTreeAdapter implements GraphAdapter<Node<DexClass>> {
 
     @Override
     public String getId(Node<DexClass> node) {
-        return node.getPath();
+        return "".equals(node.getPath()) ? "[root]" : node.getPath();
     }
 
     @Override
