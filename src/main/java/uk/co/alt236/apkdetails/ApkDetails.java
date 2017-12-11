@@ -1,12 +1,13 @@
 package uk.co.alt236.apkdetails;
 
 import uk.co.alt236.apkdetails.cli.CommandLineOptions;
-import uk.co.alt236.apkdetails.output.FilePathFactory;
 import uk.co.alt236.apkdetails.output.FilesOutputter;
+import uk.co.alt236.apkdetails.output.OutputPathFactory;
 import uk.co.alt236.apkdetails.output.StatisticsOutputter;
 import uk.co.alt236.apkdetails.output.loging.Logger;
 import uk.co.alt236.apkdetails.print.file.FileWriter;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.dex.DexRepository;
 import uk.co.alt236.apkdetails.repo.manifest.AndroidManifestRepository;
 import uk.co.alt236.apkdetails.util.Colorizer;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
@@ -33,14 +34,15 @@ class ApkDetails {
 
         for (final String apkFile : files) {
             final File file = new File(apkFile);
-            final FilePathFactory filePathFactory = new FilePathFactory(file, cli.getOutputDirectory());
-            setupLogger(filePathFactory.getMainOutputPath());
+            final OutputPathFactory outputPathFactory = new OutputPathFactory(file, cli.getOutputDirectory());
+            setupLogger(outputPathFactory.getMainLog());
 
             final ZipContents zipContents = new ZipContents(file);
             final AndroidManifestRepository manifestRepository = new AndroidManifestRepository(file);
+            final DexRepository dexRepository = new DexRepository(zipContents);
 
-            statsOutputter.doOutput(filePathFactory, zipContents, manifestRepository, verbose);
-            filesOutputter.doOutput(filePathFactory, zipContents, manifestRepository, verbose);
+            statsOutputter.doOutput(outputPathFactory, zipContents, manifestRepository, dexRepository, verbose);
+            filesOutputter.doOutput(outputPathFactory, zipContents, manifestRepository, dexRepository, verbose);
 
             zipContents.close();
         }

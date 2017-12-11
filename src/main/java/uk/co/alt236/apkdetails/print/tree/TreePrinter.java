@@ -15,6 +15,7 @@ public class TreePrinter<T> {
 
     public void print(FileWriter fileWriter, T root) {
         print(fileWriter, root, "", true);
+        fileWriter.close();
     }
 
     private void print(FileWriter fileWriter, T node, String prefix, boolean isTail) {
