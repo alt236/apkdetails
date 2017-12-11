@@ -10,10 +10,8 @@ import uk.co.alt236.apkdetails.util.StreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DexRepository {
     private final ZipContents zipContents;
@@ -27,6 +25,13 @@ public class DexRepository {
     public List<DexFile> getDexFiles() {
         loadDexFiles();
         return Collections.unmodifiableList(dexFiles);
+    }
+
+    public Set<DexClass> getAllClasses() {
+        loadDexFiles();
+        return dexFiles.stream()
+                .flatMap(dexFile -> dexFile.getClasses().stream())
+                .collect(Collectors.toSet());
     }
 
     public long getTotalMethodCount() {

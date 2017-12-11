@@ -4,11 +4,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 
-public class FilePathFactory {
+public class OutputPathFactory {
     private final File apk;
     private final String outputFolder;
 
-    public FilePathFactory(@Nonnull File apk, @Nullable final String outputFolder) {
+    public OutputPathFactory(@Nonnull File apk, @Nullable final String outputFolder) {
         this.apk = apk;
         this.outputFolder = outputFolder;
     }
@@ -19,7 +19,7 @@ public class FilePathFactory {
     }
 
     @Nullable
-    public File getMainOutputPath() {
+    public File getMainLog() {
         if (outputFolder == null) {
             return null;
         } else {
@@ -28,11 +28,29 @@ public class FilePathFactory {
     }
 
     @Nullable
-    public File getManifestOutputPath() {
+    public File getManifestFile() {
         if (outputFolder == null) {
             return null;
         } else {
             return new File(outputFolder, apk.getName() + "_manifest.xml");
+        }
+    }
+
+    @Nullable
+    public File getClassTreeFile() {
+        if (outputFolder == null) {
+            return null;
+        } else {
+            return new File(outputFolder, apk.getName() + "_class_tree.txt");
+        }
+    }
+
+    @Nullable
+    public File getClassListFile() {
+        if (outputFolder == null) {
+            return null;
+        } else {
+            return new File(outputFolder, apk.getName() + "_class_list.txt");
         }
     }
 }

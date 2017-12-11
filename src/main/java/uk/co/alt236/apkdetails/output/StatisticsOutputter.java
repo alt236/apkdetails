@@ -4,6 +4,7 @@ import uk.co.alt236.apkdetails.output.loging.Logger;
 import uk.co.alt236.apkdetails.output.sections.*;
 import uk.co.alt236.apkdetails.print.section.OutputCollector;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.dex.DexRepository;
 import uk.co.alt236.apkdetails.repo.manifest.AndroidManifestRepository;
 import uk.co.alt236.apkdetails.util.Colorizer;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
@@ -21,12 +22,13 @@ public class StatisticsOutputter {
         this.colorizer = colorizer;
     }
 
-    public void doOutput(FilePathFactory filePathFactory,
+    public void doOutput(OutputPathFactory outputPathFactory,
                          ZipContents zipContents,
                          AndroidManifestRepository manifestRepository,
+                         DexRepository dexRepository,
                          boolean verbose) {
 
-        final File apk = filePathFactory.getApk();
+        final File apk = outputPathFactory.getApk();
         final Output fileInfoOutput = new FileInfoOutput(apk, fileSizeFormatter);
         final Output manifestInfoOutput = new ManifestInfoOutput(manifestRepository, colorizer, verbose);
         final Output dexInfoOutput = new DexInfoOutput(zipContents);
@@ -47,7 +49,6 @@ public class StatisticsOutputter {
         collect(collector, contentSizeOutput, true);
 
         Logger.get().out(collector.toString());
-        zipContents.close();
     }
 
     private void collect(OutputCollector outputCollector, Output output, final boolean enabled) {
