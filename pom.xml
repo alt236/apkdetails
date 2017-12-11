@@ -108,5 +108,11 @@
             <version>2.0.2-beta</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
     </dependencies>
 </project>

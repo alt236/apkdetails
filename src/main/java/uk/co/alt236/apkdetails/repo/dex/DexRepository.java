@@ -4,6 +4,8 @@ import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import uk.co.alt236.apkdetails.repo.common.Entry;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
+import uk.co.alt236.apkdetails.repo.dex.model.DexClass;
+import uk.co.alt236.apkdetails.repo.dex.model.DexFile;
 import uk.co.alt236.apkdetails.util.StreamUtils;
 
 import java.io.IOException;
@@ -15,40 +17,38 @@ import java.util.Locale;
 
 public class DexRepository {
     private final ZipContents zipContents;
-    private final List<DexBackedDexFile> dexFiles;
-    private final DexClassInfo dexClassInfo;
+    private final List<DexFile> dexFiles;
 
     public DexRepository(final ZipContents zipContents) {
-        this.dexClassInfo = new DexClassInfo();
         this.zipContents = zipContents;
         this.dexFiles = new ArrayList<>();
     }
 
-    public List<DexBackedDexFile> getDexFiles() {
+    public List<DexFile> getDexFiles() {
         loadDexFiles();
         return Collections.unmodifiableList(dexFiles);
     }
 
     public long getTotalMethodCount() {
         loadDexFiles();
-        return dexFiles.stream().mapToLong(DexBackedDexFile::getMethodCount).sum();
+        return dexFiles.stream().mapToLong(DexFile::getMethodCount).sum();
     }
 
     public long getTotalClassCount() {
         loadDexFiles();
-        return dexFiles.stream().mapToLong(DexBackedDexFile::getClassCount).sum();
+        return dexFiles.stream().mapToLong(DexFile::getClassCount).sum();
     }
 
     public long getTotalFieldCount() {
         loadDexFiles();
-        return dexFiles.stream().mapToLong(DexBackedDexFile::getFieldCount).sum();
+        return dexFiles.stream().mapToLong(DexFile::getFieldCount).sum();
     }
 
     public long getAnonymousClassCount() {
         loadDexFiles();
         long count = 0;
-        for (final DexBackedDexFile dexFile : dexFiles) {
-            count += dexFile.getClasses().stream().filter(dexClassInfo::isInnerClass).count();
+        for (final DexFile dexFile : dexFiles) {
+            count += dexFile.getClasses().stream().filter(DexClass::isInnerClass).count();
         }
 
         return count;
@@ -57,8 +57,8 @@ public class DexRepository {
     public long getLambdaClassCount() {
         loadDexFiles();
         long count = 0;
-        for (final DexBackedDexFile dexFile : dexFiles) {
-            count += dexFile.getClasses().stream().filter(dexClassInfo::isLambda).count();
+        for (final DexFile dexFile : dexFiles) {
+            count += dexFile.getClasses().stream().filter(DexClass::isLambda).count();
         }
 
         return count;
@@ -66,12 +66,12 @@ public class DexRepository {
 
     public long getTotalStringCount() {
         loadDexFiles();
-        return dexFiles.stream().mapToLong(DexBackedDexFile::getStringCount).sum();
+        return dexFiles.stream().mapToLong(DexFile::getStringCount).sum();
     }
 
     public long getTotalProtoCount() {
         loadDexFiles();
-        return dexFiles.stream().mapToLong(DexBackedDexFile::getProtoCount).sum();
+        return dexFiles.stream().mapToLong(DexFile::getProtoCount).sum();
     }
 
     private void loadDexFiles() {
@@ -84,7 +84,7 @@ public class DexRepository {
             final InputStream is = zipContents.getInputStream(entry);
             try {
                 final DexBackedDexFile dexFile = DexBackedDexFile.fromInputStream(Opcodes.getDefault(), is);
-                dexFiles.add(dexFile);
+                dexFiles.add(new DexFile(dexFile, entry.getName(), entry.getFileSize()));
             } catch (final IOException e) {
                 e.printStackTrace();
             }
