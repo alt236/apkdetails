@@ -2,10 +2,7 @@ package uk.co.alt236.apkdetails.print.graphml;
 
 import uk.co.alt236.apkdetails.print.file.FileWriter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GraphMLPrinter<T> {
 
@@ -26,7 +23,13 @@ public class GraphMLPrinter<T> {
         edgeList.clear();
 
         parse(root);
-        final String xml = xmlFactory.createXml(vertexMap.values(), edgeList);
+        final List<Vertex> vertices = new ArrayList<>(vertexMap.values());
+        vertices.sort(Comparator.comparing(Vertex::getId));
+
+        final List<Edge> edges = new ArrayList<>(edgeList);
+        edges.sort(Comparator.comparing(o -> (o.getId1() + "_" + o.getId2())));
+
+        final String xml = xmlFactory.createXml(vertices, edges);
 
         fileWriter.outln(xml);
         fileWriter.close();
