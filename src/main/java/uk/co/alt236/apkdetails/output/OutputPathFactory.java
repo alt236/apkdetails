@@ -46,6 +46,15 @@ public class OutputPathFactory {
     }
 
     @Nullable
+    public File getClassGraphMlFile() {
+        if (outputFolder == null) {
+            return null;
+        } else {
+            return new File(outputFolder, apk.getName() + "_class_tree.graphml");
+        }
+    }
+
+    @Nullable
     public File getClassListFile() {
         if (outputFolder == null) {
             return null;
