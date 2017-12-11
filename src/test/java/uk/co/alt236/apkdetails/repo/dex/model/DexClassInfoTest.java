@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.repo.dex;
+package uk.co.alt236.apkdetails.repo.dex.model;
 
 import org.jf.dexlib2.iface.ClassDef;
 import org.junit.Before;

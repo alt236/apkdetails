@@ -2,6 +2,7 @@ package uk.co.alt236.apkdetails.repo.common;
 
 import uk.co.alt236.apkdetails.util.StreamUtils;
 
+import javax.annotation.Nonnull;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class ZipContents {
     private final List<Entry> entryList;
     private ZipFile zipFile;
 
-    public ZipContents(final File file) {
+    public ZipContents(@Nonnull final File file) {
         this.file = file;
         this.entryList = new ArrayList<>();
     }
@@ -43,11 +44,13 @@ public class ZipContents {
         }
     }
 
+    @Nonnull
     public List<Entry> getEntries() {
         parseZipFile();
         return Collections.unmodifiableList(entryList);
     }
 
+    @Nonnull
     public List<Entry> getEntries(Predicate<Entry> predicate) {
         parseZipFile();
         return entryList
