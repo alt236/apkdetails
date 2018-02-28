@@ -1,18 +1,16 @@
 package uk.co.alt236.apkdetails.repo.manifest;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import uk.co.alt236.apkdetails.decoder.ManifestParser;
 import uk.co.alt236.apkdetails.xml.AndroidXmlDocument;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AndroidManifestRepository {
 
     private final ManifestParser manifestParser;
+    private final NodeParser nodeParser;
     private AndroidXmlDocument xmlDocument;
 
     public AndroidManifestRepository(final File apk) {
@@ -21,6 +19,7 @@ public class AndroidManifestRepository {
 
     public AndroidManifestRepository(final ManifestParser manifestParser) {
         this.manifestParser = manifestParser;
+        this.nodeParser = new NodeParser();
     }
 
     public String getXml() {
@@ -46,7 +45,6 @@ public class AndroidManifestRepository {
         return xmlDocument.getLongValue(expression);
     }
 
-
     public String getVersionName() {
         loadManifest();
 
@@ -55,7 +53,6 @@ public class AndroidManifestRepository {
 
         return xmlDocument.getStringValue(expression);
     }
-
 
     public int getMinSdkVersion() {
         loadManifest();
@@ -97,79 +94,78 @@ public class AndroidManifestRepository {
     }
 
     public List<String> getActivities() {
+        loadManifest();
+
         final List<String> items = new ArrayList<>();
         final String expression = "/" + Keys.NODE_MANIFEST +
                 "/" + Keys.NODE_APPLICATION +
                 "/" + Keys.NODE_ACTIVITY;
 
-        return getAndroidNamesOfNodes(items, expression);
+        return nodeParser.getAndroidNamesOfNodes(items, expression);
     }
 
 
     public List<String> getServices() {
+        loadManifest();
+
         final List<String> items = new ArrayList<>();
         final String expression = "/" + Keys.NODE_MANIFEST +
                 "/" + Keys.NODE_APPLICATION +
                 "/" + Keys.NODE_SERVICE;
 
-        return getAndroidNamesOfNodes(items, expression);
+        return nodeParser.getAndroidNamesOfNodes(items, expression);
     }
 
     public List<String> getUsedPermissions() {
+        loadManifest();
+
         final List<String> items = new ArrayList<>();
         final String expression = "/" + Keys.NODE_MANIFEST +
                 "/" + Keys.NODE_USES_PERMISSION;
 
-        return getAndroidNamesOfNodes(items, expression);
+        return nodeParser.getAndroidNamesOfNodes(items, expression);
     }
 
     public List<String> getReceivers() {
+        loadManifest();
+
         final List<String> items = new ArrayList<>();
         final String expression = "/" + Keys.NODE_MANIFEST +
                 "/" + Keys.NODE_APPLICATION +
                 "/" + Keys.NODE_RECEIVER;
 
-        return getAndroidNamesOfNodes(items, expression);
+        return nodeParser.getAndroidNamesOfNodes(items, expression);
     }
 
     public List<String> getProviders() {
+        loadManifest();
+
         final List<String> items = new ArrayList<>();
         final String expression = "/" + Keys.NODE_MANIFEST +
                 "/" + Keys.NODE_APPLICATION +
                 "/" + Keys.NODE_PROVIDER;
 
-        return getAndroidNamesOfNodes(items, expression);
+        return nodeParser.getAndroidNamesOfNodes(items, expression);
     }
 
+    public List<Requirable> getUsedFeatures() {
+        loadManifest();
+
+        final List<Requirable> items = new ArrayList<>();
+        final String expression = "/" + Keys.NODE_MANIFEST +
+                "/" + Keys.NODE_USES_FEATURE;
+
+        return nodeParser.getRequirableItems(items, expression);
+    }
 
     private synchronized void loadManifest() {
         if (xmlDocument == null) {
             try {
                 xmlDocument = manifestParser.createXmlDocument();
+                nodeParser.setXmlDocument(xmlDocument);
             } catch (Exception e) {
                 throw new IllegalStateException(e.getMessage(), e);
             }
         }
-    }
-
-    private List<String> getAndroidNamesOfNodes(List<String> items, String expression) {
-        loadManifest();
-        final NodeList nodeList = xmlDocument.getNodes(expression);
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            final Node node = nodeList.item(i);
-
-            final Node nameNode;
-
-            if (node.getAttributes().getNamedItem("android:name") != null) {
-                nameNode = node.getAttributes().getNamedItem("android:name");
-            } else {
-                nameNode = node.getAttributes().getNamedItem("name");
-            }
-
-            items.add(nameNode.getNodeValue());
-        }
-
-        Collections.sort(items);
-        return items;
     }
 }

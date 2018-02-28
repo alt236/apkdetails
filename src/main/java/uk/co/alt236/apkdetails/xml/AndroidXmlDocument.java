@@ -15,11 +15,14 @@ import java.io.IOException;
 import java.io.StringReader;
 
 public class AndroidXmlDocument {
+    private final AndroidXmlValueParser valueParser;
     private final String xml;
     private final Document document;
 
     public AndroidXmlDocument(final String xml) {
+        this.valueParser = new AndroidXmlValueParser();
         this.xml = xml;
+
         final InputSource is = new InputSource(new StringReader(xml));
 
         try {
@@ -37,30 +40,22 @@ public class AndroidXmlDocument {
 
     public long getLongValue(final String xPathExpression) {
         final String result = evaluateExpressionForString(xPathExpression);
-        try {
-            return Long.parseLong(result);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
+        return valueParser.parseLong(result);
     }
 
     public int getIntValue(final String xPathExpression) {
         final String result = evaluateExpressionForString(xPathExpression);
-        try {
-            return Integer.parseInt(result);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
+        return valueParser.parseInt(result);
     }
 
     public boolean getBooleanValue(final String xPathExpression) {
         final String result = evaluateExpressionForString(xPathExpression);
-        return Boolean.parseBoolean(result);
+        return valueParser.parseBoolean(result);
     }
 
     public String getStringValue(String expression) {
         final String result = evaluateExpressionForString(expression);
-        return result == null ? "" : result.trim();
+        return valueParser.parseString(result);
     }
 
     public NodeList getNodes(String expression) {
