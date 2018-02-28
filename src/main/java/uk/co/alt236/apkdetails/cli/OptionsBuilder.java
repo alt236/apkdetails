@@ -50,7 +50,7 @@ public class OptionsBuilder {
         return Option.builder(ARG_OUTPUT)
                 .longOpt(ARG_OUTPUT_LONG)
                 .hasArg()
-                .required(true)
+                .required(false)
                 .desc(desc)
                 .build();
     }
