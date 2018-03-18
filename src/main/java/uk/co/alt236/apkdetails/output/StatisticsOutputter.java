@@ -36,6 +36,7 @@ public class StatisticsOutputter {
         final Output archOutput = new ArchitecturesOutput(zipContents, verbose);
         final Output signingInfoOutput = new SigningInfoOutput(apk, colorizer);
         final Output contentSizeOutput = new ContentSizeOutput(zipContents, fileSizeFormatter, 10);
+        final Output buildConfigFileOutput = new BuildConfigInfoOutput(zipContents, verbose);
 
         final OutputCollector collector = new OutputCollector();
         collector.addSectionLine();
@@ -46,6 +47,7 @@ public class StatisticsOutputter {
         collect(collector, archOutput, true);
         collect(collector, dexInfoOutput, true);
         collect(collector, signingInfoOutput, true);
+        collect(collector, buildConfigFileOutput, true);
         collect(collector, contentSizeOutput, true);
 
         Logger.get().out(collector.toString());
