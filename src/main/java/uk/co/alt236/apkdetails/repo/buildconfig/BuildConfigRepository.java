@@ -22,11 +22,13 @@ public class BuildConfigRepository {
     private final ZipContents zipContents;
     private final List<BuildConfigFile> buildConfigFiles;
     private final DexValueParser dexValueParser;
+    private final BuildConfigDetector buildConfigDetector;
 
     public BuildConfigRepository(final ZipContents zipContents) {
         this.zipContents = zipContents;
         this.buildConfigFiles = new ArrayList<>();
         this.dexValueParser = new DexValueParser();
+        this.buildConfigDetector = new BuildConfigDetector();
     }
 
     public List<BuildConfigFile> getBuildConfigFiles() {
@@ -46,7 +48,7 @@ public class BuildConfigRepository {
                 final DexBackedDexFile dexFile = DexBackedDexFile.fromInputStream(Opcodes.getDefault(), is);
                 dexFile.getClasses()
                         .stream()
-                        .filter(this::isBuildConfigClass)
+                        .filter(buildConfigDetector::isBuildConfigFile)
                         .map(this::createBuildConfigFile)
                         .forEachOrdered(buildConfigFile -> buildConfigFiles.add(buildConfigFile));
 
@@ -67,11 +69,6 @@ public class BuildConfigRepository {
 
 
         return new BuildConfigFile(type, fields);
-    }
-
-    private boolean isBuildConfigClass(DexBackedClassDef classDef) {
-        // TODO: this will break with obfuscation
-        return classDef.getType().toLowerCase().endsWith("buildconfig;");
     }
 
     private List<Entry> getDexFileEntries() {
