@@ -82,4 +82,9 @@ public class ManifestInfoOutput implements Output {
             return String.valueOf(input);
         }
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.MANIFEST;
+    }
 }

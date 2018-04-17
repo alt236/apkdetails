@@ -78,4 +78,9 @@ public class SigningInfoOutput implements Output {
 
         return retVal;
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.CERTIFICATES;
+    }
 }

@@ -4,12 +4,12 @@ import uk.co.alt236.apkdetails.output.loging.Logger;
 import uk.co.alt236.apkdetails.output.sections.*;
 import uk.co.alt236.apkdetails.print.section.OutputCollector;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
-import uk.co.alt236.apkdetails.repo.dex.DexRepository;
 import uk.co.alt236.apkdetails.repo.manifest.AndroidManifestRepository;
 import uk.co.alt236.apkdetails.util.Colorizer;
 import uk.co.alt236.apkdetails.util.FileSizeFormatter;
 
 import java.io.File;
+import java.util.EnumSet;
 
 public class StatisticsOutputter {
 
@@ -25,7 +25,7 @@ public class StatisticsOutputter {
     public void doOutput(OutputPathFactory outputPathFactory,
                          ZipContents zipContents,
                          AndroidManifestRepository manifestRepository,
-                         DexRepository dexRepository,
+                         EnumSet<OutputType> enabledOutputs,
                          boolean verbose) {
 
         final File apk = outputPathFactory.getApk();
@@ -41,20 +41,23 @@ public class StatisticsOutputter {
         final OutputCollector collector = new OutputCollector();
         collector.addSectionLine();
 
-        collect(collector, fileInfoOutput, true);
-        collect(collector, manifestInfoOutput, true);
-        collect(collector, resOutput, true);
-        collect(collector, archOutput, true);
-        collect(collector, dexInfoOutput, true);
-        collect(collector, signingInfoOutput, true);
-        collect(collector, buildConfigFileOutput, true);
-        collect(collector, contentSizeOutput, true);
+        collect(collector, fileInfoOutput, enabledOutputs);
+        collect(collector, manifestInfoOutput, enabledOutputs);
+        collect(collector, resOutput, enabledOutputs);
+        collect(collector, archOutput, enabledOutputs);
+        collect(collector, dexInfoOutput, enabledOutputs);
+        collect(collector, signingInfoOutput, enabledOutputs);
+        collect(collector, buildConfigFileOutput, enabledOutputs);
+        collect(collector, contentSizeOutput, enabledOutputs);
 
         Logger.get().out(collector.toString());
     }
 
-    private void collect(OutputCollector outputCollector, Output output, final boolean enabled) {
-        if (enabled) {
+    private void collect(final OutputCollector outputCollector,
+                         final Output output,
+                         final EnumSet<OutputType> enabledOutputs) {
+
+        if (enabledOutputs.contains(output.getOutputType())) {
             output.output(outputCollector);
             outputCollector.addNewLine();
         }

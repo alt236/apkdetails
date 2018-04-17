@@ -29,4 +29,9 @@ public class FileInfoOutput implements Output {
         printer.addKv("SHA256", apkContents.getSha256());
         printer.endKeyValueSection();
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.FILE_INFO;
+    }
 }

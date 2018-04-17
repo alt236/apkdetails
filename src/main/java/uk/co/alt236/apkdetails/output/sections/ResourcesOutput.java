@@ -24,4 +24,9 @@ public class ResourcesOutput implements Output {
         printer.addKv("Assets", fileInfo.getNumberOfAssets());
         printer.endKeyValueSection();
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.RESOURCES;
+    }
 }

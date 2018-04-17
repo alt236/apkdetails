@@ -39,4 +39,9 @@ public class BuildConfigInfoOutput implements Output {
 
         printer.endKeyValueSection();
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.BUILD_CONFIG;
+    }
 }

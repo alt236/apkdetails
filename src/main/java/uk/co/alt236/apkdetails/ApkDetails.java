@@ -41,7 +41,7 @@ class ApkDetails {
             final AndroidManifestRepository manifestRepository = new AndroidManifestRepository(file);
             final DexRepository dexRepository = new DexRepository(zipContents);
 
-            statsOutputter.doOutput(outputPathFactory, zipContents, manifestRepository, dexRepository, verbose);
+            statsOutputter.doOutput(outputPathFactory, zipContents, manifestRepository, cli.getSelectedOutputs(), verbose);
             filesOutputter.doOutput(outputPathFactory, zipContents, manifestRepository, dexRepository, verbose);
 
             zipContents.close();
