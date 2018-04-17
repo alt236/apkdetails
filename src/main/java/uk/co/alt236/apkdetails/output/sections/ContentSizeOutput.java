@@ -51,4 +51,9 @@ public class ContentSizeOutput implements Output {
         printer.endKeyValueSection();
         printer.addNewLine();
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.CONTENT_SIZE;
+    }
 }

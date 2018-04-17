@@ -48,4 +48,9 @@ public class ArchitecturesOutput implements Output {
         }
         return sb.toString();
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.ARCHITECTURES;
+    }
 }

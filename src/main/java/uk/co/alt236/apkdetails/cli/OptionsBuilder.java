@@ -2,6 +2,7 @@ package uk.co.alt236.apkdetails.cli;
 
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import uk.co.alt236.apkdetails.output.sections.OutputType;
 import uk.co.alt236.apkdetails.resources.Strings;
 
 public class OptionsBuilder {
@@ -18,6 +19,9 @@ public class OptionsBuilder {
     /*package*/ static final String ARG_HUMAN_READABLE_SIZES = "h";
     /*package*/ static final String ARG_HUMAN_READABLE_SIZES_LONG = "human";
 
+    /*package*/ static final String ARG_SHOW_ONLY = "s";
+    /*package*/ static final String ARG_SHOW_ONLY_LONG = "show-only";
+
     private final Strings strings;
 
     public OptionsBuilder(Strings strings) {
@@ -31,6 +35,7 @@ public class OptionsBuilder {
         options.addOption(createOptionOutput());
         options.addOption(createOptionVerbose());
         options.addOption(createOptionHumanReadableSizes());
+        options.addOption(createShowOnly());
 
         return options;
     }
@@ -70,6 +75,20 @@ public class OptionsBuilder {
         return Option.builder(ARG_HUMAN_READABLE_SIZES)
                 .longOpt(ARG_HUMAN_READABLE_SIZES_LONG)
                 .hasArg(false)
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createShowOnly() {
+        final String validOptions = OutputType.getAllTypesAsString();
+        final String desc = strings.getString("cli_cmd_show_only")
+                .replace("##SHOW_ONLY##", validOptions);
+
+        return Option.builder(ARG_SHOW_ONLY)
+                .longOpt(ARG_SHOW_ONLY_LONG)
+                .hasArgs()
+                .valueSeparator(',')
                 .required(false)
                 .desc(desc)
                 .build();

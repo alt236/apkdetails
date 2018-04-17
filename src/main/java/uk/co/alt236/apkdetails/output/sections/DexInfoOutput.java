@@ -33,4 +33,9 @@ public class DexInfoOutput implements Output {
         printer.addKv("Strings", repo.getTotalStringCount());
         printer.endKeyValueSection();
     }
+
+    @Override
+    public OutputType getOutputType() {
+        return OutputType.DEX_INFO;
+    }
 }
