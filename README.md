@@ -10,24 +10,30 @@ Analyzes an APK and prints information helpful to a developer
 - List of the supported JNI architectures based on the contents of the `lib` directory.
 
 ## Usage
+Get the latest release here: [https://github.com/alt236/apkdetails/releases]()
 
 ```
 usage: apkdetails.jar [-h] -i <arg> [-v]
-version: 1.0
+version: 1.1.0
 Analyzes an APK and prints helpful info.
 
- -h,--human         If set, file sizes will be human readable
- -i,--input <arg>   Input. This can be either a single APK, or a
-                    directory. If it's the latter, all files with ".apk"
-                    extension will be analysed
- -v,--verbose       If set, more detailed information will be printed.
-                    This includes a full list of Manifest
-                    activities/permissions/receivers and services.
+ -h,--human             If set, file sizes will be human readable
+ -i,--input <arg>       Input. This can be either a single APK, or a
+                        directory. If it's the latter, all files with
+                        ".apk" extension will be analysed
+ -o,--output <arg>      Output Directory (Optional)
+ -s,--show-only <arg>   Show only the following, comma separated outputs.
+                        Valid options are: [architectures, build_config,
+                        certificates, content_size, dex_info, file_info,
+                        manifest, resources]
+ -v,--verbose           If set, more detailed information will be printed.
+                        This includes a full list of Manifest
+                        activities/permissions/receivers and services.
 
 Sample usage:
 
- * apkdetails-1.0-SNAPSHOT.jar --input ~/tmp/sample.apk
- * apkdetails-1.0-SNAPSHOT.jar -v -i ~/tmp/path/to/apks/
+ * classes --input ~/tmp/sample.apk
+ * classes -v -i ~/tmp/path/to/apks/
 
 Source code: https://github.com/alt236/apkdetails
 Please report issues at https://github.com/alt236/apkdetails/issues
@@ -48,9 +54,16 @@ apkdetails.jar -v -i ~/tmp/path/to/apks/
 
 Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 
+## Versions
+
+* 1.0.0: First release
+* 1.1.0: Added selection of outputs
+
 ## Links
 
 * Github: [https://github.com/alt236/apkdetails]()
+* Bug reports: [https://github.com/alt236/apkdetails/issues]()
+* Releases: [https://github.com/alt236/apkdetails/releases]()
 
 ## Credits
 
@@ -58,6 +71,19 @@ Author: [Alexandros Schillings](https://github.com/alt236).
 
 The XML parser a slightly modified version of the one in [apk-extractor](https://code.google.com/archive/p/apk-extractor) by Prasanta Paul.
 
-The code in this project is licensed under the [Apache Software License 2.0](LICENSE-2.0.html).
+The code in this project is licensed under the [Apache Software License 2.0](LICENSE).
 
-Copyright (c) 2017 Alexandros Schillings.
+## License
+Copyright (c) 2017-present, Alexandros Schillings.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
