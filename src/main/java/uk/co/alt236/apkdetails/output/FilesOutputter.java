@@ -1,15 +1,14 @@
 package uk.co.alt236.apkdetails.output;
 
-import uk.co.alt236.apkdetails.output.graphml.GraphMlTreeAdapter;
+import uk.co.alt236.apkdetails.output.classlist.graphml.GraphMlTreeAdapter;
+import uk.co.alt236.apkdetails.output.classlist.tree.ClassTreeAdapter;
+import uk.co.alt236.apkdetails.output.classlist.tree.DexNode;
+import uk.co.alt236.apkdetails.output.classlist.tree.DexTree;
 import uk.co.alt236.apkdetails.output.loging.Logger;
-import uk.co.alt236.apkdetails.output.tree.ClassTreeAdapter;
-import uk.co.alt236.apkdetails.output.tree.DexNode;
-import uk.co.alt236.apkdetails.output.tree.DexTree;
 import uk.co.alt236.apkdetails.print.ClassListPrinter;
-import uk.co.alt236.apkdetails.print.file.FileWriter;
 import uk.co.alt236.apkdetails.print.graphml.GraphMLPrinter;
 import uk.co.alt236.apkdetails.print.tree.TreePrinter;
-import uk.co.alt236.apkdetails.repo.common.ZipContents;
+import uk.co.alt236.apkdetails.print.writer.FileWriter;
 import uk.co.alt236.apkdetails.repo.dex.DexRepository;
 import uk.co.alt236.apkdetails.repo.dex.model.DexClass;
 import uk.co.alt236.apkdetails.repo.manifest.AndroidManifestRepository;
@@ -37,10 +36,8 @@ public class FilesOutputter {
     }
 
     public void doOutput(OutputPathFactory outputPathFactory,
-                         ZipContents zipContents,
                          AndroidManifestRepository manifestRepository,
-                         DexRepository dexRepository,
-                         boolean verbose) {
+                         DexRepository dexRepository) {
 
         saveManifest(outputPathFactory, manifestRepository);
         saveClassList(outputPathFactory, dexRepository);
