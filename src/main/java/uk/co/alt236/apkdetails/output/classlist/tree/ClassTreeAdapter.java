@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.output.tree;
+package uk.co.alt236.apkdetails.output.classlist.tree;
 
 import uk.co.alt236.apkdetails.print.tree.TreeAdapter;
 import uk.co.alt236.apkdetails.repo.dex.model.DexClass;

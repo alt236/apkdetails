@@ -1,6 +1,6 @@
 package uk.co.alt236.apkdetails.output.loging;
 
-import uk.co.alt236.apkdetails.print.file.FileWriter;
+import uk.co.alt236.apkdetails.print.writer.FileWriter;
 
 public class Logger {
     private static Logger instance;

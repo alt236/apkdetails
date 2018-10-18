@@ -1,6 +1,6 @@
 package uk.co.alt236.apkdetails.print.graphml;
 
-import uk.co.alt236.apkdetails.print.file.FileWriter;
+import uk.co.alt236.apkdetails.print.writer.Writer;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class GraphMLPrinter<T> {
         this.xmlFactory = new XmlFactory();
     }
 
-    public synchronized void print(FileWriter fileWriter, T root) {
+    public synchronized void print(Writer writer, T root) {
         vertexMap.clear();
         edgeList.clear();
 
@@ -31,8 +31,8 @@ public class GraphMLPrinter<T> {
 
         final String xml = xmlFactory.createXml(vertices, edges);
 
-        fileWriter.outln(xml);
-        fileWriter.close();
+        writer.outln(xml);
+        writer.close();
     }
 
     private void parse(T node) {

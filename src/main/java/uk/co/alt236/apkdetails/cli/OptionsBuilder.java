@@ -1,6 +1,7 @@
 package uk.co.alt236.apkdetails.cli;
 
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import uk.co.alt236.apkdetails.output.sections.OutputType;
 import uk.co.alt236.apkdetails.resources.Strings;
@@ -22,6 +23,11 @@ public class OptionsBuilder {
     /*package*/ static final String ARG_SHOW_ONLY = "s";
     /*package*/ static final String ARG_SHOW_ONLY_LONG = "show-only";
 
+    /*package*/ static final String ARG_PRINT_CLASS_LIST = "print-class-list";
+    /*package*/ static final String ARG_PRINT_CLASS_TREE = "print-class-tree";
+    /*package*/ static final String ARG_PRINT_CLASS_GRAPH = "print-class-graph";
+    /*package*/ static final String ARG_PRINT_MANIFEST = "print-manifest";
+
     private final Strings strings;
 
     public OptionsBuilder(Strings strings) {
@@ -37,6 +43,14 @@ public class OptionsBuilder {
         options.addOption(createOptionHumanReadableSizes());
         options.addOption(createShowOnly());
 
+
+        final OptionGroup optionGroup = new OptionGroup();
+        optionGroup.addOption(createPrintClassGraph());
+        optionGroup.addOption(createPrintClassList());
+        optionGroup.addOption(createPrintClassTree());
+        optionGroup.addOption(createPrintManifest());
+
+        options.addOptionGroup(optionGroup);
         return options;
     }
 
@@ -89,6 +103,46 @@ public class OptionsBuilder {
                 .longOpt(ARG_SHOW_ONLY_LONG)
                 .hasArgs()
                 .valueSeparator(',')
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createPrintClassList() {
+        final String desc = strings.getString("cli_cmd_print_class_list");
+        return Option.builder()
+                .longOpt(ARG_PRINT_CLASS_LIST)
+                .hasArg(false)
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createPrintClassTree() {
+        final String desc = strings.getString("cli_cmd_print_class_tree");
+        return Option.builder()
+                .longOpt(ARG_PRINT_CLASS_TREE)
+                .hasArg(false)
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createPrintClassGraph() {
+        final String desc = strings.getString("cli_cmd_print_class_graph");
+        return Option.builder()
+                .longOpt(ARG_PRINT_CLASS_GRAPH)
+                .hasArg(false)
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createPrintManifest() {
+        final String desc = strings.getString("cli_cmd_print_manifest");
+        return Option.builder()
+                .longOpt(ARG_PRINT_MANIFEST)
+                .hasArg(false)
                 .required(false)
                 .desc(desc)
                 .build();

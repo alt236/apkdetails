@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.output.graphml;
+package uk.co.alt236.apkdetails.output.classlist.graphml;
 
 import uk.co.alt236.apkdetails.print.graphml.Edge;
 import uk.co.alt236.apkdetails.print.graphml.GraphAdapter;

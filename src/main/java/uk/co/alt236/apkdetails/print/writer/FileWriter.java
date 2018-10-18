@@ -1,4 +1,4 @@
-package uk.co.alt236.apkdetails.print.file;
+package uk.co.alt236.apkdetails.print.writer;
 
 import uk.co.alt236.apkdetails.util.StreamUtils;
 
@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileWriter {
+public class FileWriter implements Writer {
 
     private final Path path;
     private final BufferedWriter writer;
@@ -27,10 +27,12 @@ public class FileWriter {
         }
     }
 
+    @Override
     public synchronized void outln(final String string) {
         writeln(string);
     }
 
+    @Override
     public void errln(String string) {
         writeln(string);
     }
@@ -45,6 +47,7 @@ public class FileWriter {
         }
     }
 
+    @Override
     public void close() {
         try {
             writer.flush();

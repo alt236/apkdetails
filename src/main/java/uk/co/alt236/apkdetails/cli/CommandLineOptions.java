@@ -35,6 +35,22 @@ public class CommandLineOptions {
         return selectedOutputs;
     }
 
+    public boolean isPrintClassList() {
+        return commandLine.hasOption(OptionsBuilder.ARG_PRINT_CLASS_LIST);
+    }
+
+    public boolean isPrintClassTree() {
+        return commandLine.hasOption(OptionsBuilder.ARG_PRINT_CLASS_TREE);
+    }
+
+    public boolean isPrintClassGraph() {
+        return commandLine.hasOption(OptionsBuilder.ARG_PRINT_CLASS_GRAPH);
+    }
+
+    public boolean isPrintManifest() {
+        return commandLine.hasOption(OptionsBuilder.ARG_PRINT_MANIFEST);
+    }
+
     private EnumSet<OutputType> parseSelectedOutputs() {
         final String[] stringArgs = commandLine.getOptionValues(OptionsBuilder.ARG_SHOW_ONLY_LONG);
 
