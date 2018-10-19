@@ -13,22 +13,34 @@ Analyzes an APK and prints information helpful to a developer
 Get the latest release here: [https://github.com/alt236/apkdetails/releases]()
 
 ```
-usage: apkdetails.jar [-h] -i <arg> [-v]
-version: 1.1.0
+usage: apkdetails.jar [-h] -i <arg> [-o <arg>] [--print-class-graph |
+                             --print-class-list | --print-class-tree | --print-manifest]    [-s
+                             <arg>] [-v]
+version: 1.2.0
 Analyzes an APK and prints helpful info.
 
- -h,--human             If set, file sizes will be human readable
- -i,--input <arg>       Input. This can be either a single APK, or a
-                        directory. If it's the latter, all files with
-                        ".apk" extension will be analysed
- -o,--output <arg>      Output Directory (Optional)
- -s,--show-only <arg>   Show only the following, comma separated outputs.
-                        Valid options are: [architectures, build_config,
-                        certificates, content_size, dex_info, file_info,
-                        manifest, resources]
- -v,--verbose           If set, more detailed information will be printed.
-                        This includes a full list of Manifest
-                        activities/permissions/receivers and services.
+ -h,--human               If set, file sizes will be human readable
+ -i,--input <arg>         Input. This can be either a single APK, or a
+                          directory. If it's the latter, all files with
+                          ".apk" extension will be analysed
+ -o,--output <arg>        Output Directory (Optional)
+    --print-class-graph   Print the APK classes as a GraphML graph to
+                          terminal. It ignores all options except -i and
+                          -o.
+    --print-class-list    Print the APK classes as a list to the terminal.
+                          It ignores all options except -i and -o.
+    --print-class-tree    Print the APK classes as an ASCII tree to
+                          terminal. It ignores all options except -i and
+                          -o.
+    --print-manifest      Print the APK manifest to the terminal. It
+                          ignores all options except -i and -o.
+ -s,--show-only <arg>     Show only the following, comma separated
+                          outputs. Valid options are: [architectures,
+                          build_config, certificates, content_size,
+                          dex_info, file_info, manifest, resources]
+ -v,--verbose             If set, more detailed information will be
+                          printed. This includes a full list of Manifest
+                          activities/permissions/receivers and services.
 
 Sample usage:
 
@@ -58,6 +70,7 @@ Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 
 * 1.0.0: First release
 * 1.1.0: Added selection of outputs
+* 1.2.0: Added options to print list/tree/graph of classes and dump of the Manifest to the terminal.
 
 ## Links
 
