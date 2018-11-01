@@ -16,7 +16,7 @@ Get the latest release here: [https://github.com/alt236/apkdetails/releases]()
 usage: apkdetails.jar [-h] -i <arg> [-o <arg>] [--print-class-graph |
                              --print-class-list | --print-class-tree | --print-manifest]    [-s
                              <arg>] [-v]
-version: 1.2.0
+version: 1.2.1
 Analyzes an APK and prints helpful info.
 
  -h,--human               If set, file sizes will be human readable
@@ -44,8 +44,8 @@ Analyzes an APK and prints helpful info.
 
 Sample usage:
 
- * classes --input ~/tmp/sample.apk
- * classes -v -i ~/tmp/path/to/apks/
+ * apkdetails.jar --input ~/tmp/sample.apk
+ * apkdetails.jar -v -i ~/tmp/path/to/apks/
 
 Source code: https://github.com/alt236/apkdetails
 Please report issues at https://github.com/alt236/apkdetails/issues
@@ -71,6 +71,7 @@ Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 * 1.0.0: First release
 * 1.1.0: Added selection of outputs
 * 1.2.0: Added options to print list/tree/graph of classes and dump of the Manifest to the terminal.
+* 1.2.1: Fixed NPE when EncodedValue is null while parsing BuildConfigs
 
 ## Links
 
