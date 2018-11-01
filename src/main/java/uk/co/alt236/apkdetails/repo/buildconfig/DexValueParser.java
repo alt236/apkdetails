@@ -9,6 +9,10 @@ public class DexValueParser {
 
     public String getValueAsString(final EncodedValue value) {
 
+        if (value == null) {
+            return "null";
+        }
+
         final String retVal;
         switch (value.getValueType()) {
             case ValueType.BYTE:
