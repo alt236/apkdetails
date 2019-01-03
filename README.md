@@ -9,6 +9,10 @@ Analyzes an APK and prints information helpful to a developer
 - Information about the DEX files, such as how many there are and the number of classes, methods and strings.
 - List of the supported JNI architectures based on the contents of the `lib` directory.
 
+It can also:
+ - Dump the manifest to console
+ - Dump a list of all classes as list/tree graph/graphml
+ 
 ## Usage
 Get the latest release here: [https://github.com/alt236/apkdetails/releases]()
 
