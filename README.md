@@ -1,5 +1,7 @@
 # APK Details
 
+[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-apkdetails-green.svg?style=flat )]( https://android-arsenal.com/details/1/7429 )
+
 Analyzes an APK and prints information helpful to a developer
 
 - API levels as declared in the manifest.
@@ -12,7 +14,7 @@ Analyzes an APK and prints information helpful to a developer
 It can also:
  - Dump the manifest to console
  - Dump a list of all classes as list/tree graph/graphml
- 
+
 ## Usage
 Get the latest release here: [https://github.com/alt236/apkdetails/releases]()
 
