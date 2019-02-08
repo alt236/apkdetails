@@ -21,7 +21,9 @@ public class Main {
 
         if (cliOptions != null) {
             final ApkFileFilter apkFileFilter = new ApkFileFilter();
-            final List<String> files = apkFileFilter.getFiles(cliOptions.getInput());
+            final List<String> files = apkFileFilter.getFiles(
+                    cliOptions.getInput(),
+                    cliOptions.isRecursiveApkSearch());
 
             if (files.isEmpty()) {
                 System.err.println("No valid files found");

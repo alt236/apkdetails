@@ -11,6 +11,9 @@ public class OptionsBuilder {
     /*package*/ static final String ARG_INPUT = "i";
     /*package*/ static final String ARG_INPUT_LONG = "input";
 
+    /*package*/ static final String ARG_RECURSIVE = "r";
+    /*package*/ static final String ARG_RECURSIVE_LONG = "recursive";
+
     /*package*/ static final String ARG_OUTPUT = "o";
     /*package*/ static final String ARG_OUTPUT_LONG = "output";
 
@@ -40,6 +43,7 @@ public class OptionsBuilder {
         options.addOption(createOptionInput());
         options.addOption(createOptionOutput());
         options.addOption(createOptionVerbose());
+        options.addOption(createOptionRecursive());
         options.addOption(createOptionHumanReadableSizes());
         options.addOption(createShowOnly());
 
@@ -69,6 +73,16 @@ public class OptionsBuilder {
         return Option.builder(ARG_OUTPUT)
                 .longOpt(ARG_OUTPUT_LONG)
                 .hasArg()
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
+    private Option createOptionRecursive() {
+        final String desc = strings.getString("cli_cmd_input_recursive");
+        return Option.builder(ARG_RECURSIVE)
+                .longOpt(ARG_RECURSIVE_LONG)
+                .hasArg(false)
                 .required(false)
                 .desc(desc)
                 .build();

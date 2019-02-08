@@ -72,6 +72,7 @@ Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 * 1.1.0: Added selection of outputs
 * 1.2.0: Added options to print list/tree/graph of classes and dump of the Manifest to the terminal.
 * 1.2.1: Fixed NPE when EncodedValue is null while parsing BuildConfigs
+* 1.2.2: Added option to recursively search a directory for APKs
 
 ## Links
 
