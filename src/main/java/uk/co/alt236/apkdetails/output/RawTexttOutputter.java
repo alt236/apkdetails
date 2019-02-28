@@ -21,7 +21,7 @@ public class RawTexttOutputter {
                          DexRepository dexRepository,
                          AndroidManifestRepository manifestRepository) {
 
-        final ClassListToTextMapper classListToTextMapper = new ClassListToTextMapper(dexRepository);
+        final ClassListToTextMapper classListToTextMapper = new ClassListToTextMapper(dexRepository, cli.isVerbose());
 
         final OutputCollector collector = new OutputCollector();
 

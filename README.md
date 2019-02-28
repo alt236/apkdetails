@@ -20,9 +20,9 @@ Get the latest release here: [https://github.com/alt236/apkdetails/releases]()
 
 ```
 usage: apkdetails.jar [-h] -i <arg> [-o <arg>] [--print-class-graph |
-                             --print-class-list | --print-class-tree | --print-manifest]    [-s
-                             <arg>] [-v]
-version: 1.2.1
+                             --print-class-list | --print-class-tree | --print-manifest]    [-r]
+                             [-s <arg>] [-v]
+version: 1.2.3
 Analyzes an APK and prints helpful info.
 
  -h,--human               If set, file sizes will be human readable
@@ -34,12 +34,16 @@ Analyzes an APK and prints helpful info.
                           terminal. It ignores all options except -i and
                           -o.
     --print-class-list    Print the APK classes as a list to the terminal.
-                          It ignores all options except -i and -o.
+                          It ignores all options except -i and -o, except
+                          -v which will print additional class information
+                          like the dexfile the class belongs to.
     --print-class-tree    Print the APK classes as an ASCII tree to
                           terminal. It ignores all options except -i and
                           -o.
     --print-manifest      Print the APK manifest to the terminal. It
                           ignores all options except -i and -o.
+ -r,--recursive           If set, and input is a directory, it will
+                          recursively find all APKs contained.
  -s,--show-only <arg>     Show only the following, comma separated
                           outputs. Valid options are: [architectures,
                           build_config, certificates, content_size,
@@ -74,11 +78,12 @@ Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 
 ## Versions
 
-* 1.0.0: First release
-* 1.1.0: Added selection of outputs
+* 1.0.0: First release.
+* 1.1.0: Added selection of outputs.
 * 1.2.0: Added options to print list/tree/graph of classes and dump of the Manifest to the terminal.
-* 1.2.1: Fixed NPE when EncodedValue is null while parsing BuildConfigs
-* 1.2.2: Added option to recursively search a directory for APKs
+* 1.2.1: Fixed NPE when EncodedValue is null while parsing BuildConfigs.
+* 1.2.2: Added option to recursively search a directory for APKs.
+* 1.2.3: Now prints the dexfile a class is stored in when calling --print-class-list while verbose.
 
 ## Links
 

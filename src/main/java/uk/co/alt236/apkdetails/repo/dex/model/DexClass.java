@@ -10,13 +10,15 @@ public class DexClass {
 
     private final boolean innerClass;
     private final boolean lambdaClass;
+    private final String dexFileName;
     private final String name;
     private final String type;
     private final String superType;
     private final PackageName packageName;
 
-    private DexClass(final DexBackedClassDef classDef) {
+    private DexClass(final String dexFileName, final DexBackedClassDef classDef) {
         final DexClassInfo dexClassInfo = new DexClassInfo();
+        this.dexFileName = dexFileName;
         this.name = dexClassInfo.getClassSimpleName(classDef);
         this.type = classDef.getType();
         this.superType = classDef.getSuperclass();
@@ -25,11 +27,12 @@ public class DexClass {
         this.packageName = new PackageName(dexClassInfo.getPackageName(classDef));
     }
 
-    static Set<DexClass> getClasses(final Set<? extends DexBackedClassDef> classes) {
+    static Set<DexClass> getClasses(final String dexFileName,
+                                    final Set<? extends DexBackedClassDef> classes) {
         final Set<DexClass> retVal = new HashSet<>(classes.size());
 
         for (final DexBackedClassDef classDef : classes) {
-            retVal.add(new DexClass(classDef));
+            retVal.add(new DexClass(dexFileName, classDef));
         }
 
         return Collections.unmodifiableSet(retVal);
@@ -57,5 +60,9 @@ public class DexClass {
 
     public PackageName getPackageName() {
         return packageName;
+    }
+
+    public String getDexFileName() {
+        return dexFileName;
     }
 }
