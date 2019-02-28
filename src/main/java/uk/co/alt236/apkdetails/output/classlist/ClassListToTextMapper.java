@@ -22,15 +22,18 @@ import java.util.stream.Collectors;
 public class ClassListToTextMapper {
 
     private final DexRepository dexRepository;
+    private final boolean verbose;
 
-    public ClassListToTextMapper(final DexRepository dexRepository) {
+    public ClassListToTextMapper(final DexRepository dexRepository,
+                                 final boolean verbose) {
         this.dexRepository = dexRepository;
+        this.verbose = verbose;
     }
 
 
     public String getClassList() {
         final StringCollector stringCollector = new StringCollector();
-        final ClassListPrinter classListPrinter = new ClassListPrinter();
+        final ClassListPrinter classListPrinter = new ClassListPrinter(verbose);
 
         final Collection<DexClass> classes = dexRepository.getAllClasses();
         final List<DexClass> sortedList = new ArrayList<>(classes);

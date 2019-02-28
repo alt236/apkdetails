@@ -28,11 +28,14 @@ public class FilesOutputter {
 
     private final FileSizeFormatter fileSizeFormatter;
     private final Colorizer colorizer;
+    private final boolean verbose;
 
     public FilesOutputter(final FileSizeFormatter fileSizeFormatter,
-                          final Colorizer colorizer) {
+                          final Colorizer colorizer,
+                          final boolean verbose) {
         this.fileSizeFormatter = fileSizeFormatter;
         this.colorizer = colorizer;
+        this.verbose = verbose;
     }
 
     public void doOutput(OutputPathFactory outputPathFactory,
@@ -101,7 +104,7 @@ public class FilesOutputter {
         if (outputFile != null) {
             Logger.get().out("Class List file: " + outputFile);
             final FileWriter fileWriter = new FileWriter(outputFile);
-            final ClassListPrinter classListPrinter = new ClassListPrinter();
+            final ClassListPrinter classListPrinter = new ClassListPrinter(verbose);
 
             final Collection<DexClass> classes = dexRepository.getAllClasses();
 

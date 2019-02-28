@@ -6,19 +6,28 @@ import uk.co.alt236.apkdetails.repo.dex.model.DexClass;
 import java.util.List;
 
 public class ClassListPrinter {
+    private final boolean verbose;
 
+    public ClassListPrinter(final boolean verbose) {
+        this.verbose = verbose;
+    }
 
     public void print(final Writer writer,
                       final List<DexClass> dexClasses) {
 
         for (final DexClass dexClass : dexClasses) {
-            writer.outln(formatLine(dexClass));
+            if (verbose) {
+                writer.outln(dexClass.getDexFileName() + ", " + formatClass(dexClass));
+            } else {
+                writer.outln(formatClass(dexClass));
+            }
+
         }
 
         writer.close();
     }
 
-    private String formatLine(final DexClass dexClass) {
+    private String formatClass(final DexClass dexClass) {
         String retVal = dexClass.getType();
 
         if (retVal.startsWith("L")) {

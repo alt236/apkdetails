@@ -23,7 +23,7 @@ public class DexFile {
         this.fieldCount = dexBackedFile.getFieldCount();
         this.stringCount = dexBackedFile.getStringCount();
         this.protoCount = dexBackedFile.getProtoCount();
-        this.classes = DexClass.getClasses(dexBackedFile.getClasses());
+        this.classes = DexClass.getClasses(name, dexBackedFile.getClasses());
         this.fileSize = fileSize;
         this.name = name;
     }

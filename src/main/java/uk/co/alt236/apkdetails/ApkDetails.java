@@ -31,7 +31,7 @@ class ApkDetails {
         final FileSizeFormatter fileSizeFormatter = new FileSizeFormatter(humanReadableFileSizes);
         final Colorizer colorizer = new Colorizer(!isSaveToFileEnabled);
 
-        final FilesOutputter filesOutputter = new FilesOutputter(fileSizeFormatter, colorizer);
+        final FilesOutputter filesOutputter = new FilesOutputter(fileSizeFormatter, colorizer, verbose);
         final StatisticsOutputter statsOutputter = new StatisticsOutputter(fileSizeFormatter, colorizer);
         final RawTexttOutputter rawTextOutputter = new RawTexttOutputter(fileSizeFormatter, colorizer);
 
