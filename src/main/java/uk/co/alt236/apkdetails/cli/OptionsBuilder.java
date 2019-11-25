@@ -26,6 +26,9 @@ public class OptionsBuilder {
     /*package*/ static final String ARG_SHOW_ONLY = "s";
     /*package*/ static final String ARG_SHOW_ONLY_LONG = "show-only";
 
+    /*package*/ static final String ARGS_PACKAGE_FILTER = "p";
+    /*package*/ static final String ARGS_PACKAGE_FILTER_LONG = "package-filter";
+
     /*package*/ static final String ARG_PRINT_CLASS_LIST = "print-class-list";
     /*package*/ static final String ARG_PRINT_CLASS_TREE = "print-class-tree";
     /*package*/ static final String ARG_PRINT_CLASS_GRAPH = "print-class-graph";
@@ -46,6 +49,7 @@ public class OptionsBuilder {
         options.addOption(createOptionRecursive());
         options.addOption(createOptionHumanReadableSizes());
         options.addOption(createShowOnly());
+        options.addOption(createPackageFilter());
 
 
         final OptionGroup optionGroup = new OptionGroup();
@@ -161,4 +165,15 @@ public class OptionsBuilder {
                 .desc(desc)
                 .build();
     }
+
+    private Option createPackageFilter() {
+        final String desc = strings.getString("cli_cmd_package_filter");
+        return Option.builder(ARGS_PACKAGE_FILTER)
+                .longOpt(ARGS_PACKAGE_FILTER_LONG)
+                .hasArg(true)
+                .required(false)
+                .desc(desc)
+                .build();
+    }
+
 }

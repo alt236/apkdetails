@@ -15,10 +15,14 @@ public class DexClass {
     private final String type;
     private final String superType;
     private final PackageName packageName;
+    private final Class javaClass;
+    private final DexBackedClassDef dexBackedClassDef;
 
     private DexClass(final String dexFileName, final DexBackedClassDef classDef) {
         final DexClassInfo dexClassInfo = new DexClassInfo();
+        this.javaClass = classDef.getClass();
         this.dexFileName = dexFileName;
+        this.dexBackedClassDef = classDef;
         this.name = dexClassInfo.getClassSimpleName(classDef);
         this.type = classDef.getType();
         this.superType = classDef.getSuperclass();
@@ -64,5 +68,13 @@ public class DexClass {
 
     public String getDexFileName() {
         return dexFileName;
+    }
+
+    public Class getJavaClass() {
+        return javaClass;
+    }
+
+    public DexBackedClassDef getDexBackedClassDef() {
+        return dexBackedClassDef;
     }
 }

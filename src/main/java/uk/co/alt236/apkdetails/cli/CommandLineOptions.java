@@ -27,6 +27,10 @@ public class CommandLineOptions {
         return commandLine.getOptionValue(OptionsBuilder.ARG_INPUT_LONG);
     }
 
+    public String getPackageFilter() {
+        return commandLine.getOptionValue(OptionsBuilder.ARGS_PACKAGE_FILTER_LONG);
+    }
+
     public boolean isRecursiveApkSearch() {
         return commandLine.hasOption(OptionsBuilder.ARG_RECURSIVE_LONG);
     }

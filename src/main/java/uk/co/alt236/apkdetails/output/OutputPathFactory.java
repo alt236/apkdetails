@@ -1,5 +1,7 @@
 package uk.co.alt236.apkdetails.output;
 
+import uk.co.alt236.apkdetails.repo.dex.model.DexClass;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
@@ -62,4 +64,29 @@ public class OutputPathFactory {
             return new File(outputFolder, apk.getName() + "_class_list.txt");
         }
     }
+
+    @Nullable
+    public File getPlantUmlFile(DexClass dexClass) {
+        if (outputFolder == null) {
+            return null;
+        } else {
+            final String path = dexClass.getPackageName().toString().replaceAll("\\.", "/") + "/";
+            final File dir = new File(outputFolder, path);
+            dir.mkdirs();
+            return new File(dir, dexClass.getSimpleName() + ".plantuml");
+        }
+    }
+
+    @Nullable
+    public File getMarkdownFile(DexClass dexClass) {
+        if (outputFolder == null) {
+            return null;
+        } else {
+            final String path = dexClass.getPackageName().toString().replaceAll("\\.", "/") + "/";
+            final File dir = new File(outputFolder, path);
+            dir.mkdirs();
+            return new File(dir, dexClass.getSimpleName() + ".md");
+        }
+    }
+
 }
