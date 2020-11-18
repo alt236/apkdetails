@@ -18,11 +18,11 @@ public class DexFile {
     public DexFile(DexBackedDexFile dexBackedFile,
                    String name,
                    long fileSize) {
-        this.methodCount = dexBackedFile.getMethodCount();
-        this.classCount = dexBackedFile.getClassCount();
-        this.fieldCount = dexBackedFile.getFieldCount();
-        this.stringCount = dexBackedFile.getStringCount();
-        this.protoCount = dexBackedFile.getProtoCount();
+        this.methodCount = dexBackedFile.getMethodSection().size();
+        this.classCount = dexBackedFile.getClasses().size();
+        this.fieldCount = dexBackedFile.getFieldSection().size();
+        this.stringCount = dexBackedFile.getStringSection().size();
+        this.protoCount = dexBackedFile.getProtoSection().size();
         this.classes = DexClass.getClasses(name, dexBackedFile.getClasses());
         this.fileSize = fileSize;
         this.name = name;

@@ -3,10 +3,8 @@ package uk.co.alt236.apkdetails.repo.architectures;
 import uk.co.alt236.apkdetails.repo.common.Entry;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ArchitectureRepository {
     private static final String JNI_DIRECTORY = "lib/";
@@ -24,10 +22,35 @@ public class ArchitectureRepository {
             retVal.add(new Architecture(mapEntry.getKey(), mapEntry.getValue()));
         }
 
-        retVal.sort((o1, o2) -> o1.getName().compareTo(o2.toString()));
+        retVal.sort(Comparator.comparing(Architecture::getName));
         return retVal;
     }
 
+    public List<SoComparison> getSoLibComparison() {
+        final List<Architecture> architectures = getJniArchitectures();
+        final Set<String> libraries = new HashSet<>();
+
+        for (Architecture architecture : architectures) {
+            libraries.addAll(
+                    architecture.getFiles().stream().map(Entry::getFilename).collect(Collectors.toList())
+            );
+        }
+
+        final List<SoComparison> soComparisons = new ArrayList<>();
+        for (String library : libraries) {
+            final Set<String> haveIt = new HashSet<>();
+            for (Architecture architecture : architectures) {
+                if (architecture.hasSoFile(library)) {
+                    haveIt.add(architecture.getName());
+                }
+            }
+
+            soComparisons.add(new SoComparison(library, haveIt));
+            soComparisons.sort(Comparator.comparing(SoComparison::getSoLibrary));
+        }
+
+        return soComparisons;
+    }
 
     private Map<String, List<Entry>> getArchitecturesAndFiles() {
         final List<Entry> libFiles = zipContents
@@ -36,7 +59,7 @@ public class ArchitectureRepository {
         final Map<String, List<Entry>> retVal = new HashMap<>();
 
         for (final Entry entry : libFiles) {
-            final String cleanName = entry.getName().substring(JNI_DIRECTORY.length(), entry.getName().length());
+            final String cleanName = entry.getName().substring(JNI_DIRECTORY.length());
 
             if (entry.isDirectory()) {
                 // This is the case where there is an empty dir under lib/
