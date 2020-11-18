@@ -84,6 +84,7 @@ Linux/Mac: `mvn clean package && chmod +x target/apkdetails-X.X.jar`
 * 1.2.1: Fixed NPE when EncodedValue is null while parsing BuildConfigs.
 * 1.2.2: Added option to recursively search a directory for APKs.
 * 1.2.3: Now prints the dexfile a class is stored in when calling --print-class-list while verbose.
+* 1.2.4: Bumped dexlib2 version to 2.4.0.
 
 ## Links
 

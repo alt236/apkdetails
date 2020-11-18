@@ -2,10 +2,14 @@ package uk.co.alt236.apkdetails.repo.dex;
 
 import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
+import uk.co.alt236.apkdetails.output.classlist.tree.DexNode;
+import uk.co.alt236.apkdetails.output.classlist.tree.DexTree;
 import uk.co.alt236.apkdetails.repo.common.Entry;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
 import uk.co.alt236.apkdetails.repo.dex.model.DexClass;
 import uk.co.alt236.apkdetails.repo.dex.model.DexFile;
+import uk.co.alt236.apkdetails.tree.Node;
+import uk.co.alt236.apkdetails.tree.Tree;
 import uk.co.alt236.apkdetails.util.StreamUtils;
 
 import java.io.IOException;
@@ -100,5 +104,15 @@ public class DexRepository {
     private List<Entry> getDexFileEntries() {
         return zipContents
                 .getEntries(entry -> !entry.isDirectory() && entry.getName().toLowerCase(Locale.US).endsWith(".dex"));
+    }
+
+    public Tree<DexClass> getClassTree() {
+        loadDexFiles();
+
+        final Tree<DexClass> tree = new DexTree();
+        final Collection<DexClass> classes = getAllClasses();
+        final List<Node<DexClass>> dexNodes = classes.stream().map(DexNode::new).collect(Collectors.toList());
+        tree.addChildren(dexNodes);
+        return tree;
     }
 }

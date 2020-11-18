@@ -2,8 +2,6 @@ package uk.co.alt236.apkdetails.output;
 
 import uk.co.alt236.apkdetails.output.classlist.graphml.GraphMlTreeAdapter;
 import uk.co.alt236.apkdetails.output.classlist.tree.ClassTreeAdapter;
-import uk.co.alt236.apkdetails.output.classlist.tree.DexNode;
-import uk.co.alt236.apkdetails.output.classlist.tree.DexTree;
 import uk.co.alt236.apkdetails.output.loging.Logger;
 import uk.co.alt236.apkdetails.print.ClassListPrinter;
 import uk.co.alt236.apkdetails.print.graphml.GraphMLPrinter;
@@ -22,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FilesOutputter {
 
@@ -45,9 +42,11 @@ public class FilesOutputter {
         saveManifest(outputPathFactory, manifestRepository);
         saveClassList(outputPathFactory, dexRepository);
 
-        final Tree<DexClass> dexTree = createTree(dexRepository);
-        saveClassTree(outputPathFactory, dexTree);
-        saveGraphMl(outputPathFactory, dexTree);
+        if (outputPathFactory.getClassTreeFile() != null || outputPathFactory.getClassGraphMlFile() != null) {
+            final Tree<DexClass> classTree = dexRepository.getClassTree();
+            saveClassTree(outputPathFactory, classTree);
+            saveGraphMl(outputPathFactory, classTree);
+        }
     }
 
 
@@ -113,14 +112,5 @@ public class FilesOutputter {
 
             classListPrinter.print(fileWriter, sortedList);
         }
-    }
-
-    private Tree<DexClass> createTree(final DexRepository dexRepository) {
-        final Tree<DexClass> tree = new DexTree();
-        final Collection<DexClass> classes = dexRepository.getAllClasses();
-        final List<Node<DexClass>> dexNodes = classes.stream().map(DexNode::new).collect(Collectors.toList());
-        tree.addChildren(dexNodes);
-
-        return tree;
     }
 }
