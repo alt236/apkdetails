@@ -21,4 +21,13 @@ public class Architecture {
     public List<Entry> getFiles() {
         return files;
     }
+
+    public boolean hasSoFile(String soFileName) {
+        for (Entry entry : files) {
+            if (entry.getFilename().equals(soFileName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

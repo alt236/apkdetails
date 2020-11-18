@@ -35,6 +35,8 @@ public class ArchitecturesOutput implements Output {
         }
 
         printer.endKeyValueSection();
+
+        //new ArchitecturesGridPrinter().print(archs);
     }
 
     private String toString(final List<Architecture> list) {
