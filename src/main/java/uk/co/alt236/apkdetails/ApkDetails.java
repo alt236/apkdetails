@@ -1,10 +1,7 @@
 package uk.co.alt236.apkdetails;
 
 import uk.co.alt236.apkdetails.cli.CommandLineOptions;
-import uk.co.alt236.apkdetails.output.FilesOutputter;
-import uk.co.alt236.apkdetails.output.OutputPathFactory;
-import uk.co.alt236.apkdetails.output.RawTexttOutputter;
-import uk.co.alt236.apkdetails.output.StatisticsOutputter;
+import uk.co.alt236.apkdetails.output.*;
 import uk.co.alt236.apkdetails.output.loging.Logger;
 import uk.co.alt236.apkdetails.print.writer.FileWriter;
 import uk.co.alt236.apkdetails.repo.common.ZipContents;
@@ -34,6 +31,7 @@ class ApkDetails {
         final FilesOutputter filesOutputter = new FilesOutputter(fileSizeFormatter, colorizer, verbose);
         final StatisticsOutputter statsOutputter = new StatisticsOutputter(fileSizeFormatter, colorizer);
         final RawTexttOutputter rawTextOutputter = new RawTexttOutputter(fileSizeFormatter, colorizer);
+        final PlantUmlOutputter plantUmlOutputter = new PlantUmlOutputter();
 
         for (final String apkFile : files) {
             final File file = new File(apkFile);
@@ -52,6 +50,8 @@ class ApkDetails {
             }
 
             filesOutputter.doOutput(outputPathFactory, manifestRepository, dexRepository);
+
+            plantUmlOutputter.doOutput(outputPathFactory, dexRepository, cli.getPackageFilter());
 
             zipContents.close();
         }
